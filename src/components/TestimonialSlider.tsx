@@ -22,7 +22,7 @@ export function TestimonialSlider() {
 
   return (
     <>
-      <HeadingStack lines={["In Their", "Words"]} className="pb-[11px] md:pt-[36px] md:pb-[24px]" />
+      <HeadingStack lines={["Worn", "& Trusted"]} className="pb-[11px] md:pt-[36px] md:pb-[24px]" />
       <FabricFeature slides={slides} />
     </>
   );
