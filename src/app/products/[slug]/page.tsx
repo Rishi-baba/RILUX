@@ -70,7 +70,6 @@ export default async function ProductPage({ params }: Props) {
   if (!product) notFound();
 
   const primary = getCollection(specificCollections(product)[0] ?? product.collections[0] ?? "all");
-  const productType = product.title.replace(/\s+\d+$/, "");
 
   return (
     <>
@@ -83,7 +82,7 @@ export default async function ProductPage({ params }: Props) {
       />
       <ProductMain product={product} />
       <TrustStrip />
-      <ProductStory productType={productType} tone={product.altTone} />
+      <ProductStory tone={product.altTone} />
       <ProductScroller title="You May Also Like" items={recommendations(product)} />
       <section className="px-[16px] pb-[40px] md:px-[36px]">
         <h2 className="mb-[20px] text-center font-display text-[34px] font-normal uppercase leading-[42px] text-black">
