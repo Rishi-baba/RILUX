@@ -2,18 +2,18 @@
 
 ## URL
 <!-- Replace with the URL of the website you're reverse-engineering -->
-https://example.com
+https://vahro.in/
 
 ## Scope
 
 ### Pages to Replicate
 <!-- List every page you want to rebuild. Be specific. -->
-- [ ] Home page
+- [x] Home page
 - [ ] (add more pages here)
 
 ### Fidelity Level
 <!-- Choose one -->
-- [ ] **Pixel-perfect** — exact match in colors, spacing, typography, animations
+- [x] **Pixel-perfect** — exact match in colors, spacing, typography, animations
 - [ ] **High fidelity** — visually similar, same layout and feel, minor deviations OK
 - [ ] **Structural** — same layout and components, custom styling acceptable
 
@@ -34,8 +34,9 @@ https://example.com
 
 ## Why
 <!-- Brief explanation of why you're cloning this site -->
-(Fill in your reason — portfolio piece, learning exercise, demo, template for custom features, etc.)
+Design template for the Rilux brand. Reproduces vahro.in layout, styling, and interactions only.
 
 ## Customization Plans
 <!-- After the base emulation, what changes do you want to make? -->
-- (List planned modifications or say "none — pure emulation")
+- All Vahro brand assets (logo, product photos, copy, product names) are replaced with neutral placeholders. Nothing Vahro owns ships in this build.
+- Placeholder imagery = solid/gradient blocks or generic stock-free SVGs sized to the original aspect ratios.

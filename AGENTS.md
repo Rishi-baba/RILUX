@@ -31,7 +31,7 @@ A reusable template for reverse-engineering any website and rebuilding it as a f
 ## Design Principles
 - **Pixel-perfect emulation** — match the target's spacing, colors, typography exactly
 - **No personal aesthetic changes during emulation phase** — match 1:1 first, customize later
-- **Real content** — use actual text and assets from the target site, not placeholders
+- **Placeholder content (project override)** — this build reproduces the target's layout, styling and behaviour ONLY. Never copy the target's text, product names, logo, photos or other brand assets. Use neutral placeholder copy of similar length and the `<Placeholder>` image block (`src/components/Placeholder.tsx`). Display font Cormorant Garamond and UI font Montserrat stand in for the target's licensed fonts.
 - **Beauty-first** — every pixel matters
 
 ## Project Structure

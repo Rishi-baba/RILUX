@@ -7,9 +7,18 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
-  --font-heading: var(--font-sans);
+  --font-sans: var(--font-archivo-narrow), ui-sans-serif, system-ui, sans-serif;
+  --font-ui: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-heading: var(--font-display);
+  --color-brand: var(--brand);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-stone: var(--stone);
+  --color-sand: var(--sand);
+  --color-linen: var(--linen);
+  --color-mist: var(--mist);
+  --ease-theme: cubic-bezier(0.104, 0.204, 0.492, 1);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -81,6 +90,17 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Source palette (extracted from getComputedStyle) */
+  --brand: rgb(1, 40, 25);       /* deep green: announcement bar, badges */
+  --ink: rgb(17, 17, 17);        /* nav text */
+  --ink-soft: rgb(21, 21, 21);   /* headings in cards, primary buttons */
+  --stone: rgb(154, 154, 154);   /* muted product meta */
+  --sand: rgb(237, 233, 225);    /* featured product card */
+  --linen: rgb(238, 236, 233);   /* app download band */
+  --mist: rgb(245, 245, 245);    /* footer */
+  --header-h: 66px;
+  --announce-h: 45px;
 }
 
 .dark {
@@ -126,5 +146,18 @@
   }
   html {
     @apply font-sans;
+  }
+  body {
+    font-size: 17px;
+    line-height: 1.6;
+    color: rgb(0, 0, 0);
+    background: rgb(255, 255, 255);
+  }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
