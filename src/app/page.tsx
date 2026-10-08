@@ -26,8 +26,6 @@ export default function Home() {
         <HeadingStack lines={["Shop by Fabric"]} size="md" />
         <FabricTiles />
         <HeroProductScroller />
-        <SingleImageBanner tone="cool" aspect="tall" title="Pure Giza" href={bannerLinks.one} className="py-4 md:py-5" />
-        <SingleImageBanner tone="warm" aspect="tall" overline="New Season" title="The Formal Edit" href={bannerLinks.two} className="pb-4 md:pb-5" />
         <HeadingStack lines={[headings.wardrobe]} size="xl" />
         <TileSlider />
         <SingleImageBanner tone="sand" aspect="tall" overline="Off Duty" title="Easy Weekends" href={bannerLinks.three} mobileRatio="aspect-[390/495]" className="md:pb-[30px]" />
