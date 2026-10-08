@@ -1,12 +1,16 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
-import {
-  BagIcon,
-  ChevronDownIcon,
-  HeartIcon,
-  SearchIcon,
-  UserIcon,
-} from "@/components/icons";
-import { brandName, navItems } from "@/lib/content";
+import { CartDrawer } from "@/components/CartDrawer";
+import { MobileMenu } from "@/components/MobileMenu";
+import { NavDropdown } from "@/components/NavDropdown";
+import { SearchOverlay } from "@/components/SearchOverlay";
+import { BagIcon, HeartIcon, SearchIcon, UserIcon } from "@/components/icons";
+import { brandName, navItems, routes } from "@/lib/content";
+import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 const hoverFade =
@@ -17,7 +21,25 @@ const iconButton = cn(
   hoverFade,
 );
 
+const bubble =
+  "absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-ink px-[3px] font-ui text-[9px] font-semibold leading-none text-white";
+
 export function Header() {
+  const pathname = usePathname();
+  const { openPanel, setOpenPanel, cartCount, wishlist, user, hydrated } = useStore();
+
+  // Close any open panel (menu, search, cart) when the route changes.
+  const lastPath = useRef(pathname);
+  useEffect(() => {
+    if (lastPath.current === pathname) return;
+    lastPath.current = pathname;
+    setOpenPanel(null);
+  }, [pathname, setOpenPanel]);
+
+  const bagCount = hydrated ? cartCount : 0;
+  const wishCount = hydrated ? wishlist.length : 0;
+  const accountHref = hydrated && user ? routes.account : routes.login;
+
   return (
     <header className="sticky top-0 z-50 w-full bg-white">
       <div className="grid h-[56px] grid-cols-[1fr_auto_1fr] items-center px-4 md:h-[66px] lg:grid-cols-[1fr_auto] lg:px-[63px]">
@@ -26,45 +48,28 @@ export function Header() {
           <button
             type="button"
             aria-label="Open menu"
+            aria-expanded={openPanel === "menu"}
+            onClick={() => setOpenPanel("menu")}
             className={cn(iconButton, "justify-self-start lg:hidden")}
           >
             <Menu size={22} strokeWidth={1.5} />
           </button>
 
-          <a
-            href="#"
+          <Link
+            href={routes.home}
             className="justify-self-center whitespace-nowrap font-display text-[30px] uppercase leading-none tracking-[0.02em] text-ink lg:mr-8 lg:min-w-[120px]"
           >
             {brandName}
-          </a>
+          </Link>
 
           <nav aria-label="Main" className="hidden lg:block">
             <ul className="flex items-center gap-6">
               {navItems.map((item) => (
-                <li key={item.label}>
-                  <a
-                    href={item.href}
-                    className={cn(
-                      "inline-flex items-center font-sans text-[16px] font-normal leading-[25.6px] text-ink",
-                      hoverFade,
-                    )}
-                  >
-                    {item.label}
-                    {item.badge && (
-                      <span className="ml-1.5 rounded-[4px] bg-brand px-[5px] py-0.5 font-sans text-[8px] font-semibold uppercase leading-[11.2px] tracking-[0.24px] text-white">
-                        {item.badge}
-                      </span>
-                    )}
-                    {item.hasDropdown && (
-                      <ChevronDownIcon
-                        aria-hidden
-                        size={12}
-                        strokeWidth={1.5}
-                        className="ml-[3px]"
-                      />
-                    )}
-                  </a>
-                </li>
+                <NavDropdown
+                  key={item.label}
+                  item={item}
+                  active={pathname === item.href || pathname.startsWith(`${item.href}/`)}
+                />
               ))}
             </ul>
           </nav>
@@ -72,31 +77,46 @@ export function Header() {
 
         {/* Right cluster */}
         <div className="flex items-center justify-end gap-5">
-          <a
-            href="#"
-            aria-label="Wishlist"
+          <Link
+            href={routes.wishlist}
+            aria-label={wishCount > 0 ? `Wishlist (${wishCount} items)` : "Wishlist"}
             className={cn(iconButton, "hidden md:inline-flex")}
           >
             <HeartIcon size={20} strokeWidth={1.5} />
-          </a>
-          <a
-            href="#"
-            aria-label="Account"
+            {wishCount > 0 && <span className={bubble}>{wishCount}</span>}
+          </Link>
+          <Link
+            href={accountHref}
+            aria-label={hydrated && user ? "Account" : "Sign in"}
             className={cn(iconButton, "hidden md:inline-flex")}
           >
             <UserIcon size={20} strokeWidth={1.5} />
-          </a>
-          <button type="button" aria-label="Search" className={iconButton}>
+          </Link>
+          <button
+            type="button"
+            aria-label="Search"
+            aria-expanded={openPanel === "search"}
+            onClick={() => setOpenPanel("search")}
+            className={iconButton}
+          >
             <SearchIcon size={20} strokeWidth={1.5} />
           </button>
-          <a href="#" aria-label="Cart" className={iconButton}>
+          <button
+            type="button"
+            aria-label={`Cart (${bagCount} items)`}
+            aria-expanded={openPanel === "cart"}
+            onClick={() => setOpenPanel("cart")}
+            className={iconButton}
+          >
             <BagIcon size={20} strokeWidth={1.5} />
-            <span className="absolute -right-2 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-ink font-ui text-[9px] font-semibold leading-none text-white">
-              0
-            </span>
-          </a>
+            <span className={bubble}>{bagCount}</span>
+          </button>
         </div>
       </div>
+
+      <MobileMenu />
+      <SearchOverlay />
+      <CartDrawer />
     </header>
   );
 }
