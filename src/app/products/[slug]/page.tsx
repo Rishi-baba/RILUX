@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { ProductCard } from "@/components/ProductCard";
 import { ProductScroller } from "@/components/ProductScroller";
 import { Breadcrumbs } from "@/components/product/Breadcrumbs";
 import { ProductMain } from "@/components/product/ProductMain";
@@ -53,18 +52,6 @@ function recommendations(product: Product) {
   );
 }
 
-const fabricSlugs = ["giza-cotton", "giza-satin", "premium-cotton", "pure-cotton"];
-const cutSlugs = ["formal", "regular", "casual"];
-
-/** 4 shirts to pair: same fabric family in a different cut first, then the same fabric, then any shirt. */
-function pairings(product: Product) {
-  const fabric = product.collections.find((c) => fabricSlugs.includes(c)) ?? "all";
-  const cut = product.collections.find((c) => cutSlugs.includes(c));
-  const sameFabric = productsIn(fabric);
-  const otherCut = sameFabric.filter((p) => !cut || !p.collections.includes(cut));
-  return uniqueFill([otherCut, sameFabric, productsIn("all")], new Set([product.id]), 4);
-}
-
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
   const product = getProduct(slug);
@@ -86,16 +73,6 @@ export default async function ProductPage({ params }: Props) {
       <ProductStory tone={product.altTone} />
       <ProductReviews product={product} />
       <ProductScroller title="You May Also Like" items={recommendations(product)} />
-      <section className="px-[16px] pb-[40px] md:px-[36px]">
-        <h2 className="mb-[20px] text-center font-display text-[34px] font-normal uppercase leading-[42px] text-black">
-          Pair It With
-        </h2>
-        <div className="grid grid-cols-2 gap-[6px] md:grid-cols-4">
-          {pairings(product).map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      </section>
     </>
   );
 }
