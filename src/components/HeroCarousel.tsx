@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import type { KeyboardEvent, MouseEvent, PointerEvent } from "react";
 
@@ -114,7 +115,7 @@ export function HeroCarousel() {
             aria-hidden={i !== index}
             className="relative h-full w-full shrink-0"
           >
-            <a
+            <Link
               href={slide.href}
               draggable={false}
               tabIndex={i === index ? 0 : -1}
@@ -122,7 +123,7 @@ export function HeroCarousel() {
               className="absolute inset-0 block"
             >
               <Placeholder tone={slide.tone} />
-            </a>
+            </Link>
           </div>
         ))}
       </div>

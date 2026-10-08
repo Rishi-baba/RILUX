@@ -1,4 +1,7 @@
+import Link from "next/link";
+
 import { Placeholder, type PlaceholderTone } from "@/components/Placeholder";
+import { routes } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 // Full-bleed linked image banner. Source: image 1265 wide at heights 723 / 466 / 394
@@ -11,6 +14,7 @@ export function SingleImageBanner({
   title,
   align = "left",
   className,
+  href = routes.collection("all"),
 }: {
   tone: PlaceholderTone;
   aspect: "tall" | "medium" | "short";
@@ -18,6 +22,7 @@ export function SingleImageBanner({
   title?: string;
   align?: "left" | "center";
   className?: string;
+  href?: string;
 }) {
   const ratio = {
     tall: "aspect-[4/5] md:aspect-[1265/723]",
@@ -27,7 +32,7 @@ export function SingleImageBanner({
 
   return (
     <section className={cn("pb-5 md:pb-10", className)}>
-      <a href="#" className={cn("relative block w-full overflow-hidden", ratio)}>
+      <Link href={href} className={cn("relative block w-full overflow-hidden", ratio)}>
         <Placeholder tone={tone} />
         {title ? (
           <div
@@ -44,7 +49,7 @@ export function SingleImageBanner({
             </span>
           </div>
         ) : null}
-      </a>
+      </Link>
     </section>
   );
 }

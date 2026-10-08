@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState } from "react";
 import type { PointerEvent } from "react";
 import { ArrowRightIcon, ChevronLeftIcon, ChevronRightIcon } from "@/components/icons";
@@ -65,18 +66,23 @@ export function FeaturedProductHero() {
                 <p className="mt-[10px] font-ui text-[18px] font-normal leading-[36.8px] text-ink-soft md:text-[23px]">
                   {slide.price}
                 </p>
-                <a
-                  href="#"
+                <Link
+                  href={slide.href}
                   tabIndex={i === index ? 0 : -1}
                   className="mt-[14px] inline-flex items-center gap-2 rounded-[6px] bg-ink-soft px-3 py-[5px] font-ui text-[13px] font-medium leading-[20.8px] text-white transition-opacity duration-200 hover:opacity-80"
                 >
                   {slide.cta}
                   <ArrowRightIcon size={14} aria-hidden />
-                </a>
+                </Link>
               </div>
-              <div className="relative h-[118px] w-[96px] flex-none overflow-hidden rounded-[13px] md:h-[228px] md:w-[187px]">
+              <Link
+                href={slide.href}
+                tabIndex={-1}
+                aria-hidden
+                className="relative block h-[118px] w-[96px] flex-none overflow-hidden rounded-[13px] md:h-[228px] md:w-[187px]"
+              >
                 <Placeholder tone={slide.thumbTone} />
-              </div>
+              </Link>
             </div>
           </div>
         ))}

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Placeholder } from "@/components/Placeholder";
 import { headings, occasionTiles } from "@/lib/content";
 
@@ -13,7 +15,7 @@ export function HeroCollectionScroller() {
       <div className="scrollbar-none absolute inset-x-0 bottom-0 snap-x snap-mandatory scroll-px-6 overflow-x-auto">
         <div className="mx-auto flex w-max gap-2 px-6 pb-6">
           {occasionTiles.map((tile) => (
-            <a
+            <Link
               key={tile.title}
               href={tile.href}
               className="group relative aspect-[185/247] w-[185px] flex-none snap-start overflow-hidden"
@@ -25,7 +27,7 @@ export function HeroCollectionScroller() {
                   {tile.title}
                 </span>
               </span>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

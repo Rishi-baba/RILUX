@@ -1,11 +1,34 @@
+"use client";
+
 import Link from "next/link";
 import { AtSign, Globe } from "lucide-react";
 import { brandName, footerColumns } from "@/lib/content";
+import { useStore } from "@/lib/store";
 
 const socials = [
   { label: "Website", Icon: Globe },
   { label: "Social", Icon: AtSign },
 ];
+
+function SocialButtons() {
+  const { notify } = useStore();
+
+  return (
+    <div className="mt-10 flex gap-4">
+      {socials.map(({ label, Icon }) => (
+        <button
+          key={label}
+          type="button"
+          aria-label={label}
+          onClick={() => notify("Social links coming soon")}
+          className="text-black"
+        >
+          <Icon className="size-[18px]" aria-hidden />
+        </button>
+      ))}
+    </div>
+  );
+}
 
 export function Footer() {
   return (
@@ -34,13 +57,7 @@ export function Footer() {
           </div>
         ))}
       </div>
-      <div className="mt-10 flex gap-4">
-        {socials.map(({ label, Icon }) => (
-          <a key={label} href="#" aria-label={label} className="text-black">
-            <Icon className="size-[18px]" aria-hidden />
-          </a>
-        ))}
-      </div>
+      <SocialButtons />
       <p className="mt-8 font-ui text-[13px] leading-[20.8px] text-black">
         © 2026 {brandName}. All rights reserved.
       </p>

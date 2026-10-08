@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Placeholder } from "@/components/Placeholder";
 import { stripTiles } from "@/lib/content";
 import { cn } from "@/lib/utils";
@@ -14,7 +16,7 @@ export function StripTiles({
     <section className={cn(className)}>
       <div className="scrollbar-none flex snap-x snap-mandatory gap-[6px] overflow-x-auto px-[6px]">
         {items.map((tile) => (
-          <a
+          <Link
             key={tile.title}
             href={tile.href}
             className="relative block aspect-[540/202] w-[85vw] flex-none snap-start overflow-hidden md:w-[540px]"
@@ -26,7 +28,7 @@ export function StripTiles({
                 {tile.title}
               </span>
             </span>
-          </a>
+          </Link>
         ))}
       </div>
     </section>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState } from "react";
 import type { MouseEvent, PointerEvent } from "react";
 import { ChevronRightIcon } from "@/components/icons";
@@ -70,7 +71,7 @@ export function FeaturedSlider() {
           };
 
           return (
-            <a
+            <Link
               key={slide.title}
               href={slide.href}
               draggable={false}
@@ -95,7 +96,7 @@ export function FeaturedSlider() {
                   <ChevronRightIcon size={18} aria-hidden />
                 </span>
               ) : null}
-            </a>
+            </Link>
           );
         })}
       </div>

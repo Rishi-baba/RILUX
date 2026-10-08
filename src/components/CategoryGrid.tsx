@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Placeholder } from "@/components/Placeholder";
 import { categoryTiles } from "@/lib/content";
 import { cn } from "@/lib/utils";
@@ -19,7 +21,7 @@ export function CategoryGrid({
     >
       <div className="grid grid-cols-2 gap-[4px] md:grid-cols-3 md:gap-[6px]">
         {items.map((tile) => (
-          <a
+          <Link
             key={tile.title}
             href={tile.href}
             className="group relative block aspect-[363/399] overflow-hidden"
@@ -34,7 +36,7 @@ export function CategoryGrid({
             <span className="absolute bottom-[10px] left-[12px] font-ui text-[20px] font-normal uppercase leading-[26px] text-white md:bottom-[18px] md:left-[20px] md:text-[34px] md:leading-[42px]">
               {tile.title}
             </span>
-          </a>
+          </Link>
         ))}
       </div>
     </section>
