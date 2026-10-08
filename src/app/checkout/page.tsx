@@ -170,8 +170,9 @@ export default function CheckoutPage() {
     }
     const lines = cart;
     const finalShipping = shippingFor(cartSubtotal, method);
+    const finalTotal = Math.max(0, cartSubtotal - discount) + finalShipping;
     placingRef.current = true;
-    const order = placeOrder();
+    const order = placeOrder(finalTotal);
     if (!order) {
       placingRef.current = false;
       return;
@@ -188,7 +189,7 @@ export default function CheckoutPage() {
       discount,
       coupon: discountPercent ? (coupon ?? "").toUpperCase() : null,
       shipping: finalShipping,
-      total: Math.max(0, cartSubtotal - discount) + finalShipping,
+      total: finalTotal,
     };
     writeSession(LAST_ORDER_KEY, JSON.stringify(snapshot));
     writeSession(COUPON_KEY, null);

@@ -47,7 +47,8 @@ interface StoreValue extends Persisted {
   // account (mock)
   signIn: (user: MockUser) => void;
   signOut: () => void;
-  placeOrder: () => MockOrder | null;
+  /** `total` = amount charged after discount + shipping (defaults to subtotal) */
+  placeOrder: (total?: number) => MockOrder | null;
   // ui
   openPanel: Panel;
   setOpenPanel: (panel: Panel) => void;
@@ -158,13 +159,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     [data.cart],
   );
 
-  const placeOrder = useCallback((): MockOrder | null => {
+  const placeOrder = useCallback((total?: number): MockOrder | null => {
     if (data.cart.length === 0) return null;
     const order: MockOrder = {
       id: `#${1000 + data.orders.length + 1}`,
       createdAt: new Date().toISOString(),
       lines: data.cart,
-      total: cartSubtotal,
+      total: total ?? cartSubtotal,
       status: "Confirmed",
     };
     setData((d) => ({ ...d, cart: [], orders: [order, ...d.orders] }));
