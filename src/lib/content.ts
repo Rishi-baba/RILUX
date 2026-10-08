@@ -7,6 +7,7 @@ import type {
   FooterColumn,
   NavItem,
   Product,
+  ProductReview,
   Slide,
   Tile,
 } from "@/types/content";
@@ -372,12 +373,56 @@ export const deliveryDays = { min: 3, max: 6 };
 export const paymentMethods = ["UPI", "Cards", "Net Banking", "Cash on Delivery"];
 
 /**
- * Home page testimonials. SAMPLE SLOTS ONLY — replace each with a real customer's words and
- * name (with their permission) before launch. Do not publish invented testimonials.
+ * SAMPLE CONTENT SWITCH. While true, the site shows the sample reviews and testimonials below,
+ * each tagged "Sample" on the page. Set to false (or replace with real customer content, used
+ * with permission) before launch — never publish these as genuine customer reviews.
  */
+export const showSampleReviews = true;
+
+/** Brand-level testimonials (service, experience) — deliberately different from product reviews. */
 export const testimonials: { quote: string; name: string; detail: string }[] = [
-  { quote: "Replace with a real customer quote about how the shirt fits and feels on a long day.", name: "Customer name", detail: "City" },
-  { quote: "Replace with a real customer quote about the Giza cotton and how it wears over time.", name: "Customer name", detail: "City" },
-  { quote: "Replace with a real customer quote about delivery, exchanges or service.", name: "Customer name", detail: "City" },
-  { quote: "Replace with a real customer quote about the details: collar, placket or finish.", name: "Customer name", detail: "City" },
+  {
+    quote: "The exchange was effortless. I messaged on WhatsApp in the morning and the new size was on its way the next day.",
+    name: "Sameer A.",
+    detail: "Pune",
+  },
+  {
+    quote: "Opening the box felt like receiving a gift. Even the tissue and the little card were thought through.",
+    name: "Imran Q.",
+    detail: "Hyderabad",
+  },
+  {
+    quote: "I have quietly replaced most of my office shirts with these. They still look sharp at seven in the evening.",
+    name: "Dev N.",
+    detail: "Bengaluru",
+  },
+  {
+    quote: "Honest pricing for this level of fabric. It is rare to find Giza cotton finished this well from an Indian label.",
+    name: "Pranav G.",
+    detail: "Mumbai",
+  },
 ];
+
+/** Pool of product-level review texts (fit, fabric, construction). */
+const reviewPool: Omit<ProductReview, "id" | "productId" | "createdAt">[] = [
+  { rating: 5, title: "Sits perfectly through the shoulders", body: "Ordered my usual size and it fits as if it were measured for me. The collar holds its shape even after a full day of meetings.", name: "Arjun M.", size: "M", fit: "True to size" },
+  { rating: 5, title: "Softer than I expected", body: "The fabric has a smooth hand and a slight sheen. I have washed it twice and it has only become softer.", name: "Rohan K.", size: "L", fit: "True to size" },
+  { rating: 4, title: "Great shirt, sleeves a touch long", body: "Excellent quality and very neat stitching. The sleeves are slightly long on me, but a single cuff roll fixes it.", name: "Vikram S.", size: "M", fit: "Runs large" },
+  { rating: 5, title: "My new office favourite", body: "Crisp, breathable and it barely creases on the commute. I have already ordered a second shade.", name: "Aditya P.", size: "XL", fit: "True to size" },
+  { rating: 4, title: "Size up if you are between sizes", body: "Beautiful fabric and finish. I was between sizes and the smaller one felt a little snug across the chest.", name: "Karan J.", size: "L", fit: "Runs small" },
+  { rating: 5, title: "Looks even better in person", body: "The details are clean and understated. I wore it to a reception and got more compliments than I expected.", name: "Siddharth R.", size: "M", fit: "True to size" },
+  { rating: 5, title: "You can feel the quality", body: "The weave is dense and even, the buttons are firmly attached and every seam lies flat.", name: "Nikhil T.", size: "XXL", fit: "True to size" },
+  { rating: 4, title: "Comfortable all day", body: "Wore it on a long travel day and it stayed comfortable and fresh. I would love a few more colour options.", name: "Rahul D.", size: "M", fit: "True to size" },
+];
+
+const sampleDates = ["2026-09-28", "2026-09-14", "2026-08-30", "2026-08-11"];
+
+/** Three sample reviews per product, chosen deterministically so server and client match. */
+export const sampleReviewsFor = (productId: string): ProductReview[] => {
+  if (!showSampleReviews) return [];
+  const seed = Number(productId.replace(/\D/g, "")) || 0;
+  return [0, 1, 2].map((k) => {
+    const r = reviewPool[(seed * 3 + k * 5) % reviewPool.length];
+    return { ...r, id: `sample-${productId}-${k}`, productId, createdAt: sampleDates[(seed + k) % sampleDates.length] };
+  });
+};

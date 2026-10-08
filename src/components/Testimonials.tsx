@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Quote } from "lucide-react";
 import { useAutoplay } from "@/hooks/useAutoplay";
-import { testimonials } from "@/lib/content";
+import { showSampleReviews, testimonials } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 // Customer testimonials: one large quote at a time, cross-fading every 6s, with dots.
@@ -16,6 +16,9 @@ export function Testimonials() {
       <div className="mx-auto max-w-[860px] text-center">
         <p className="font-ui text-[11px] uppercase tracking-[0.24em] text-white/60 md:text-[12px]">Testimonials</p>
         <h2 className="mt-[10px] font-display text-[30px] uppercase leading-[1.1] md:text-[44px]">In Their Words</h2>
+        {showSampleReviews ? (
+          <p className="mt-[8px] font-ui text-[11px] uppercase tracking-[0.16em] text-white/45">Sample testimonials for preview</p>
+        ) : null}
 
         <Quote className="mx-auto mt-[32px] size-[28px] text-white/40" strokeWidth={1.25} aria-hidden />
 

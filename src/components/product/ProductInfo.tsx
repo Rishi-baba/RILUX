@@ -6,6 +6,7 @@ import { Feather, Minus, Plus, Ruler, Share2, Shirt, Sparkles, type LucideIcon }
 
 import { HeartIcon } from "@/components/icons";
 import { Stars } from "@/components/Stars";
+import { sampleReviewsFor } from "@/lib/content";
 import { DeliveryEstimate } from "@/components/product/DeliveryEstimate";
 import { Placeholder } from "@/components/Placeholder";
 import { ProductAccordion } from "@/components/product/ProductAccordion";
@@ -31,7 +32,8 @@ export function ProductInfo({
 }) {
   const router = useRouter();
   const { addToCart, setOpenPanel, toggleWishlist, isWishlisted, notify, reviewsFor, hydrated } = useStore();
-  const reviews = hydrated ? reviewsFor(product.id) : [];
+  const realCount = hydrated ? reviewsFor(product.id).length : 0;
+  const reviews = [...(hydrated ? reviewsFor(product.id) : []), ...sampleReviewsFor(product.id)];
   const avgRating = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0;
   const [size, setSize] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
@@ -145,7 +147,9 @@ export function ProductInfo({
       <a href="#reviews" className="mt-[8px] inline-flex items-center gap-[8px] font-ui text-[12px] text-ink-soft hover:text-black">
         <Stars rating={avgRating} size={13} />
         <span className="underline underline-offset-[3px]">
-          {reviews.length ? `${reviews.length} ${reviews.length === 1 ? "review" : "reviews"}` : "Write the first review"}
+          {reviews.length
+            ? `${reviews.length} ${reviews.length === 1 ? "review" : "reviews"}${reviews.length > realCount ? " (incl. samples)" : ""}`
+            : "Write the first review"}
         </span>
       </a>
 

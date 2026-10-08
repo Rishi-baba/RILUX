@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { MessageSquareText } from "lucide-react";
 import { StarPicker, Stars } from "@/components/Stars";
+import { sampleReviewsFor } from "@/lib/content";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import type { Product, ReviewFit } from "@/types/content";
@@ -20,7 +21,10 @@ const formatDate = (iso: string) =>
 // Front-end only — reviews are saved in the visitor's browser via the store.
 export function ProductReviews({ product }: { product: Product }) {
   const { reviewsFor, addReview, hydrated, notify, user } = useStore();
-  const reviews = hydrated ? reviewsFor(product.id) : [];
+  // Real (browser-saved) reviews first, then clearly tagged sample reviews while enabled.
+  const samples = sampleReviewsFor(product.id);
+  const reviews = [...(hydrated ? reviewsFor(product.id) : []), ...samples];
+  const isSample = (id: string) => id.startsWith("sample-");
   const [formOpen, setFormOpen] = useState(false);
 
   const [rating, setRating] = useState(0);
@@ -80,6 +84,9 @@ export function ProductReviews({ product }: { product: Product }) {
                 <p className="mt-[6px] font-ui text-[13px] text-stone">
                   Based on {count} {count === 1 ? "review" : "reviews"}
                 </p>
+                {samples.length ? (
+                  <p className="mt-[4px] font-ui text-[11px] text-stone">Includes sample reviews shown for preview</p>
+                ) : null}
               </div>
               <ul className="w-full max-w-[360px] space-y-[6px]">
                 {distribution.map(({ star, n }) => (
@@ -175,7 +182,14 @@ export function ProductReviews({ product }: { product: Product }) {
             {reviews.map((r) => (
               <li key={r.id} className="grid gap-[12px] py-[28px] md:grid-cols-[220px_1fr] md:gap-[40px]">
                 <div>
-                  <p className="font-ui text-[14px] font-semibold text-black">{r.name}</p>
+                  <p className="flex items-center gap-[8px] font-ui text-[14px] font-semibold text-black">
+                    {r.name}
+                    {isSample(r.id) ? (
+                      <span className="rounded-[3px] bg-mist px-[6px] py-[2px] font-ui text-[10px] font-normal uppercase tracking-[0.08em] text-stone">
+                        Sample
+                      </span>
+                    ) : null}
+                  </p>
                   <p className="mt-[2px] font-ui text-[12px] text-stone">{formatDate(r.createdAt)}</p>
                   {r.size || r.fit ? (
                     <p className="mt-[8px] font-ui text-[12px] text-ink-soft">
