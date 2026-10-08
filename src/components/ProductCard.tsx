@@ -107,7 +107,7 @@ export function ProductCard({
             {product.price}
           </p>
           {product.colorCount ? (
-            <p className="mt-[2px] font-ui text-[14px] text-[rgb(1,41,28)]">
+            <p className="mt-[2px] font-ui text-[14px] text-black">
               +{product.colorCount} colours
             </p>
           ) : null}

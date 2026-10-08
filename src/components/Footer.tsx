@@ -5,16 +5,16 @@ import { SocialButtons } from "@/components/SocialButtons";
 import { brandName, contact, footerColumns, paymentMethods, whatsappHref } from "@/lib/content";
 
 const heading =
-  "mb-[19px] font-display text-[16px] font-normal capitalize leading-[20px] text-black [font-variant-caps:small-caps]";
+  "mb-[19px] font-display text-[16px] font-normal capitalize leading-[20px] text-white [font-variant-caps:small-caps]";
 const link =
-  "font-ui text-[14px] font-normal capitalize leading-[21px] text-black underline-offset-[3px] hover:underline";
+  "font-ui text-[14px] font-normal capitalize leading-[21px] text-white/75 underline-offset-[3px] transition-colors hover:text-white hover:underline";
 
 export function Footer() {
   return (
-    <footer className="bg-mist px-[11px] pb-[71px] pt-[42px] text-black md:px-[35px] md:pb-[40px] md:pt-[70px]">
+    <footer className="bg-black px-[11px] pb-[71px] pt-[42px] text-white md:px-[35px] md:pb-[40px] md:pt-[70px]">
       {/* Logo + newsletter */}
       <div className="mb-[56px] flex flex-col gap-[32px] md:mb-[72px] md:flex-row md:items-start md:justify-between">
-        <Link href="/" className="block w-fit font-display text-[38px] uppercase leading-[32px] text-brand md:text-[64px] md:leading-[53px]">
+        <Link href="/" className="block w-fit font-display text-[38px] uppercase leading-[32px] text-white md:text-[64px] md:leading-[53px]">
           {brandName}
         </Link>
         <NewsletterForm />
@@ -62,19 +62,19 @@ export function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="mt-[56px] flex flex-col gap-[20px] border-t border-black/10 pt-[24px] md:mt-[72px] md:flex-row md:items-center md:justify-between md:pr-[72px]">
+      <div className="mt-[56px] flex flex-col gap-[20px] border-t border-white/15 pt-[24px] md:mt-[72px] md:flex-row md:items-center md:justify-between md:pr-[72px]">
         <SocialButtons />
         <ul aria-label="Payment methods" className="flex flex-wrap gap-[8px]">
           {paymentMethods.map((method) => (
             <li
               key={method}
-              className="rounded-[4px] border border-black/15 bg-white px-[10px] py-[4px] font-ui text-[11px] uppercase tracking-[0.06em] text-ink-soft"
+              className="rounded-[4px] border border-white/25 px-[10px] py-[4px] font-ui text-[11px] uppercase tracking-[0.06em] text-white/75"
             >
               {method}
             </li>
           ))}
         </ul>
-        <p className="font-ui text-[13px] leading-[20.8px] text-black">© 2026 {brandName}. All rights reserved.</p>
+        <p className="font-ui text-[13px] leading-[20.8px] text-white/60">© 2026 {brandName}. All rights reserved.</p>
       </div>
     </footer>
   );

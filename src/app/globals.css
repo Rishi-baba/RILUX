@@ -92,7 +92,7 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   /* Source palette (extracted from getComputedStyle) */
-  --brand: rgb(1, 40, 25);       /* deep green: announcement bar, badges */
+  --brand: rgb(0, 0, 0);         /* black accent: announcement bar, buttons, badges */
   --ink: rgb(17, 17, 17);        /* nav text */
   --ink-soft: rgb(21, 21, 21);   /* headings in cards, primary buttons */
   --stone: rgb(154, 154, 154);   /* muted product meta */

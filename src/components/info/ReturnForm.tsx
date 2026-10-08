@@ -152,7 +152,7 @@ export function ReturnForm() {
                 value={t}
                 checked={values.type === t}
                 onChange={() => set("type")(t)}
-                className="h-4 w-4 accent-[rgb(1,40,25)]"
+                className="h-4 w-4 accent-black"
               />
               {t}
             </label>

@@ -19,7 +19,7 @@ export function SocialButtons() {
           type="button"
           aria-label={label}
           onClick={() => notify("Social links coming soon")}
-          className="text-black"
+          className="text-white/75 transition-colors hover:text-white"
         >
           <Icon className="size-[18px]" aria-hidden />
         </button>

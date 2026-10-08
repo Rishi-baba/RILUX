@@ -97,7 +97,7 @@ export function RegisterForm() {
             type="checkbox"
             checked={emails}
             onChange={(e) => setEmails(e.target.checked)}
-            className="size-[16px] accent-[rgb(1,40,25)]"
+            className="size-[16px] accent-black"
           />
           Sign up for emails
         </label>
