@@ -3,16 +3,16 @@
 import { useRef, useState } from "react";
 import { Placeholder } from "@/components/Placeholder";
 import { useAutoplay } from "@/hooks/useAutoplay";
-import { fabricSlides } from "@/lib/content";
+import type { FabricSlide } from "@/types/content";
 import { cn } from "@/lib/utils";
 
 const SWIPE_THRESHOLD = 50;
 
-// Single-slide fabric slideshow: auto-advances every 4.5s and loops; dots + swipe pause it briefly.
-export function FabricFeature() {
+// Single-slide slideshow (text left, image right): auto-advances every 4.5s and loops; dots + swipe pause it briefly.
+export function FabricFeature({ slides }: { slides: FabricSlide[] }) {
   const [index, setIndex] = useState(0);
   const startX = useRef<number | null>(null);
-  const count = fabricSlides.length;
+  const count = slides.length;
 
   const goTo = (i: number) => setIndex(((i % count) + count) % count);
   const nudge = useAutoplay(() => setIndex((i) => (i + 1) % count), { interval: 4500 });
@@ -47,7 +47,7 @@ export function FabricFeature() {
           className="flex transition-transform duration-500 ease-theme"
           style={{ transform: `translateX(-${index * 100}%)` }}
         >
-          {fabricSlides.map((slide, i) => (
+          {slides.map((slide, i) => (
             <div
               key={slide.title}
               aria-hidden={i !== index}
@@ -72,7 +72,7 @@ export function FabricFeature() {
         </div>
       </div>
       <div className="mt-[31px] flex items-center justify-center gap-[13px] md:mt-[39px]">
-        {fabricSlides.map((slide, i) => (
+        {slides.map((slide, i) => (
           <button
             key={slide.title}
             type="button"

@@ -2,7 +2,6 @@
 // the reference site — replace with real brand copy, products and imagery.
 import type {
   Collection,
-  FabricSlide,
   FeaturedProductSlide,
   FooterColumn,
   NavItem,
@@ -284,13 +283,6 @@ export const featuredProducts: FeaturedProductSlide[] = products
     thumbTone: p.tone,
   }));
 
-export const fabricSlides: FabricSlide[] = [
-  { title: "Giza Cotton", body: "Extra-long-staple Egyptian cotton with a soft hand and a natural sheen.", tone: "stone" },
-  { title: "Giza Satin", body: "A satin weave of Giza cotton for a smooth, lustrous finish suited to evenings.", tone: "warm" },
-  { title: "Premium Cotton", body: "A dense, crisp premium cotton that holds its shape through the day.", tone: "cool" },
-  { title: "Pure Cotton", body: "Breathable 100% cotton for everyday comfort.", tone: "olive" },
-];
-
 /** Banners on the home page and where they link */
 export const bannerLinks = {
   three: routes.collection("casual"),
@@ -324,7 +316,6 @@ export const headings = {
   shopByCategory: "Find Your Shirt",
   wardrobe: "In the Details",
   signature: ["The Mill", "Edit"],
-  fabric: ["Cloth", "Matters"],
 };
 
 /** Trust strip used on product and cart pages */
