@@ -6,7 +6,7 @@ import { FeaturedProductHero } from "@/components/FeaturedProductHero";
 import { FeaturedSlider } from "@/components/FeaturedSlider";
 import { HeadingStack } from "@/components/HeadingStack";
 import { HeroCarousel } from "@/components/HeroCarousel";
-import { HeroCollectionScroller } from "@/components/HeroCollectionScroller";
+import { DressForTheDay } from "@/components/DressForTheDay";
 import { ProductScroller } from "@/components/ProductScroller";
 import { SingleImageBanner } from "@/components/SingleImageBanner";
 import { StripTiles } from "@/components/StripTiles";
@@ -25,7 +25,7 @@ export default function Home() {
         <CategoryGrid />
         <HeadingStack lines={["Shop by Fabric"]} size="md" />
         <FabricTiles />
-        <HeroCollectionScroller />
+        <DressForTheDay />
         <HeadingStack lines={[headings.wardrobe]} size="xl" />
         <TileSlider />
         <SingleImageBanner tone="sand" aspect="tall" overline="Off Duty" title="Easy Weekends" href={bannerLinks.three} mobileRatio="aspect-[390/495]" className="md:pb-[30px]" />
