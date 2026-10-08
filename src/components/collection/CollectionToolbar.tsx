@@ -1,8 +1,9 @@
 "use client";
 
-import { ChevronDown, SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { sortOptions, type SortValue } from "./filters";
+import { SortMenu } from "./SortMenu";
+import type { SortValue } from "./filters";
 
 /** "dense" = 2 cols mobile / 4 desktop; "loose" = 1 col mobile / 2 desktop */
 export type Density = "dense" | "loose";
@@ -78,26 +79,7 @@ export function CollectionToolbar({
           {densityButton("dense", 4, "Four columns", "hidden md:flex")}
         </div>
 
-        <label className="relative flex items-center">
-          <span className="sr-only">Sort by</span>
-          <select
-            value={sort}
-            onChange={(e) => onSortChange(e.target.value as SortValue)}
-            className="max-w-[130px] cursor-pointer appearance-none truncate bg-transparent py-1 pr-[20px] font-ui text-[14px] text-ink outline-none md:max-w-none"
-          >
-            {sortOptions.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
-          <ChevronDown
-            size={14}
-            strokeWidth={1.5}
-            aria-hidden
-            className="pointer-events-none absolute right-0 text-ink"
-          />
-        </label>
+        <SortMenu value={sort} onChange={onSortChange} />
 
         <span className="hidden font-ui text-[13px] text-stone sm:inline" aria-live="polite">
           {count} {count === 1 ? "item" : "items"}
