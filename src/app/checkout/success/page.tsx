@@ -90,7 +90,7 @@ export default function CheckoutSuccessPage() {
       <section className="mx-auto flex max-w-[560px] flex-col items-center px-6 py-20 text-center">
         <h1 className="font-display text-[36px] uppercase leading-tight text-black">No recent order</h1>
         <p className="mt-3 font-ui text-[14px] text-ink-soft">
-          We couldn&apos;t find a recent order in this session. Placeholder line suggesting a fresh look around.
+          We couldn&apos;t find a recent order in this session. Take another look at the collection.
         </p>
         <Link href={routes.home} className={`${buttonBase} mt-8 flex-none bg-brand text-white`}>
           Back to home
@@ -108,8 +108,8 @@ export default function CheckoutSuccessPage() {
         <h1 className="mt-4 font-display text-[40px] font-normal leading-[1.1] text-black">Thank you!</h1>
         <p className="mt-2 font-ui text-[15px] font-medium text-black">Order {order.id} is confirmed</p>
         <p className="mt-2 max-w-[460px] font-ui text-[13px] text-ink-soft">
-          Placeholder line confirming the order and explaining that an update will follow. Demo store — no payment
-          was taken.
+          We&apos;ll send you an update as soon as your shirts are on their way. Demo store — no payment was
+          taken.
         </p>
       </div>
 

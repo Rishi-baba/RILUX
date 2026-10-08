@@ -15,7 +15,7 @@ export default function NotFound() {
       </p>
       <h1 className="mt-4 font-ui text-[18px] font-semibold uppercase tracking-[0.1em] text-black">Page not found</h1>
       <p className="mt-3 max-w-[420px] font-ui text-[14px] leading-[1.7] text-stone">
-        Placeholder line explaining that the page may have moved or no longer exists.
+        The page you&apos;re looking for may have moved or no longer exists.
       </p>
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
         <Link href={routes.home} className={primaryButtonClass}>

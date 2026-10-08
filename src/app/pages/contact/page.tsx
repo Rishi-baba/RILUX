@@ -5,20 +5,20 @@ import { PageHero } from "@/components/info/PageHero";
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Placeholder contact page for the storefront template.",
+  description: "Questions about sizing, orders or fabrics? Get in touch with RILUX."
 };
 
 const cards = [
   { icon: Mail, label: "Email", value: "hello@example.com", href: "mailto:hello@example.com" },
   { icon: Phone, label: "Phone", value: "+91 00000 00000", href: "tel:+910000000000" },
-  { icon: Clock, label: "Hours", value: "Placeholder days, 00:00 – 00:00" },
-  { icon: MapPin, label: "Address", value: "Placeholder street, placeholder city, 000000" },
+  { icon: Clock, label: "Hours", value: "Monday – Saturday, 10:00 – 19:00" },
+  { icon: MapPin, label: "Address", value: "Studio address coming soon" },
 ];
 
 export default function ContactPage() {
   return (
     <>
-      <PageHero title="Contact Us" subtitle="Placeholder line inviting customers to get in touch with questions." />
+      <PageHero title="Contact Us" subtitle="Questions about sizing, fabrics or an order? We&apos;re happy to help." />
       <div className="mx-auto grid max-w-[1100px] gap-10 px-4 pb-[72px] md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-14">
         <ul className="flex flex-col gap-3">
           {cards.map(({ icon: Icon, label, value, href }) => (

@@ -82,7 +82,7 @@ export function ReturnForm() {
             Your reference number is{" "}
             <span className="font-semibold tracking-[0.04em] text-black">{reference}</span>.
           </p>
-          <p>Placeholder line explaining what happens next. Nothing has been sent — this is a demo form.</p>
+          <p>We&apos;ll be in touch to arrange a pickup. Nothing has been sent — this is a demo form.</p>
         </SuccessState>
       </div>
     );

@@ -29,7 +29,7 @@ export function NewsletterForm() {
         Stay in the loop
       </p>
       <p className="mt-[8px] font-ui text-[13px] leading-[1.6] text-ink-soft">
-        Placeholder line about new arrivals and members-only offers.
+        New arrivals, fabric stories and early access, straight to your inbox.
       </p>
       <div className="mt-[14px] flex h-[46px] border-b border-black">
         <label htmlFor="newsletter-email" className="sr-only">

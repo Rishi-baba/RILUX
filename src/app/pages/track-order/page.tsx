@@ -4,7 +4,7 @@ import { TrackOrderForm } from "@/components/info/TrackOrderForm";
 
 export const metadata: Metadata = {
   title: "Track Your Order",
-  description: "Placeholder order tracking page for the storefront template.",
+  description: "Track your RILUX order.",
 };
 
 export default function TrackOrderPage() {

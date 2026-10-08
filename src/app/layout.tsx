@@ -32,7 +32,7 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: { default: "Rilux", template: "%s | Rilux" },
-  description: "Rilux storefront template",
+  description: "RILUX — premium men's shirts in Giza cotton, tailored to last.",
 };
 
 export default function RootLayout({

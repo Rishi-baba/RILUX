@@ -34,7 +34,7 @@ export function SizeGuide({ open, onClose }: { open: boolean; onClose: () => voi
       <div className="px-[20px] py-[24px]">
         <table className="w-full border-collapse font-ui text-[13px] text-black">
           <caption className="mb-[10px] text-left text-[12px] text-stone">
-            Placeholder garment measurements in inches
+            Indicative garment measurements in inches
           </caption>
           <thead>
             <tr className="bg-mist">

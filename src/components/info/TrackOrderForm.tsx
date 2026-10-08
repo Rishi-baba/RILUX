@@ -21,7 +21,7 @@ const normalize = (id: string) => id.trim().replace(/^#/, "").toLowerCase();
 
 const formatDate = (iso: string, addDays: number) => {
   const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return "Placeholder date";
+  if (Number.isNaN(d.getTime())) return "Date to be confirmed";
   d.setDate(d.getDate() + addDays);
   return d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
 };

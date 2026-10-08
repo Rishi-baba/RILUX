@@ -12,7 +12,7 @@ import type {
 } from "@/types/content";
 import type { PlaceholderTone } from "@/components/Placeholder";
 
-export const brandName = "BRAND";
+export const brandName = "RILUX";
 
 /* ------------------------------------------------------------------ routes */
 
@@ -119,6 +119,19 @@ export const formatPrice = (value: number) =>
 
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
+const cutCopy: Record<Cut, string> = {
+  formal: "A crisp formal shirt with a sharp collar, made for long days at the office and the evenings that follow.",
+  regular: "A versatile regular-fit shirt that moves easily from the workweek into the weekend.",
+  casual: "An easy, relaxed shirt for warm afternoons and unhurried weekends.",
+};
+
+const fabricCopy: Record<FabricFamily, string> = {
+  "giza-cotton": "Woven from extra-long-staple Giza cotton for a soft hand and a quiet sheen.",
+  "giza-satin": "A satin weave of Giza cotton gives it a smooth, lustrous finish.",
+  "premium-cotton": "Dense premium cotton keeps it crisp from the first meeting to the last.",
+  "pure-cotton": "Breathable 100% cotton keeps it comfortable from morning to night.",
+};
+
 // Deterministic (no randomness) so SSR and client match.
 export const products: Product[] = catalogue.map((entry, i) => {
   const style = styles[entry.style];
@@ -140,7 +153,7 @@ export const products: Product[] = catalogue.map((entry, i) => {
     colors,
     sizes: shirtSizes,
     collections: ["all", style.cut, style.sleeve, entry.fabric, ...(entry.isNew ? ["new-in"] : [])],
-    description: `Placeholder description for the ${title}. A sentence about the ${fabricName.toLowerCase()} fabric, the fit and when to wear it. Replace with your own copy.`,
+    description: `${cutCopy[style.cut]} ${fabricCopy[entry.fabric]}`,
     features: [fabricName, style.sleeve === "full-sleeve" ? "Full Sleeve" : "Half Sleeve", cutLabel[style.cut].replace(" Shirts", " Fit")],
     materialCare: [fabricName, "Machine wash cold, gentle cycle", "Do not bleach", "Iron on medium heat"],
     details: [...style.details, "Model is 6'0\" wearing size M"],
@@ -161,7 +174,7 @@ export const searchProducts = (query: string) => {
 /* -------------------------------------------------------------- navigation */
 
 export const announcement = {
-  message: "Placeholder offer message here.",
+  message: "Complimentary shipping across India",
   cta: "Shop now",
   href: routes.collection("all"),
 };
@@ -231,9 +244,9 @@ export const roundedTiles: Tile[] = [
 ];
 
 export const stripTiles: Tile[] = [
-  { title: "Feature One", href: routes.about, tone: tone(3) },
-  { title: "Feature Two Here", href: routes.about, tone: tone(4) },
-  { title: "Feature Three", href: routes.about, tone: tone(5) },
+  { title: "Egyptian Giza Cotton", href: routes.about, tone: tone(3) },
+  { title: "Precision Tailoring", href: routes.about, tone: tone(4) },
+  { title: "Considered Details", href: routes.about, tone: tone(5) },
 ];
 
 export const occasionTiles: Tile[] = [
@@ -269,10 +282,10 @@ export const featuredProducts: FeaturedProductSlide[] = products
   }));
 
 export const fabricSlides: FabricSlide[] = [
-  { title: "Giza Cotton", body: "Extra-long-staple Egyptian cotton with a soft hand and a natural sheen. Placeholder copy, refine with the mill's details.", tone: "stone" },
-  { title: "Giza Satin", body: "A satin weave of Giza cotton for a smooth, lustrous finish suited to evenings. Placeholder copy, refine with the mill's details.", tone: "warm" },
-  { title: "Premium Cotton", body: "A dense, crisp premium cotton that holds its shape through the day. Placeholder copy, refine with the mill's details.", tone: "cool" },
-  { title: "Pure Cotton", body: "Breathable 100% cotton for everyday comfort. Placeholder copy, refine with the mill's details.", tone: "olive" },
+  { title: "Giza Cotton", body: "Extra-long-staple Egyptian cotton with a soft hand and a natural sheen.", tone: "stone" },
+  { title: "Giza Satin", body: "A satin weave of Giza cotton for a smooth, lustrous finish suited to evenings.", tone: "warm" },
+  { title: "Premium Cotton", body: "A dense, crisp premium cotton that holds its shape through the day.", tone: "cool" },
+  { title: "Pure Cotton", body: "Breathable 100% cotton for everyday comfort.", tone: "olive" },
 ];
 
 /** Banners on the home page and where they link */
@@ -307,13 +320,13 @@ export const footerColumns: FooterColumn[] = [
 ];
 
 export const headings = {
-  newArrivals: "Section Title",
-  shopByCategory: "Section Title Here",
-  wardrobe: "Section Title Lorem",
-  signature: ["Section Title", "Second Line"],
-  fabric: ["Section", "Title"],
-  bestsellers: { lead: "Overline", strong: "Headline" },
-  occasion: "Section Title",
+  newArrivals: "Just Arrived",
+  shopByCategory: "Find Your Shirt",
+  wardrobe: "In the Details",
+  signature: ["The Mill", "Edit"],
+  fabric: ["Cloth", "Matters"],
+  bestsellers: { lead: "Most", strong: "Loved" },
+  occasion: "Dress for the Day",
 };
 
 /** Trust strip used on product and cart pages */
@@ -321,10 +334,10 @@ export const trustPoints = [
   { title: "Cash on Delivery", body: "Pay when your order arrives." },
   { title: "Free Shipping", body: "On every order, across India." },
   { title: "7-Day Exchange", body: "Easy size or style swaps." },
-  { title: "Customer Care", body: "Placeholder line about support hours." },
+  { title: "Customer Care", body: "Reach us on WhatsApp or email." },
 ];
 
-export const shippingNote = "Placeholder dispatch and delivery note";
+export const shippingNote = "Dispatched within 2 business days · Free shipping across India";
 export const freeShippingThreshold = 1999;
 
 /* ---------------------------------------------- additions from the brief */
@@ -339,10 +352,10 @@ export const fabrics: Tile[] = [
 
 /** "Why us" brand points on the home page */
 export const brandPoints = [
-  { title: "Premium Fabrics", body: "Placeholder line about sourcing the finest fabrics." },
-  { title: "Precise Tailoring", body: "Placeholder line about fit and finishing." },
-  { title: "Made to Last", body: "Placeholder line about durability and quality checks." },
-  { title: "Thoughtful Service", body: "Placeholder line about delivery and exchanges." },
+  { title: "Premium Fabrics", body: "Extra-long-staple Giza cotton and fine satin weaves, chosen for softness and sheen." },
+  { title: "Precise Tailoring", body: "Clean plackets, sharp collars and a fit refined until it sits just right." },
+  { title: "Made to Last", body: "Dense weaves and careful stitching that hold their shape wash after wash." },
+  { title: "Thoughtful Service", body: "Free shipping, cash on delivery and easy 7-day exchanges." },
 ];
 
 /** Placeholder contact details — replace before launch */

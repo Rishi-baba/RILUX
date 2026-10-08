@@ -292,9 +292,9 @@ export function ProductInfo({
           {
             title: "Shipping & Returns",
             content: [
-              "Placeholder line about dispatch times.",
-              "Placeholder line about delivery charges.",
-              "Placeholder line about the returns window.",
+              "Dispatched within 2 business days.",
+              "Free shipping on every order across India.",
+              "Easy size or style exchanges within 7 days of delivery.",
             ],
           },
         ]}

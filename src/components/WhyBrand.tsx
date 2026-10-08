@@ -14,7 +14,7 @@ export function WhyBrand() {
           Why {brandName}
         </p>
         <h2 className="mx-auto mt-[12px] max-w-[760px] font-display text-[24px] uppercase leading-[1.2] text-black md:text-[36px]">
-          Placeholder statement about the brand and what it stands for.
+          Shirts cut from the world&apos;s finest cottons, made to be worn for years.
         </h2>
         <ul className="mt-[32px] grid grid-cols-2 gap-x-[16px] gap-y-[28px] md:mt-[48px] md:grid-cols-4 md:gap-x-[32px]">
           {brandPoints.map((point, i) => {

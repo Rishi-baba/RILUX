@@ -59,7 +59,7 @@ export default function CartPage() {
             <ShoppingBag size={30} strokeWidth={1.3} aria-hidden />
           </span>
           <p className="mt-5 font-ui text-[16px] text-black">Your cart is empty</p>
-          <p className="mt-1.5 font-ui text-[13px] text-stone">Placeholder line inviting a browse of the latest pieces.</p>
+          <p className="mt-1.5 font-ui text-[13px] text-stone">Discover our latest shirts in Giza cotton and fine satin.</p>
           <Link
             href={routes.collection("all")}
             className="mt-6 inline-flex h-[50px] items-center justify-center bg-brand px-10 font-ui text-[14px] font-medium uppercase tracking-[0.1em] text-white transition-opacity duration-200 ease-theme hover:opacity-90"

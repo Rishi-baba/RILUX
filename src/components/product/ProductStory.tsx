@@ -27,12 +27,12 @@ export function ProductStory({
       <section className="mx-auto grid max-w-[1100px] items-center gap-[32px] px-[16px] pb-[48px] md:grid-cols-2 md:gap-[48px] md:px-[24px]">
         <div>
           <h3 className="font-ui text-[28px] font-bold uppercase leading-[1.15] text-black md:text-[36px]">
-            Placeholder Headline.
+            Cut With Care.
           </h3>
           <div className="mt-[20px] space-y-[16px] font-sans text-[19px] leading-[1.5] text-ink-soft">
-            <p className="max-w-[300px]">Placeholder paragraph about the cut and how it sits.</p>
-            <p className="max-w-[300px]">Placeholder paragraph about the fabric and its feel.</p>
-            <p className="max-w-[300px]">Placeholder paragraph about styling and occasions.</p>
+            <p className="max-w-[300px]">A considered pattern that sits close without ever restricting movement.</p>
+            <p className="max-w-[300px]">Fine yarns, tightly woven, for a smooth hand that softens with every wear.</p>
+            <p className="max-w-[300px]">Tuck it into tailored trousers for the office, or wear it open on slower days.</p>
           </div>
         </div>
         <div className="relative aspect-[4/5] w-full">
@@ -43,12 +43,12 @@ export function ProductStory({
       {/* Image banner */}
       <section className="pb-[48px]">
         <h3 className="mb-[24px] px-[16px] text-center font-ui text-[30px] font-bold uppercase leading-[1.1] text-black md:text-[44px]">
-          Placeholder Statement.
+          Made to Be Worn Well.
         </h3>
         <div className="relative aspect-[4/5] w-full sm:aspect-[1265/600]">
           <Placeholder tone="dark" />
           <p className="absolute bottom-0 left-0 max-w-[640px] p-[24px] font-sans text-[18px] leading-[1.5] text-white md:p-[48px] md:text-[20px]">
-            Placeholder overlay paragraph. A short line or two that sits over the banner image.
+            Every RILUX shirt starts with the cloth: the finest cottons we can find, cut and finished to last.
           </p>
         </div>
       </section>

@@ -7,13 +7,13 @@ import { routes } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Request a Return / Exchange",
-  description: "Placeholder return and exchange request page for the storefront template.",
+  description: "Request a return or size exchange for your RILUX order.",
 };
 
 const steps = [
-  { icon: ClipboardList, title: "Submit a request", line: "Placeholder line about filling in the form below." },
-  { icon: PackageCheck, title: "Pack your item", line: "Placeholder line about packing and handing over the parcel." },
-  { icon: RefreshCcw, title: "Refund or exchange", line: "Placeholder line about what happens once it arrives." },
+  { icon: ClipboardList, title: "Submit a request", line: "Tell us your order number and what you would like to change." },
+  { icon: PackageCheck, title: "Pack your item", line: "Pack the shirt unworn with its tags, ready for pickup." },
+  { icon: RefreshCcw, title: "Refund or exchange", line: "Once it reaches us, we ship your exchange or process the refund." },
 ];
 
 export default function ReturnsPage() {
