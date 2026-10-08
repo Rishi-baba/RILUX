@@ -1,34 +1,6 @@
-"use client";
-
 import Link from "next/link";
-import { AtSign, Globe } from "lucide-react";
 import { brandName, footerColumns } from "@/lib/content";
-import { useStore } from "@/lib/store";
-
-const socials = [
-  { label: "Website", Icon: Globe },
-  { label: "Social", Icon: AtSign },
-];
-
-function SocialButtons() {
-  const { notify } = useStore();
-
-  return (
-    <div className="mt-10 flex gap-4">
-      {socials.map(({ label, Icon }) => (
-        <button
-          key={label}
-          type="button"
-          aria-label={label}
-          onClick={() => notify("Social links coming soon")}
-          className="text-black"
-        >
-          <Icon className="size-[18px]" aria-hidden />
-        </button>
-      ))}
-    </div>
-  );
-}
+import { SocialButtons } from "@/components/SocialButtons";
 
 export function Footer() {
   return (
