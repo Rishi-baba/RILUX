@@ -44,108 +44,108 @@ export const routes = {
 const tones: PlaceholderTone[] = ["warm", "cool", "sand", "olive", "stone", "dark"];
 const tone = (i: number) => tones[((i % tones.length) + tones.length) % tones.length];
 
+// Shirts only. Structure follows the Rilux style sheet: 3 cuts (formal / regular / casual),
+// 2 sleeve lengths and 4 fabric families.
 export const collections: Collection[] = [
-  { slug: "all", title: "All Products", tone: "stone" },
-  { slug: "new-in", title: "New In", tone: "warm" },
-  { slug: "shirts", title: "All Shirts", tone: "cool", related: ["formal-shirts", "casual-shirts", "linen", "stretch"] },
-  { slug: "formal-shirts", title: "Formal Shirts", tone: "stone", related: ["shirts", "casual-shirts", "linen"] },
-  { slug: "casual-shirts", title: "Casual Shirts", tone: "sand", related: ["shirts", "formal-shirts", "linen"] },
-  { slug: "linen", title: "Linen", tone: "sand", related: ["shirts", "casual-shirts"] },
-  { slug: "stretch", title: "Stretch Collection", tone: "olive", related: ["shirts", "trousers"] },
-  { slug: "trousers", title: "All Trousers", tone: "warm", related: ["tailored-trousers", "chinos", "relaxed-trousers"] },
-  { slug: "tailored-trousers", title: "Tailored Trousers", tone: "dark", related: ["trousers", "chinos"] },
-  { slug: "chinos", title: "Chinos", tone: "sand", related: ["trousers", "tailored-trousers"] },
-  { slug: "relaxed-trousers", title: "Relaxed Trousers", tone: "olive", related: ["trousers", "chinos"] },
-  { slug: "essentials", title: "Essentials", tone: "stone", related: ["t-shirts", "polos"] },
-  { slug: "t-shirts", title: "T-Shirts", tone: "stone", related: ["essentials", "polos"] },
-  { slug: "polos", title: "Polos", tone: "warm", related: ["essentials", "t-shirts"] },
-  { slug: "outerwear", title: "Outerwear", tone: "dark", related: ["jackets", "overshirts"] },
-  { slug: "jackets", title: "Jackets", tone: "dark", related: ["outerwear", "overshirts"] },
-  { slug: "overshirts", title: "Overshirts", tone: "olive", related: ["outerwear", "jackets"] },
-  { slug: "denim", title: "Denim", tone: "cool", related: ["trousers"] },
+  { slug: "all", title: "All Shirts", tone: "stone", related: ["formal", "regular", "casual", "giza-cotton"] },
+  { slug: "new-in", title: "New In", tone: "warm", related: ["formal", "regular", "casual"] },
+  { slug: "formal", title: "Formal Shirts", tone: "cool", related: ["regular", "casual", "full-sleeve", "giza-cotton"] },
+  { slug: "regular", title: "Regular Shirts", tone: "sand", related: ["formal", "casual", "full-sleeve"] },
+  { slug: "casual", title: "Casual Shirts", tone: "olive", related: ["formal", "regular", "half-sleeve"] },
+  { slug: "full-sleeve", title: "Full Sleeve", tone: "dark", related: ["half-sleeve", "formal", "regular"] },
+  { slug: "half-sleeve", title: "Half Sleeve", tone: "sand", related: ["full-sleeve", "casual", "formal"] },
+  { slug: "giza-cotton", title: "Giza Cotton", tone: "stone", related: ["giza-satin", "premium-cotton", "pure-cotton"] },
+  { slug: "giza-satin", title: "Giza Satin", tone: "warm", related: ["giza-cotton", "premium-cotton", "pure-cotton"] },
+  { slug: "premium-cotton", title: "Premium Cotton", tone: "cool", related: ["giza-cotton", "giza-satin", "pure-cotton"] },
+  { slug: "pure-cotton", title: "Pure Cotton", tone: "olive", related: ["giza-cotton", "giza-satin", "premium-cotton"] },
 ];
 
 export const getCollection = (slug: string) => collections.find((c) => c.slug === slug);
 
 /* ---------------------------------------------------------------- products */
 
-interface ProductSeed {
-  type: string;
-  category: string;
-  price: number;
-  collections: string[];
-  sizes: string[];
-}
+type Cut = "formal" | "regular" | "casual";
+type Sleeve = "full-sleeve" | "half-sleeve";
+type FabricFamily = "giza-cotton" | "giza-satin" | "premium-cotton" | "pure-cotton";
 
-const shirtSizes = ["S", "M", "L", "XL", "XXL"];
-const waistSizes = ["28", "30", "32", "34", "36", "38"];
+/** The 8 construction styles from the Rilux style sheet */
+const styles: Record<number, { cut: Cut; sleeve: Sleeve; label: string; details: string[] }> = {
+  1: { cut: "regular", sleeve: "full-sleeve", label: "Chambray Collar Shirt", details: ["Contrast chambray collar", "Full sleeves with button cuffs", "Regular fit"] },
+  2: { cut: "regular", sleeve: "full-sleeve", label: "Double Pocket Shirt", details: ["Two chest pockets", "Full sleeves with button cuffs", "Regular fit"] },
+  3: { cut: "formal", sleeve: "half-sleeve", label: "Half Sleeve Formal Shirt", details: ["Clean front, no pockets", "Half sleeves", "Formal fit"] },
+  4: { cut: "casual", sleeve: "half-sleeve", label: "Roll-Up Sleeve Shirt", details: ["Chest pocket", "Half sleeves with roll-up tab", "Relaxed casual fit"] },
+  5: { cut: "formal", sleeve: "full-sleeve", label: "Hidden Placket Shirt", details: ["Concealed button placket", "No pockets", "Full sleeves", "Formal fit"] },
+  6: { cut: "formal", sleeve: "full-sleeve", label: "Formal Shirt", details: ["Self-fold placket", "No pockets", "Full sleeves", "Formal fit"] },
+  7: { cut: "formal", sleeve: "full-sleeve", label: "Pocket Formal Shirt", details: ["Self-fold placket", "Chest pocket", "Full sleeves", "Formal fit"] },
+  8: { cut: "regular", sleeve: "full-sleeve", label: "Yoke Shirt", details: ["Back yoke", "Two chest pockets", "Self-fold placket", "Regular fit"] },
+};
 
-const seeds: ProductSeed[] = [
-  { type: "Oxford Shirt", category: "Formal Shirts", price: 2299, collections: ["shirts", "formal-shirts"], sizes: shirtSizes },
-  { type: "Poplin Shirt", category: "Formal Shirts", price: 2199, collections: ["shirts", "formal-shirts"], sizes: shirtSizes },
-  { type: "Linen Shirt", category: "Casual Shirts", price: 2499, collections: ["shirts", "casual-shirts", "linen"], sizes: shirtSizes },
-  { type: "Camp Collar Shirt", category: "Casual Shirts", price: 1999, collections: ["shirts", "casual-shirts"], sizes: shirtSizes },
-  { type: "Stretch Shirt", category: "Formal Shirts", price: 2399, collections: ["shirts", "formal-shirts", "stretch"], sizes: shirtSizes },
-  { type: "Flannel Shirt", category: "Casual Shirts", price: 2599, collections: ["shirts", "casual-shirts"], sizes: shirtSizes },
-  { type: "Pleated Trouser", category: "Tailored Trousers", price: 2999, collections: ["trousers", "tailored-trousers"], sizes: waistSizes },
-  { type: "Flat Front Trouser", category: "Tailored Trousers", price: 2799, collections: ["trousers", "tailored-trousers", "stretch"], sizes: waistSizes },
-  { type: "Chino", category: "Chinos", price: 2299, collections: ["trousers", "chinos"], sizes: waistSizes },
-  { type: "Drawstring Trouser", category: "Relaxed Trousers", price: 2199, collections: ["trousers", "relaxed-trousers", "linen"], sizes: waistSizes },
-  { type: "Crew Tee", category: "T-Shirts", price: 999, collections: ["essentials", "t-shirts"], sizes: shirtSizes },
-  { type: "Knit Polo", category: "Polos", price: 1799, collections: ["essentials", "polos"], sizes: shirtSizes },
-  { type: "Overshirt", category: "Overshirts", price: 3499, collections: ["outerwear", "overshirts"], sizes: shirtSizes },
-  { type: "Field Jacket", category: "Jackets", price: 4999, collections: ["outerwear", "jackets"], sizes: shirtSizes },
-  { type: "Straight Jean", category: "Denim", price: 2999, collections: ["denim", "trousers"], sizes: waistSizes },
-  { type: "Relaxed Jean", category: "Denim", price: 3199, collections: ["denim", "trousers"], sizes: waistSizes },
+const fabricLabel: Record<FabricFamily, string> = {
+  "giza-cotton": "100% Giza Cotton",
+  "giza-satin": "Giza Satin",
+  "premium-cotton": "100% Premium Cotton",
+  "pure-cotton": "100% Cotton",
+};
+
+const cutLabel: Record<Cut, string> = { formal: "Formal Shirts", regular: "Regular Shirts", casual: "Casual Shirts" };
+
+/** One entry per shirt; `shades` = number of fabric colourways for it in the style sheet */
+const catalogue: { name: string; style: number; fabric: FabricFamily; shades: number; price: number; isNew?: boolean }[] = [
+  { name: "Classic", style: 1, fabric: "pure-cotton", shades: 3, price: 3799 },
+  { name: "Signature", style: 1, fabric: "pure-cotton", shades: 3, price: 3799, isNew: true },
+  { name: "Verona", style: 2, fabric: "giza-cotton", shades: 2, price: 4999 },
+  { name: "Classic", style: 3, fabric: "pure-cotton", shades: 1, price: 3499 },
+  { name: "Leece", style: 3, fabric: "giza-cotton", shades: 3, price: 4499, isNew: true },
+  { name: "Weekend", style: 4, fabric: "pure-cotton", shades: 3, price: 3499 },
+  { name: "Classic", style: 5, fabric: "pure-cotton", shades: 5, price: 3999 },
+  { name: "Signature", style: 5, fabric: "pure-cotton", shades: 1, price: 3999 },
+  { name: "Wilson", style: 5, fabric: "giza-cotton", shades: 3, price: 5299 },
+  { name: "Wilmar", style: 5, fabric: "pure-cotton", shades: 1, price: 4199 },
+  { name: "Worton", style: 5, fabric: "giza-cotton", shades: 1, price: 5299, isNew: true },
+  { name: "Lyon", style: 6, fabric: "giza-cotton", shades: 6, price: 5499 },
+  { name: "Porto", style: 6, fabric: "giza-cotton", shades: 4, price: 5499, isNew: true },
+  { name: "Signature", style: 6, fabric: "pure-cotton", shades: 1, price: 3999 },
+  { name: "Satin", style: 7, fabric: "giza-satin", shades: 2, price: 5999, isNew: true },
+  { name: "Classic", style: 7, fabric: "pure-cotton", shades: 2, price: 3999 },
+  { name: "Plantino", style: 7, fabric: "pure-cotton", shades: 1, price: 4299 },
+  { name: "Premium", style: 8, fabric: "premium-cotton", shades: 3, price: 4299 },
+  { name: "Martin", style: 8, fabric: "pure-cotton", shades: 2, price: 3999 },
 ];
 
-const colorNames = ["Ivory", "Navy", "Sand", "Olive", "Grey", "Charcoal"];
+const shirtSizes = ["S", "M", "L", "XL", "XXL"];
 
 export const formatPrice = (value: number) =>
   `₹${value.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
-// 32 products: two variants of every seed. Deterministic (no randomness) so SSR and client match.
-export const products: Product[] = seeds.flatMap((seed, si) =>
-  [0, 1].map((variant) => {
-    const i = si * 2 + variant;
-    const n = String(variant + 1).padStart(2, "0");
-    const title = `${seed.type} ${n}`;
-    const colorCount = 2 + (i % 3);
-    const colors = Array.from({ length: colorCount }, (_, c) => ({
-      name: colorNames[(i + c) % colorNames.length],
-      tone: tone(i + c),
-    }));
-    const isNew = i % 5 === 0;
-    return {
-      id: `p-${i}`,
-      slug: slugify(title),
-      title,
-      category: seed.category,
-      price: formatPrice(seed.price + variant * 200),
-      priceValue: seed.price + variant * 200,
-      tone: tone(i),
-      altTone: tone(i + 2),
-      gallery: Array.from({ length: 6 }, (_, g) => tone(i + g)),
-      tag: i % 4 === 3 ? "Tag Label" : undefined,
-      colorCount: colorCount > 2 ? colorCount : undefined,
-      colors,
-      sizes: seed.sizes,
-      collections: ["all", ...seed.collections, ...(isNew ? ["new-in"] : [])],
-      description:
-        "Placeholder product description. Two or three sentences about the fit, the fabric and when to wear it. Replace with your own copy.",
-      features: ["Feature One", "Feature Two", "Feature Three"],
-      materialCare: [
-        "Placeholder fabric composition",
-        "Machine wash cold, gentle cycle",
-        "Do not bleach",
-        "Iron on medium heat",
-      ],
-      details: ["Placeholder fit description", "Placeholder closure detail", "Placeholder pocket detail", "Model is 6'0\" wearing size M"],
-    } satisfies Product;
-  }),
-);
+// Deterministic (no randomness) so SSR and client match.
+export const products: Product[] = catalogue.map((entry, i) => {
+  const style = styles[entry.style];
+  const fabricName = fabricLabel[entry.fabric];
+  const title = `${entry.name} ${style.label}`;
+  const colors = Array.from({ length: entry.shades }, (_, c) => ({ name: `Shade ${c + 1}`, tone: tone(i + c) }));
+  return {
+    id: `s-${i}`,
+    slug: slugify(`${entry.name}-${style.label}-${entry.style}`),
+    title,
+    category: cutLabel[style.cut],
+    price: formatPrice(entry.price),
+    priceValue: entry.price,
+    tone: tone(i),
+    altTone: tone(i + 2),
+    gallery: Array.from({ length: 6 }, (_, g) => tone(i + g)),
+    tag: entry.fabric === "giza-cotton" || entry.fabric === "giza-satin" ? fabricName : undefined,
+    colorCount: entry.shades > 1 ? entry.shades : undefined,
+    colors,
+    sizes: shirtSizes,
+    collections: ["all", style.cut, style.sleeve, entry.fabric, ...(entry.isNew ? ["new-in"] : [])],
+    description: `Placeholder description for the ${title}. A sentence about the ${fabricName.toLowerCase()} fabric, the fit and when to wear it. Replace with your own copy.`,
+    features: [fabricName, style.sleeve === "full-sleeve" ? "Full Sleeve" : "Half Sleeve", cutLabel[style.cut].replace(" Shirts", " Fit")],
+    materialCare: [fabricName, "Machine wash cold, gentle cycle", "Do not bleach", "Iron on medium heat"],
+    details: [...style.details, "Model is 6'0\" wearing size M"],
+  } satisfies Product;
+});
 
 export const getProduct = (slug: string) => products.find((p) => p.slug === slug);
 export const getProductById = (id: string) => products.find((p) => p.id === id);
@@ -155,7 +155,7 @@ export const productsIn = (collectionSlug: string) =>
 export const searchProducts = (query: string) => {
   const q = query.trim().toLowerCase();
   if (!q) return [];
-  return products.filter((p) => `${p.title} ${p.category}`.toLowerCase().includes(q));
+  return products.filter((p) => `${p.title} ${p.category} ${p.features.join(" ")}`.toLowerCase().includes(q));
 };
 
 /* -------------------------------------------------------------- navigation */
@@ -168,57 +168,39 @@ export const announcement = {
 
 export const navItems: NavItem[] = [
   { label: "Shop All", href: routes.collection("all") },
+  { label: "Formal", href: routes.collection("formal") },
+  { label: "Regular", href: routes.collection("regular") },
+  { label: "Casual", href: routes.collection("casual") },
   {
-    label: "Shirts",
-    href: routes.collection("shirts"),
+    label: "Sleeve",
+    href: routes.collection("full-sleeve"),
     hasDropdown: true,
     children: [
-      { label: "Formal Shirts", href: routes.collection("formal-shirts") },
-      { label: "Casual Shirts", href: routes.collection("casual-shirts") },
+      { label: "Full Sleeve", href: routes.collection("full-sleeve") },
+      { label: "Half Sleeve", href: routes.collection("half-sleeve") },
     ],
   },
   {
-    label: "Trousers",
-    href: routes.collection("trousers"),
+    label: "Fabric",
+    href: routes.collection("giza-cotton"),
     hasDropdown: true,
     children: [
-      { label: "Tailored Trousers", href: routes.collection("tailored-trousers") },
-      { label: "Chinos", href: routes.collection("chinos") },
-      { label: "Relaxed Trousers", href: routes.collection("relaxed-trousers") },
+      { label: "Giza Cotton", href: routes.collection("giza-cotton") },
+      { label: "Giza Satin", href: routes.collection("giza-satin") },
+      { label: "Premium Cotton", href: routes.collection("premium-cotton") },
+      { label: "Pure Cotton", href: routes.collection("pure-cotton") },
     ],
   },
-  {
-    label: "Essentials",
-    href: routes.collection("essentials"),
-    hasDropdown: true,
-    children: [
-      { label: "T-Shirts", href: routes.collection("t-shirts") },
-      { label: "Polos", href: routes.collection("polos") },
-    ],
-  },
-  {
-    label: "Outerwear",
-    href: routes.collection("outerwear"),
-    hasDropdown: true,
-    children: [
-      { label: "Jackets", href: routes.collection("jackets") },
-      { label: "Overshirts", href: routes.collection("overshirts") },
-    ],
-  },
-  { label: "Linen", href: routes.collection("linen"), badge: "New" },
-  { label: "Denim", href: routes.collection("denim") },
-  { label: "New In", href: routes.collection("new-in") },
+  { label: "New In", href: routes.collection("new-in"), badge: "New" },
 ];
 
 /* ------------------------------------------------------------ home content */
 
-export const heroSlides: Slide[] = [
-  "new-in",
-  "shirts",
-  "linen",
-  "trousers",
-  "outerwear",
-].map((slug, i) => ({ id: `hero-${i}`, tone: tone(i), href: routes.collection(slug) }));
+export const heroSlides: Slide[] = ["new-in", "formal", "giza-cotton", "casual", "giza-satin"].map((slug, i) => ({
+  id: `hero-${i}`,
+  tone: tone(i),
+  href: routes.collection(slug),
+}));
 
 const tile = (title: string, slug: string, i: number): Tile => ({
   title,
@@ -226,20 +208,26 @@ const tile = (title: string, slug: string, i: number): Tile => ({
   tone: tone(i),
 });
 
+const productTile = (name: string, i: number): Tile => {
+  const p = products.find((x) => x.title.startsWith(name)) ?? products[0];
+  return { title: name, href: routes.product(p.slug), tone: tone(i) };
+};
+
 export const categoryTiles: Tile[] = [
-  tile("Formal Shirts", "formal-shirts", 0),
-  tile("Trousers", "trousers", 1),
-  tile("Casual Shirts", "casual-shirts", 2),
-  tile("Outerwear", "outerwear", 3),
-  tile("T-Shirts", "t-shirts", 4),
-  tile("Polos", "polos", 5),
+  tile("Formal Shirts", "formal", 0),
+  tile("Regular Shirts", "regular", 1),
+  tile("Casual Shirts", "casual", 2),
+  tile("Full Sleeve", "full-sleeve", 3),
+  tile("Half Sleeve", "half-sleeve", 4),
+  tile("Giza Cotton", "giza-cotton", 5),
 ];
 
+/** Signature construction details */
 export const roundedTiles: Tile[] = [
-  tile("Collection One", "linen", 1),
-  tile("Collection Two", "tailored-trousers", 2),
-  tile("Collection Three", "essentials", 3),
-  tile("Collection Four", "stretch", 4),
+  tile("Hidden Placket", "formal", 1),
+  tile("Double Pocket", "regular", 2),
+  tile("Chambray Collar", "regular", 3),
+  tile("Roll-Up Sleeve", "casual", 4),
 ];
 
 export const stripTiles: Tile[] = [
@@ -249,20 +237,21 @@ export const stripTiles: Tile[] = [
 ];
 
 export const occasionTiles: Tile[] = [
-  tile("Occasion One", "essentials", 0),
-  tile("Occasion Two", "linen", 1),
-  tile("Occasion Three", "formal-shirts", 2),
-  tile("Occasion Four", "tailored-trousers", 3),
-  tile("Occasion Five", "casual-shirts", 4),
-  tile("Occasion Six", "polos", 5),
+  tile("Boardroom", "formal", 0),
+  tile("Everyday Office", "full-sleeve", 1),
+  tile("Weekend", "casual", 2),
+  tile("Evenings", "giza-satin", 3),
+  tile("Travel", "half-sleeve", 4),
+  tile("Celebrations", "giza-cotton", 5),
 ];
 
+/** Named fabric lines from the style sheet, linking to their shirt */
 export const signatureSlides: Tile[] = [
-  tile("Line One", "stretch", 2),
-  tile("Line Two", "formal-shirts", 3),
-  tile("Line Three", "casual-shirts", 4),
-  tile("Line Four", "linen", 5),
-  tile("Line Five", "denim", 6),
+  productTile("Lyon", 2),
+  productTile("Porto", 3),
+  productTile("Wilson", 4),
+  productTile("Verona", 5),
+  productTile("Satin", 6),
 ];
 
 export const featuredProducts: FeaturedProductSlide[] = products
@@ -279,17 +268,18 @@ export const featuredProducts: FeaturedProductSlide[] = products
     thumbTone: p.tone,
   }));
 
-export const fabricSlides: FabricSlide[] = Array.from({ length: 8 }, (_, i) => ({
-  title: `Fabric Feature ${i + 1}`,
-  body: "Placeholder description of the fabric and its benefits. Two or three short lines of copy explain what makes this material worth choosing.",
-  tone: tone(i),
-}));
+export const fabricSlides: FabricSlide[] = [
+  { title: "Giza Cotton", body: "Extra-long-staple Egyptian cotton with a soft hand and a natural sheen. Placeholder copy, refine with the mill's details.", tone: "stone" },
+  { title: "Giza Satin", body: "A satin weave of Giza cotton for a smooth, lustrous finish suited to evenings. Placeholder copy, refine with the mill's details.", tone: "warm" },
+  { title: "Premium Cotton", body: "A dense, crisp premium cotton that holds its shape through the day. Placeholder copy, refine with the mill's details.", tone: "cool" },
+  { title: "Pure Cotton", body: "Breathable 100% cotton for everyday comfort. Placeholder copy, refine with the mill's details.", tone: "olive" },
+];
 
 /** Banners on the home page and where they link */
 export const bannerLinks = {
-  one: routes.collection("linen"),
-  two: routes.collection("denim"),
-  three: routes.collection("essentials"),
+  one: routes.collection("giza-cotton"),
+  two: routes.collection("formal"),
+  three: routes.collection("casual"),
   promo: routes.collection("new-in"),
   short: routes.about,
 };
@@ -341,12 +331,10 @@ export const freeShippingThreshold = 1999;
 
 /** Shop-by-fabric tiles on the home page */
 export const fabrics: Tile[] = [
-  { title: "Giza Cotton", href: routes.collection("formal-shirts"), tone: "stone" },
-  { title: "Linen", href: routes.collection("linen"), tone: "sand" },
-  { title: "Oxford", href: routes.collection("shirts"), tone: "cool" },
-  { title: "Stretch", href: routes.collection("stretch"), tone: "olive" },
-  { title: "Flannel", href: routes.collection("casual-shirts"), tone: "warm" },
-  { title: "Denim", href: routes.collection("denim"), tone: "dark" },
+  { title: "Giza Cotton", href: routes.collection("giza-cotton"), tone: "stone" },
+  { title: "Giza Satin", href: routes.collection("giza-satin"), tone: "warm" },
+  { title: "Premium Cotton", href: routes.collection("premium-cotton"), tone: "cool" },
+  { title: "Pure Cotton", href: routes.collection("pure-cotton"), tone: "olive" },
 ];
 
 /** "Why us" brand points on the home page */

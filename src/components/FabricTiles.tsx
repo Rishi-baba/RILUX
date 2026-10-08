@@ -4,11 +4,11 @@ import { Placeholder } from "@/components/Placeholder";
 import { fabrics } from "@/lib/content";
 import type { Tile } from "@/types/content";
 
-// Shop-by-fabric row: 3 columns on phones, 6 across on desktop, label under each swatch.
+// Shop-by-fabric row: the four fabric families, 2 columns on phones and 4 across on desktop.
 export function FabricTiles({ items = fabrics }: { items?: Tile[] }) {
   return (
-    <section className="mx-auto max-w-[1100px] px-[6px] pb-[32px] md:px-0 md:pb-[48px]">
-      <ul className="grid grid-cols-3 gap-x-[6px] gap-y-[18px] md:grid-cols-6 md:gap-x-[12px]">
+    <section className="mx-auto max-w-[880px] px-[16px] pb-[32px] md:px-0 md:pb-[48px]">
+      <ul className="grid grid-cols-2 gap-x-[16px] gap-y-[24px] md:grid-cols-4 md:gap-x-[28px]">
         {items.map((fabric) => (
           <li key={fabric.title}>
             <Link href={fabric.href} className="group block">

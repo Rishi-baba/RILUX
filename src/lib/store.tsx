@@ -16,7 +16,7 @@ import type { CartLine, MockOrder, MockUser } from "@/types/content";
 // Front-end only store: cart, wishlist, a mock signed-in user and mock orders.
 // Persisted to localStorage; there is no backend, auth or payment.
 
-const STORAGE_KEY = "rilux-store-v1";
+const STORAGE_KEY = "rilux-store-v2";
 
 interface Persisted {
   cart: CartLine[];

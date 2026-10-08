@@ -52,14 +52,16 @@ function recommendations(product: Product) {
   );
 }
 
-/** 4 products from a complementary collection: shirts <-> trousers, otherwise essentials. */
+const fabricSlugs = ["giza-cotton", "giza-satin", "premium-cotton", "pure-cotton"];
+const cutSlugs = ["formal", "regular", "casual"];
+
+/** 4 shirts to pair: same fabric family in a different cut first, then the same fabric, then any shirt. */
 function pairings(product: Product) {
-  const target = product.collections.includes("shirts")
-    ? "trousers"
-    : product.collections.includes("trousers")
-      ? "shirts"
-      : "essentials";
-  return uniqueFill([productsIn(target), productsIn("shirts")], new Set([product.id]), 4);
+  const fabric = product.collections.find((c) => fabricSlugs.includes(c)) ?? "all";
+  const cut = product.collections.find((c) => cutSlugs.includes(c));
+  const sameFabric = productsIn(fabric);
+  const otherCut = sameFabric.filter((p) => !cut || !p.collections.includes(cut));
+  return uniqueFill([otherCut, sameFabric, productsIn("all")], new Set([product.id]), 4);
 }
 
 export default async function ProductPage({ params }: Props) {

@@ -12,7 +12,7 @@ import { collections, products, routes, searchProducts } from "@/lib/content";
 
 type Sort = "relevance" | "price-asc" | "price-desc";
 
-const suggestionSlugs = ["new-in", "shirts", "trousers", "essentials", "outerwear", "denim"];
+const suggestionSlugs = ["new-in", "formal", "regular", "casual", "giza-cotton", "half-sleeve"];
 const suggestions = suggestionSlugs
   .map((slug) => collections.find((c) => c.slug === slug))
   .filter((c) => c !== undefined);

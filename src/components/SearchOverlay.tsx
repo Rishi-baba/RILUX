@@ -10,7 +10,7 @@ import { collections, routes, searchProducts } from "@/lib/content";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
-const popularSlugs = ["new-in", "shirts", "trousers", "linen"];
+const popularSlugs = ["new-in", "formal", "casual", "giza-cotton"];
 const popular = popularSlugs
   .map((slug) => collections.find((c) => c.slug === slug))
   .filter((c) => c !== undefined);
