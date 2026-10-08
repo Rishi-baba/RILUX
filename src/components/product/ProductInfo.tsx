@@ -6,6 +6,7 @@ import { Feather, Minus, Plus, Ruler, Share2, Shirt, Sparkles, type LucideIcon }
 
 import { HeartIcon } from "@/components/icons";
 import { Stars } from "@/components/Stars";
+import { useSamplePreview } from "@/hooks/useSamplePreview";
 import { sampleReviewsFor } from "@/lib/content";
 import { DeliveryEstimate } from "@/components/product/DeliveryEstimate";
 import { Placeholder } from "@/components/Placeholder";
@@ -33,7 +34,8 @@ export function ProductInfo({
   const router = useRouter();
   const { addToCart, setOpenPanel, toggleWishlist, isWishlisted, notify, reviewsFor, hydrated } = useStore();
   const realCount = hydrated ? reviewsFor(product.id).length : 0;
-  const reviews = [...(hydrated ? reviewsFor(product.id) : []), ...sampleReviewsFor(product.id)];
+  const preview = useSamplePreview();
+  const reviews = [...(hydrated ? reviewsFor(product.id) : []), ...(preview ? sampleReviewsFor(product.id) : [])];
   const avgRating = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0;
   const [size, setSize] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);

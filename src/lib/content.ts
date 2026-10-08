@@ -373,8 +373,8 @@ export const deliveryDays = { min: 3, max: 6 };
 export const paymentMethods = ["UPI", "Cards", "Net Banking", "Cash on Delivery"];
 
 /**
- * SAMPLE CONTENT SWITCH. While true, the site shows the sample reviews and testimonials below,
- * each tagged "Sample" on the page. Set to false (or replace with real customer content, used
+ * SAMPLE CONTENT SWITCH. While true, the sample reviews below are shown — but only when the site
+ * is opened on a local preview host (see src/hooks/useSamplePreview.ts), never on a real domain. Set to false (or replace with real customer content, used
  * with permission) before launch — never publish these as genuine customer reviews.
  */
 export const showSampleReviews = true;

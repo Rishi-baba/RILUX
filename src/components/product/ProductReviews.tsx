@@ -1,6 +1,7 @@
 "use client";
 
 import { Stars } from "@/components/Stars";
+import { useSamplePreview } from "@/hooks/useSamplePreview";
 import { sampleReviewsFor } from "@/lib/content";
 import { useStore } from "@/lib/store";
 import type { Product } from "@/types/content";
@@ -8,11 +9,11 @@ import type { Product } from "@/types/content";
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
 
-// Customer reviews list (read-only). Sample reviews are tagged while the sample switch is on.
+// Customer reviews list (read-only). Sample reviews appear only on local preview hosts.
 export function ProductReviews({ product }: { product: Product }) {
   const { reviewsFor, hydrated } = useStore();
-  const reviews = [...(hydrated ? reviewsFor(product.id) : []), ...sampleReviewsFor(product.id)];
-  const isSample = (id: string) => id.startsWith("sample-");
+  const preview = useSamplePreview();
+  const reviews = [...(hydrated ? reviewsFor(product.id) : []), ...(preview ? sampleReviewsFor(product.id) : [])];
 
   if (!reviews.length) return null;
 
@@ -25,14 +26,7 @@ export function ProductReviews({ product }: { product: Product }) {
           {reviews.map((r) => (
             <li key={r.id} className="grid gap-[12px] py-[28px] md:grid-cols-[220px_1fr] md:gap-[40px]">
               <div>
-                <p className="flex items-center gap-[8px] font-ui text-[14px] font-semibold text-black">
-                  {r.name}
-                  {isSample(r.id) ? (
-                    <span className="rounded-[3px] bg-mist px-[6px] py-[2px] font-ui text-[10px] font-normal uppercase tracking-[0.08em] text-stone">
-                      Sample
-                    </span>
-                  ) : null}
-                </p>
+                <p className="font-ui text-[14px] font-semibold text-black">{r.name}</p>
                 <p className="mt-[2px] font-ui text-[12px] text-stone">{formatDate(r.createdAt)}</p>
                 {r.size || r.fit ? (
                   <p className="mt-[8px] font-ui text-[12px] text-ink-soft">
