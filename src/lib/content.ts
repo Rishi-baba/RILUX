@@ -251,13 +251,13 @@ export const stripTiles: Tile[] = [
 
 /** Dress for the Day: occasions through a day, each linked to a shirt category */
 /** `pick` = start of the recommended shirt's title */
-export const occasions: { time: string; title: string; blurb: string; slug: string; tone: PlaceholderTone; pick: string }[] = [
-  { time: "08:30", title: "Boardroom", blurb: "Sharp collars and hidden plackets for the meetings that matter.", slug: "formal", tone: "dark", pick: "Lyon" },
-  { time: "10:00", title: "Everyday Office", blurb: "Full sleeves that stay crisp from the first email to the last call.", slug: "full-sleeve", tone: "cool", pick: "Classic Hidden Placket" },
-  { time: "13:00", title: "Travel", blurb: "Breathable half sleeves for long days on the move.", slug: "half-sleeve", tone: "sand", pick: "Leece" },
-  { time: "Sat 11:00", title: "Weekend", blurb: "Relaxed cuts and roll-up sleeves for slower days.", slug: "casual", tone: "olive", pick: "Weekend" },
-  { time: "19:30", title: "Celebrations", blurb: "Fine Giza cotton that looks as good in photographs as it feels.", slug: "giza-cotton", tone: "stone", pick: "Wilson" },
-  { time: "21:00", title: "Evenings", blurb: "The quiet sheen of Giza satin, made for the night.", slug: "giza-satin", tone: "warm", pick: "Satin" },
+export const occasions: { title: string; blurb: string; slug: string; tone: PlaceholderTone; pick: string }[] = [
+  { title: "Boardroom", blurb: "Sharp collars and hidden plackets for the meetings that matter.", slug: "formal", tone: "dark", pick: "Lyon" },
+  { title: "Everyday Office", blurb: "Full sleeves that stay crisp from the first email to the last call.", slug: "full-sleeve", tone: "cool", pick: "Classic Hidden Placket" },
+  { title: "Travel", blurb: "Breathable half sleeves for long days on the move.", slug: "half-sleeve", tone: "sand", pick: "Leece" },
+  { title: "Weekend", blurb: "Relaxed cuts and roll-up sleeves for slower days.", slug: "casual", tone: "olive", pick: "Weekend" },
+  { title: "Celebrations", blurb: "Fine Giza cotton that looks as good in photographs as it feels.", slug: "giza-cotton", tone: "stone", pick: "Wilson" },
+  { title: "Evenings", blurb: "The quiet sheen of Giza satin, made for the night.", slug: "giza-satin", tone: "warm", pick: "Satin" },
 ];
 
 /** Named fabric lines from the style sheet, linking to their shirt */

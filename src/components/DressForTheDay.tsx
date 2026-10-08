@@ -10,8 +10,8 @@ import { cn } from "@/lib/utils";
 
 const picks = occasions.map((o) => products.find((p) => p.title.startsWith(o.pick)) ?? productsIn(o.slug)[0]);
 
-// "Dress for the Day": a day-planner. Occasions are listed as a timeline (left); the selected
-// one drives a large image with its time stamp and a recommended shirt (right). Steps through
+// "Dress for the Day": occasions listed on the left; the selected one drives a large image
+// with its name and a recommended shirt (right). Steps through
 // the day on its own; hovering or tapping an entry takes over for a few seconds.
 export function DressForTheDay() {
   const [active, setActive] = useState(0);
@@ -31,17 +31,13 @@ export function DressForTheDay() {
       <div className="mx-auto grid max-w-[1280px] gap-[32px] md:grid-cols-[5fr_7fr] md:gap-[64px]">
         {/* Intro + timeline */}
         <div className="flex flex-col">
-          <p className="font-ui text-[11px] uppercase tracking-[0.24em] text-stone md:text-[12px]">From first meeting to last call</p>
-          <h2 className="mt-[12px] font-display text-[36px] uppercase leading-[1.05] text-black md:text-[56px]">
+          <h2 className="font-display text-[36px] uppercase leading-[1.05] text-black md:text-[56px]">
             Dress for
             <br />
             the Day
           </h2>
-          <p className="mt-[16px] max-w-[380px] font-ui text-[14px] leading-[1.7] text-ink-soft md:text-[15px]">
-            One shirt rarely fits every hour. Pick the moment and we&apos;ll show you the shirt for it.
-          </p>
 
-          {/* Phone: swipeable time chips */}
+          {/* Phone: swipeable occasion chips */}
           <div className="scrollbar-none -mx-[16px] mt-[24px] overflow-x-auto md:hidden">
             <ul className="flex w-max gap-[8px] px-[16px]">
               {occasions.map((o, i) => (
@@ -51,11 +47,10 @@ export function DressForTheDay() {
                     onClick={() => select(i)}
                     aria-pressed={i === active}
                     className={cn(
-                      "flex flex-col items-start rounded-full border px-[16px] py-[8px] text-left transition-colors",
+                      "rounded-full border px-[18px] py-[10px] transition-colors",
                       i === active ? "border-black bg-black text-white" : "border-black/15 text-ink",
                     )}
                   >
-                    <span className="font-ui text-[10px] tracking-[0.12em] opacity-70">{o.time}</span>
                     <span className="font-display text-[15px] uppercase tracking-[0.04em]">{o.title}</span>
                   </button>
                 </li>
@@ -63,7 +58,7 @@ export function DressForTheDay() {
             </ul>
           </div>
 
-          {/* Desktop: timeline list */}
+          {/* Desktop: occasion list */}
           <ol className="mt-[40px] hidden border-t border-black/10 md:block">
             {occasions.map((o, i) => {
               const isActive = i === active;
@@ -75,11 +70,8 @@ export function DressForTheDay() {
                     onFocus={() => select(i)}
                     onClick={() => select(i)}
                     aria-pressed={isActive}
-                    className="group grid w-full grid-cols-[92px_1fr_auto] items-center gap-[16px] py-[18px] text-left"
+                    className="group grid w-full grid-cols-[1fr_auto] items-center gap-[16px] py-[18px] text-left"
                   >
-                    <span className={cn("font-ui text-[12px] tracking-[0.14em] transition-colors", isActive ? "text-black" : "text-stone")}>
-                      {o.time}
-                    </span>
                     <span>
                       <span
                         className={cn(
@@ -124,10 +116,9 @@ export function DressForTheDay() {
               </div>
             ))}
             <div className="pointer-events-none absolute left-[20px] top-[16px] md:left-[32px] md:top-[24px]">
-              <p key={current.time} className="animate-in fade-in font-display text-[56px] leading-none text-white md:text-[96px]">
-                {current.time}
+              <p key={current.title} className="animate-in fade-in font-display text-[40px] uppercase leading-none text-white md:text-[72px]">
+                {current.title}
               </p>
-              <p className="mt-[6px] font-ui text-[11px] uppercase tracking-[0.24em] text-white/80 md:text-[12px]">{current.title}</p>
             </div>
             <p className="absolute bottom-[112px] left-[20px] right-[20px] font-ui text-[14px] leading-[1.6] text-white md:hidden">
               {current.blurb}
