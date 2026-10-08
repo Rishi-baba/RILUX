@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 import { Archivo_Narrow, Cormorant_Garamond, Montserrat } from "next/font/google";
+import { AnnouncementBar } from "@/components/AnnouncementBar";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
+import { Toaster } from "@/components/Toaster";
+import { StoreProvider } from "@/lib/store";
 import "./globals.css";
 
 // Body/nav face (matches source exactly — free Google font)
@@ -24,7 +29,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Rilux",
+  title: { default: "Rilux", template: "%s | Rilux" },
   description: "Rilux storefront template",
 };
 
@@ -39,7 +44,15 @@ export default function RootLayout({
       className={`${archivoNarrow.variable} ${cormorant.variable} ${montserrat.variable} antialiased`}
     >
       {/* Extensions (e.g. ColorZilla) inject attributes on <body> before hydration */}
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        <StoreProvider>
+          <AnnouncementBar />
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <Toaster />
+        </StoreProvider>
+      </body>
     </html>
   );
 }

@@ -1,21 +1,54 @@
 import type { PlaceholderTone } from "@/components/Placeholder";
 
+export interface NavLink {
+  label: string;
+  href: string;
+}
+
 export interface NavItem {
   label: string;
   href: string;
   hasDropdown?: boolean;
   badge?: string;
+  children?: NavLink[];
 }
 
 export interface Product {
   id: string;
+  slug: string;
   title: string;
   category: string;
+  /** Display price, e.g. "₹1,999.00" */
   price: string;
+  /** Numeric price in rupees, used for cart totals, sorting and filters */
+  priceValue: number;
   tone: PlaceholderTone;
   altTone: PlaceholderTone;
+  /** Tones for the product-page gallery (4–6 images) */
+  gallery: PlaceholderTone[];
   tag?: string;
   colorCount?: number;
+  colors: ProductColor[];
+  sizes: string[];
+  /** Collection slugs this product belongs to */
+  collections: string[];
+  description: string;
+  features: string[];
+  materialCare: string[];
+  details: string[];
+}
+
+export interface ProductColor {
+  name: string;
+  tone: PlaceholderTone;
+}
+
+export interface Collection {
+  slug: string;
+  title: string;
+  tone: PlaceholderTone;
+  /** Sibling/sub collections shown in the pill scroller at the top of the page */
+  related?: string[];
 }
 
 export interface Tile {
@@ -36,6 +69,7 @@ export interface FeaturedProductSlide {
   title: string;
   price: string;
   cta: string;
+  href: string;
   bgTone: PlaceholderTone;
   thumbTone: PlaceholderTone;
 }
@@ -46,7 +80,33 @@ export interface FabricSlide {
   tone: PlaceholderTone;
 }
 
+export interface FooterLink {
+  label: string;
+  href: string;
+}
+
 export interface FooterColumn {
   heading: string;
-  links: string[];
+  links: FooterLink[];
+}
+
+export interface CartLine {
+  productId: string;
+  size: string;
+  color: string;
+  quantity: number;
+}
+
+export interface MockUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+export interface MockOrder {
+  id: string;
+  createdAt: string;
+  lines: CartLine[];
+  total: number;
+  status: "Confirmed" | "Packed" | "Shipped" | "Delivered";
 }

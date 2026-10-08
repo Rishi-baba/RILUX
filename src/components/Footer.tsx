@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AtSign, Globe } from "lucide-react";
 import { brandName, footerColumns } from "@/lib/content";
 
@@ -9,9 +10,9 @@ const socials = [
 export function Footer() {
   return (
     <footer className="bg-mist px-4 pb-6 pt-10 text-black md:px-[35px] md:pb-8 md:pt-12">
-      <div className="mb-10 font-display text-[52px] uppercase leading-none text-brand">
+      <Link href="/" className="mb-10 block w-fit font-display text-[52px] uppercase leading-none text-brand">
         {brandName}
-      </div>
+      </Link>
       <div className="grid grid-cols-2 gap-8 md:flex md:gap-20">
         {footerColumns.map((col) => (
           <div key={col.heading}>
@@ -20,13 +21,13 @@ export function Footer() {
             </h4>
             <ul className="flex flex-col gap-3">
               {col.links.map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
                     className="font-ui text-[14px] font-normal capitalize leading-[21px] text-black underline-offset-[3px] hover:underline"
                   >
-                    {link}
-                  </a>
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>

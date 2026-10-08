@@ -1,11 +1,8 @@
-import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { AppDownload } from "@/components/AppDownload";
 import { CategoryGrid } from "@/components/CategoryGrid";
 import { FabricFeature } from "@/components/FabricFeature";
 import { FeaturedProductHero } from "@/components/FeaturedProductHero";
 import { FeaturedSlider } from "@/components/FeaturedSlider";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
 import { HeadingStack } from "@/components/HeadingStack";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { HeroCollectionScroller } from "@/components/HeroCollectionScroller";
@@ -19,9 +16,6 @@ import { headings } from "@/lib/content";
 export default function Home() {
   return (
     <>
-      <AnnouncementBar />
-      <Header />
-      <main>
         <HeroCarousel />
         <ProductScroller />
         <HeadingStack lines={[headings.shopByCategory]} size="md" />
@@ -43,8 +37,6 @@ export default function Home() {
         <HeadingStack lines={headings.fabric} />
         <FabricFeature />
         <AppDownload />
-      </main>
-      <Footer />
     </>
   );
 }
