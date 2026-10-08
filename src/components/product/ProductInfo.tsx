@@ -7,7 +7,6 @@ import { Feather, Minus, Plus, Ruler, Share2, Shirt, Sparkles, type LucideIcon }
 import { HeartIcon } from "@/components/icons";
 import { DeliveryEstimate } from "@/components/product/DeliveryEstimate";
 import { Placeholder } from "@/components/Placeholder";
-import { OfferCards } from "@/components/product/OfferCards";
 import { ProductAccordion } from "@/components/product/ProductAccordion";
 import { SizeGuide } from "@/components/product/SizeGuide";
 import { routes, shippingNote } from "@/lib/content";
@@ -164,8 +163,6 @@ export function ProductInfo({
       </div>
 
       <DeliveryEstimate />
-
-      <OfferCards />
 
       {/* Size */}
       <div className="mt-[24px]">
