@@ -23,9 +23,8 @@ export function FeaturedSlider() {
 
   const go = (dir: number) => setActive((i) => (((i + dir) % count) + count) % count);
 
-  // Slideshow: advance every 4s; pause while hovered and briefly after a swipe/click.
-  const [hovered, setHovered] = useState(false);
-  const nudge = useAutoplay(() => go(1), { interval: 4000, paused: hovered });
+  // Infinite slideshow: advance every 4s (indices wrap), pausing briefly after a swipe/click.
+  const nudge = useAutoplay(() => go(1), { interval: 4000 });
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
     nudge();
@@ -52,8 +51,6 @@ export function FeaturedSlider() {
   return (
     <section
       aria-roledescription="carousel"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       className="relative flex items-start justify-center overflow-hidden pb-[18px] pt-[20px] md:pb-[39px] md:pt-[15px]"
     >
       <div

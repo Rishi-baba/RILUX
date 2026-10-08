@@ -1,4 +1,3 @@
-import { AppDownload } from "@/components/AppDownload";
 import { BrandStatement } from "@/components/BrandStatement";
 import { CategoryGrid } from "@/components/CategoryGrid";
 import { FabricFeature } from "@/components/FabricFeature";
@@ -40,7 +39,6 @@ export default function Home() {
         <FeaturedProductHero />
         <HeadingStack lines={headings.fabric} className="pb-[11px] md:pt-[36px] md:pb-[24px]" />
         <FabricFeature />
-        <AppDownload />
     </>
   );
 }
