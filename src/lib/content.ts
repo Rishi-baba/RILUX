@@ -291,7 +291,6 @@ export const fabricSlides: FabricSlide[] = [
 /** Banners on the home page and where they link */
 export const bannerLinks = {
   three: routes.collection("casual"),
-  promo: routes.collection("new-in"),
   short: routes.about,
 };
 

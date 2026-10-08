@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import type { MouseEvent, PointerEvent } from "react";
 import { ChevronRightIcon } from "@/components/icons";
 import { Placeholder } from "@/components/Placeholder";
+import { useAutoplay } from "@/hooks/useAutoplay";
 import { signatureSlides } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
@@ -22,7 +23,12 @@ export function FeaturedSlider() {
 
   const go = (dir: number) => setActive((i) => (((i + dir) % count) + count) % count);
 
+  // Slideshow: advance every 4s; pause while hovered and briefly after a swipe/click.
+  const [hovered, setHovered] = useState(false);
+  const nudge = useAutoplay(() => go(1), { interval: 4000, paused: hovered });
+
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    nudge();
     startX.current = e.clientX;
     dragged.current = false;
   };
@@ -44,7 +50,12 @@ export function FeaturedSlider() {
   };
 
   return (
-    <section className="relative flex items-start justify-center overflow-hidden pb-[18px] pt-[20px] md:pb-[39px] md:pt-[15px]">
+    <section
+      aria-roledescription="carousel"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="relative flex items-start justify-center overflow-hidden pb-[18px] pt-[20px] md:pb-[39px] md:pt-[15px]"
+    >
       <div
         className="relative aspect-[478/884] w-[62.6vw] touch-pan-y select-none [--fs-gap:-21px] md:w-[33.2vw] md:[--fs-gap:2.64vw]"
         onPointerDown={onPointerDown}

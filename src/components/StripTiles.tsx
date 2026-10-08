@@ -1,10 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import { useCallback, useRef, useState } from "react";
 
 import { Placeholder } from "@/components/Placeholder";
+import { useAutoplay } from "@/hooks/useAutoplay";
 import { stripTiles } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import type { Tile } from "@/types/content";
 
+const GAP = 6;
+
+// Wide strip slideshow: native scroll-snap row that auto-advances one tile at a time and
+// loops back to the start. Pauses on hover/focus and briefly after the visitor scrolls.
 export function StripTiles({
   items = stripTiles,
   className,
@@ -12,9 +20,37 @@ export function StripTiles({
   items?: Tile[];
   className?: string;
 }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [hovered, setHovered] = useState(false);
+
+  const advance = useCallback(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const tile = el.firstElementChild as HTMLElement | null;
+    const step = (tile?.offsetWidth ?? 0) + GAP;
+    // Loop back once (nearly) at the end, so the last move is never a tiny nudge.
+    const remaining = el.scrollWidth - el.clientWidth - el.scrollLeft;
+    el.scrollTo({ left: remaining < 24 ? 0 : el.scrollLeft + step, behavior: "smooth" });
+  }, []);
+
+  const nudge = useAutoplay(advance, { interval: 3500, paused: hovered });
+
   return (
-    <section className={cn("pb-[20px] pt-[6px] md:pb-[36px] md:pt-[16px]", className)}>
-      <div className="scrollbar-none flex snap-x snap-mandatory gap-[6px] overflow-x-auto px-[6px]">
+    <section
+      aria-roledescription="carousel"
+      className={cn("pb-[20px] pt-[6px] md:pb-[36px] md:pt-[16px]", className)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocus={() => setHovered(true)}
+      onBlur={() => setHovered(false)}
+    >
+      <div
+        ref={trackRef}
+        onPointerDown={nudge}
+        onTouchStart={nudge}
+        onWheel={nudge}
+        className="scrollbar-none flex snap-x snap-mandatory gap-[6px] overflow-x-auto px-[6px]"
+      >
         {items.map((tile) => (
           <Link
             key={tile.title}

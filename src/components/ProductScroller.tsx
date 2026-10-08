@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/icons";
@@ -16,9 +17,12 @@ const arrowBase =
 export function ProductScroller({
   title = headings.newArrivals,
   items = products,
+  viewAllHref,
 }: {
   title?: string;
   items?: Product[];
+  /** Renders a centred "View all" link under the row when set */
+  viewAllHref?: string;
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
@@ -95,6 +99,16 @@ export function ProductScroller({
           <ChevronRightIcon className="size-[18px]" />
         </button>
       </div>
+      {viewAllHref ? (
+        <div className="mt-[28px] text-center md:mt-[36px]">
+          <Link
+            href={viewAllHref}
+            className="font-ui text-[15px] text-black underline underline-offset-[5px] transition-opacity hover:opacity-60 md:text-[17px]"
+          >
+            View all
+          </Link>
+        </div>
+      ) : null}
     </section>
   );
 }
