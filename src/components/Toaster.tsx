@@ -5,7 +5,7 @@ import { useStore } from "@/lib/store";
 export function Toaster() {
   const { toasts } = useStore();
   return (
-    <div aria-live="polite" className="pointer-events-none fixed bottom-6 left-1/2 z-[70] flex -translate-x-1/2 flex-col items-center gap-2">
+    <div aria-live="polite" className="pointer-events-none fixed bottom-[76px] left-1/2 md:bottom-6 z-[70] flex -translate-x-1/2 flex-col items-center gap-2">
       {toasts.map((t) => (
         <div
           key={t.id}

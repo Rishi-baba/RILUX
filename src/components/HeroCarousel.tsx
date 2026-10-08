@@ -82,7 +82,7 @@ export function HeroCarousel() {
   };
 
   const arrowClass =
-    "absolute top-1/2 z-10 hidden h-[44px] w-[44px] -translate-y-1/2 items-center justify-center rounded-full border-[0.67px] border-solid border-white/50 bg-white/20 text-white backdrop-blur-[4px] transition-[background] duration-200 hover:bg-white/35 md:flex";
+    "absolute top-1/2 z-10 flex h-[44px] w-[44px] -translate-y-1/2 items-center justify-center rounded-full border-[0.67px] border-solid border-white/50 bg-white/20 text-white backdrop-blur-[4px] transition-[background] duration-200 hover:bg-white/35";
 
   return (
     <section
@@ -90,7 +90,9 @@ export function HeroCarousel() {
       aria-roledescription="carousel"
       aria-label="Hero"
       onKeyDown={onKeyDown}
-      className="relative aspect-[4/5] w-full overflow-hidden md:aspect-[1265/585]"
+      // Runs under the transparent header (negative top margin). Phones/tablets: viewport minus
+      // announcement + header; desktop: max(100vh, 46.25vw) like the reference.
+      className="relative -mt-[56px] h-[calc(100svh-116px)] w-full overflow-hidden md:-mt-[66px] md:h-[calc(100svh-126px)] lg:h-[max(100svh,46.25vw)]"
     >
       <div
         className={cn(
@@ -132,7 +134,7 @@ export function HeroCarousel() {
         type="button"
         aria-label="Previous slide"
         onClick={prev}
-        className={cn(arrowClass, "left-[24px]")}
+        className={cn(arrowClass, "left-[17px]")}
       >
         <ChevronLeftIcon className="h-[18px] w-[18px]" />
       </button>
@@ -140,7 +142,7 @@ export function HeroCarousel() {
         type="button"
         aria-label="Next slide"
         onClick={next}
-        className={cn(arrowClass, "right-[24px]")}
+        className={cn(arrowClass, "right-[17px]")}
       >
         <ChevronRightIcon className="h-[18px] w-[18px]" />
       </button>

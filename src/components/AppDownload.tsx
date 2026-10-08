@@ -10,14 +10,14 @@ export function AppDownload() {
   const { notify } = useStore();
 
   return (
-    <section className="flex h-[181px] w-full flex-col items-center justify-center gap-[18px] bg-linen">
+    <section className="flex h-[152px] w-full flex-col items-center gap-[20px] bg-linen pt-[32px] md:h-[181px] md:gap-[24px] md:pt-[40px]">
       <div className="flex items-center gap-2 text-ink-soft">
         <PhoneIcon className="size-4" aria-hidden />
-        <span className="font-ui text-[14px] font-semibold uppercase tracking-[1.4px]">
+        <span className="font-ui text-[14px] font-semibold uppercase leading-[20px] tracking-[1.4px] md:text-[16px]">
           Get the app
         </span>
       </div>
-      <div className="flex gap-3">
+      <div className="flex gap-3 md:gap-4">
         {stores.map((store) => (
           <button
             key={store}

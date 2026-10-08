@@ -11,7 +11,7 @@ import type { Product } from "@/types/content";
 const GAP = 6;
 
 const arrowBase =
-  "absolute top-[190px] z-10 hidden size-[40px] -translate-y-1/2 items-center justify-center rounded-full bg-white text-black shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-opacity duration-200 ease-theme md:flex";
+  "absolute top-[25.6vw] z-10 flex size-[40px] -translate-y-1/2 items-center justify-center rounded-full bg-white text-black shadow-[0_2px_10px_rgba(0,0,0,0.15)] transition-opacity duration-200 ease-theme md:top-[14.8vw]";
 
 export function ProductScroller({
   title = headings.newArrivals,
@@ -53,8 +53,8 @@ export function ProductScroller({
   };
 
   return (
-    <section className="pb-[40px] pt-[40px]">
-      <h2 className="mb-[20px] text-center font-display text-[34px] font-normal uppercase leading-[42px] text-black">
+    <section className="pb-[18px] pt-[20px] md:pt-[32px]">
+      <h2 className="mb-[20px] text-center font-display text-[24px] font-normal uppercase leading-[32px] text-black md:text-[34px] md:leading-[42px]">
         {title}
       </h2>
       <div className="relative">
@@ -66,7 +66,7 @@ export function ProductScroller({
             <ProductCard
               key={product.id}
               product={product}
-              className="w-[70vw] flex-none snap-start md:w-[304px]"
+              className="w-[41vw] flex-none snap-start md:w-[23.66vw]"
             />
           ))}
         </div>
@@ -76,7 +76,7 @@ export function ProductScroller({
           onClick={() => scrollByCard(-1)}
           className={cn(
             arrowBase,
-            "left-[16px]",
+            "left-[12px]",
             atStart && "pointer-events-none opacity-0",
           )}
         >
@@ -88,7 +88,7 @@ export function ProductScroller({
           onClick={() => scrollByCard(1)}
           className={cn(
             arrowBase,
-            "right-[16px]",
+            "right-[12px]",
             atEnd && "pointer-events-none opacity-0",
           )}
         >

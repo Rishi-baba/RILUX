@@ -15,11 +15,11 @@ export function CategoryGrid({
   return (
     <section
       className={cn(
-        "mx-auto max-w-[1100px] px-[4px] pb-[24px] md:px-0",
+        "mx-auto max-w-[1100px] pb-[23px] md:pb-[24px]",
         className,
       )}
     >
-      <div className="grid grid-cols-2 gap-[4px] md:grid-cols-3 md:gap-[6px]">
+      <div className="grid grid-cols-3 gap-[6px]">
         {items.map((tile) => (
           <Link
             key={tile.title}
@@ -33,7 +33,7 @@ export function CategoryGrid({
               aria-hidden
               className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,.45),transparent_50%)]"
             />
-            <span className="absolute bottom-[10px] left-[12px] font-ui text-[20px] font-normal uppercase leading-[26px] text-white md:bottom-[18px] md:left-[20px] md:text-[34px] md:leading-[42px]">
+            <span className="absolute bottom-[5px] left-[5px] font-ui text-[14px] font-normal uppercase leading-[18px] text-white md:bottom-[18px] md:left-[20px] md:text-[34px] md:leading-[42px]">
               {tile.title}
             </span>
           </Link>

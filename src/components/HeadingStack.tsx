@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils";
 
-// Centered display heading between sections. Source sizes: 44px/48.4 (h108),
-// 52px/57.2 two-line (h174–182), 56px/61.6 (h122). Uppercase serif, black.
+// Centered display heading between sections. Type size + vertical padding measured on the
+// reference at 1440px and 390px (e.g. md: 44px with 32/28 padding, 20px with 24/8 on phones).
 const sizes = {
-  md: "text-[30px] leading-[1.1] md:text-[44px] md:leading-[48.4px]",
-  lg: "text-[34px] leading-[1.1] md:text-[52px] md:leading-[57.2px]",
-  xl: "text-[36px] leading-[1.1] md:text-[56px] md:leading-[61.6px]",
+  md: "pt-[24px] pb-[8px] text-[20px] leading-[22px] md:pt-[32px] md:pb-[28px] md:text-[44px] md:leading-[48.4px]",
+  lg: "pt-[20px] pb-[15px] text-[26px] leading-[28.6px] md:pt-[40px] md:pb-[28px] md:text-[52px] md:leading-[57.2px]",
+  xl: "pt-[16px] pb-[16px] text-[26px] leading-[28.6px] md:pt-[36px] md:pb-[24px] md:text-[56px] md:leading-[61.6px]",
 };
 
 export function HeadingStack({
@@ -18,8 +18,8 @@ export function HeadingStack({
   className?: string;
 }) {
   return (
-    <section className={cn("px-4 pt-10 pb-6 text-center md:pt-12 md:pb-8", className)}>
-      <h2 className={cn("font-display font-normal uppercase text-black", sizes[size])}>
+    <section className={cn("px-[20px] text-center md:px-0", sizes[size], className)}>
+      <h2 className="font-display font-normal uppercase text-black">
         {lines.map((line, i) => (
           <span key={i} className="block">
             {line}

@@ -3,6 +3,7 @@ import { Archivo_Narrow, Cormorant_Garamond, Montserrat } from "next/font/google
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { Toaster } from "@/components/Toaster";
 import { StoreProvider } from "@/lib/store";
 import "./globals.css";
@@ -50,6 +51,7 @@ export default function RootLayout({
           <Header />
           <main>{children}</main>
           <Footer />
+          <MobileBottomNav />
           <Toaster />
         </StoreProvider>
       </body>

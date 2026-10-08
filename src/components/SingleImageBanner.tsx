@@ -13,11 +13,14 @@ export function SingleImageBanner({
   overline,
   title,
   align = "left",
+  mobileRatio,
   className,
   href = routes.collection("all"),
 }: {
   tone: PlaceholderTone;
   aspect: "tall" | "medium" | "short";
+  /** Tailwind aspect class for phones; each reference banner has its own portrait crop */
+  mobileRatio?: string;
   overline?: string;
   title?: string;
   align?: "left" | "center";
@@ -25,14 +28,15 @@ export function SingleImageBanner({
   href?: string;
 }) {
   const ratio = {
-    tall: "aspect-[4/5] md:aspect-[1265/723]",
-    medium: "aspect-[4/3] md:aspect-[1265/466]",
-    short: "aspect-[16/9] md:aspect-[1265/394]",
+    tall: "md:aspect-[1265/723]",
+    medium: "md:aspect-[1265/466]",
+    short: "md:aspect-[1265/394]",
   }[aspect];
+  const phone = mobileRatio ?? { tall: "aspect-[390/728]", medium: "aspect-[390/500]", short: "aspect-[390/468]" }[aspect];
 
   return (
-    <section className={cn("pb-5 md:pb-10", className)}>
-      <Link href={href} className={cn("relative block w-full overflow-hidden", ratio)}>
+    <section className={className}>
+      <Link href={href} className={cn("relative block w-full overflow-hidden", phone, ratio)}>
         <Placeholder tone={tone} />
         {title ? (
           <div
@@ -44,7 +48,7 @@ export function SingleImageBanner({
             {overline ? (
               <span className="font-ui text-sm tracking-[0.2em] uppercase md:text-2xl">{overline}</span>
             ) : null}
-            <span className="font-ui text-5xl leading-[0.95] font-bold uppercase md:text-[96px]">
+            <span className="font-ui text-[36px] leading-[0.95] font-bold uppercase md:text-[80px]">
               {title}
             </span>
           </div>

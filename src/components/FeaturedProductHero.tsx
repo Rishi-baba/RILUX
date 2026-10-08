@@ -11,10 +11,10 @@ import { cn } from "@/lib/utils";
 const SWIPE_THRESHOLD = 50;
 
 const arrowClass =
-  "absolute top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border-[0.67px] border-solid border-white/50 bg-white/20 text-white backdrop-blur-[4px] transition-colors duration-200 hover:bg-white/35 md:flex";
+  "absolute top-1/2 z-10 flex h-[42px] w-[42px] -translate-y-1/2 items-center justify-center rounded-full border-[0.67px] border-solid border-white/50 bg-white/20 text-white backdrop-blur-[4px] transition-colors duration-200 hover:bg-white/35 md:h-12 md:w-12";
 
-// Full-bleed product hero: track of slides translated by -index×100%, with a sand
-// info card (copy + thumbnail) pinned top-right on desktop and above the dots on mobile.
+// Full-bleed product hero below a thin white band: track of slides translated by -index×100%,
+// sand info card vertically centred on the right (desktop) or docked near the bottom (phones).
 export function FeaturedProductHero() {
   const slides = featuredProducts;
   const count = slides.length;
@@ -39,7 +39,8 @@ export function FeaturedProductHero() {
   };
 
   return (
-    <section className="relative min-h-[640px] w-full overflow-hidden md:h-[799px] md:min-h-0">
+    <section className="pt-[24px] md:pb-[5px] md:pt-10">
+      <div className="relative aspect-[390/474] w-full overflow-hidden md:aspect-[1440/859]">
       <div
         className="absolute inset-0 flex touch-pan-y transition-transform duration-[600ms] ease-theme"
         style={{ transform: `translateX(-${index * 100}%)` }}
@@ -54,22 +55,22 @@ export function FeaturedProductHero() {
             aria-hidden={i !== index}
           >
             <Placeholder tone={slide.bgTone} />
-            <div className="absolute bottom-14 left-4 right-4 flex items-center gap-[15px] rounded-[13px] bg-sand p-[18px] shadow-[0_4px_28px_rgba(0,0,0,0.1)] md:bottom-auto md:left-auto md:right-16 md:top-0 md:w-[650px] md:p-7">
+            <div className="absolute bottom-[17px] left-[21px] right-[21px] flex items-center gap-[15px] rounded-[13px] bg-sand p-4 shadow-[0_4px_28px_rgba(0,0,0,0.1)] md:bottom-auto md:left-auto md:right-[60px] md:top-1/2 md:w-[650px] md:-translate-y-1/2 md:p-7">
               <div className="min-w-0 flex-1">
-                <p className="font-sans text-[14px] font-medium uppercase leading-[22.4px] tracking-[2.24px] text-ink-soft">
+                <p className="font-sans text-[10px] font-medium uppercase leading-[16px] tracking-[1.6px] text-ink-soft md:text-[14px] md:leading-[22.4px] md:tracking-[2.24px]">
                   {slide.eyebrow}
                 </p>
-                <div className="my-[10px] h-px w-10 bg-ink-soft/30" />
-                <h3 className="line-clamp-2 font-display text-[22px] font-normal leading-[1.15] text-ink-soft md:text-[32px] md:leading-[36.8px]">
+                <div className="my-[5px] h-px w-10 bg-ink-soft/30 md:my-[10px]" />
+                <h3 className="line-clamp-2 font-display text-[14px] font-normal leading-[16px] text-ink-soft [font-variant-caps:small-caps] md:text-[32px] md:leading-[36.8px]">
                   {slide.title}
                 </h3>
-                <p className="mt-[10px] font-ui text-[18px] font-normal leading-[36.8px] text-ink-soft md:text-[23px]">
+                <p className="mt-[11px] font-ui text-[14px] font-normal leading-[22.4px] text-ink-soft md:mt-[10px] md:text-[23px] md:leading-[36.8px]">
                   {slide.price}
                 </p>
                 <Link
                   href={slide.href}
                   tabIndex={i === index ? 0 : -1}
-                  className="mt-[14px] inline-flex items-center gap-2 rounded-[6px] bg-ink-soft px-3 py-[5px] font-ui text-[13px] font-medium leading-[20.8px] text-white transition-opacity duration-200 hover:opacity-80"
+                  className="mt-[6px] inline-flex items-center gap-2 rounded-[6px] bg-ink-soft px-3 py-[5px] font-ui text-[13px] font-medium leading-[20.8px] text-white transition-opacity duration-200 hover:opacity-80"
                 >
                   {slide.cta}
                   <ArrowRightIcon size={14} aria-hidden />
@@ -79,7 +80,7 @@ export function FeaturedProductHero() {
                 href={slide.href}
                 tabIndex={-1}
                 aria-hidden
-                className="relative block h-[118px] w-[96px] flex-none overflow-hidden rounded-[13px] md:h-[228px] md:w-[187px]"
+                className="relative block h-[110px] w-[88px] flex-none overflow-hidden rounded-[13px] md:h-[228px] md:w-[187px]"
               >
                 <Placeholder tone={slide.thumbTone} />
               </Link>
@@ -92,7 +93,7 @@ export function FeaturedProductHero() {
         type="button"
         aria-label="Previous slide"
         onClick={() => go(-1)}
-        className={cn(arrowClass, "left-6")}
+        className={cn(arrowClass, "left-4 md:left-6")}
       >
         <ChevronLeftIcon size={18} aria-hidden />
       </button>
@@ -100,12 +101,12 @@ export function FeaturedProductHero() {
         type="button"
         aria-label="Next slide"
         onClick={() => go(1)}
-        className={cn(arrowClass, "right-6")}
+        className={cn(arrowClass, "right-4 md:right-6")}
       >
         <ChevronRightIcon size={18} aria-hidden />
       </button>
 
-      <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 gap-[3px]">
+      <div className="absolute bottom-[26px] left-1/2 z-10 hidden -translate-x-1/2 items-center gap-[6px] md:flex">
         {slides.map((slide, i) => (
           <button
             key={slide.id}
@@ -113,16 +114,17 @@ export function FeaturedProductHero() {
             aria-label={`Go to slide ${i + 1}`}
             aria-current={i === index}
             onClick={() => setIndex(i)}
-            className="flex h-4 items-center"
+            className="flex h-4 w-4 items-center justify-center"
           >
             <span
               className={cn(
-                "block h-[2px] w-10 bg-white transition-opacity duration-300",
-                i === index ? "opacity-100" : "opacity-40",
+                "block rounded-full bg-white transition-all duration-300",
+                i === index ? "size-[9px] opacity-100" : "size-[7px] opacity-60",
               )}
             />
           </button>
         ))}
+      </div>
       </div>
     </section>
   );

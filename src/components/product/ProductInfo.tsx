@@ -305,7 +305,7 @@ export function ProductInfo({
         aria-hidden={!showBar}
         inert={!showBar}
         className={cn(
-          "fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-[12px] bg-white px-[16px] py-[10px] shadow-[0_-4px_16px_rgba(0,0,0,0.1)] transition-transform duration-300 ease-theme md:hidden",
+          "fixed inset-x-0 bottom-[60px] z-40 flex items-center justify-between gap-[12px] bg-white px-[16px] py-[10px] shadow-[0_-4px_16px_rgba(0,0,0,0.1)] transition-transform duration-300 ease-theme md:hidden",
           showBar ? "translate-y-0" : "translate-y-full",
         )}
       >

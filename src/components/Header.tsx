@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
@@ -36,12 +36,27 @@ export function Header() {
     setOpenPanel(null);
   }, [pathname, setOpenPanel]);
 
+  // On the home page the header sits transparent over the hero until the page scrolls.
+  const [atTop, setAtTop] = useState(true);
+  useEffect(() => {
+    const onScroll = () => setAtTop(window.scrollY < 10);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const overlay = pathname === routes.home && atTop && openPanel === null;
+
   const bagCount = hydrated ? cartCount : 0;
   const wishCount = hydrated ? wishlist.length : 0;
   const accountHref = hydrated && user ? routes.account : routes.login;
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white">
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full bg-white transition-colors duration-[250ms] ease-theme",
+        overlay && "bg-transparent",
+      )}
+    >
       <div className="grid h-[56px] grid-cols-[1fr_auto_1fr] items-center px-4 md:h-[66px] lg:grid-cols-[1fr_auto] lg:px-[63px]">
         {/* Left cluster: display:contents below lg so menu button and logo become grid cells */}
         <div className="contents lg:flex lg:items-center">
@@ -50,14 +65,17 @@ export function Header() {
             aria-label="Open menu"
             aria-expanded={openPanel === "menu"}
             onClick={() => setOpenPanel("menu")}
-            className={cn(iconButton, "justify-self-start lg:hidden")}
+            className={cn(iconButton, "justify-self-start lg:hidden", overlay && "text-white")}
           >
             <Menu size={22} strokeWidth={1.5} />
           </button>
 
           <Link
             href={routes.home}
-            className="justify-self-center whitespace-nowrap font-display text-[30px] uppercase leading-none tracking-[0.02em] text-ink lg:mr-8 lg:min-w-[120px]"
+            className={cn(
+              "justify-self-center whitespace-nowrap font-display text-[30px] uppercase leading-none tracking-[0.02em] text-ink transition-colors duration-[250ms] lg:mr-8 lg:min-w-[120px]",
+              overlay && "text-white",
+            )}
           >
             {brandName}
           </Link>
@@ -69,6 +87,7 @@ export function Header() {
                   key={item.label}
                   item={item}
                   active={pathname === item.href || pathname.startsWith(`${item.href}/`)}
+                  inverted={overlay}
                 />
               ))}
             </ul>
@@ -76,14 +95,14 @@ export function Header() {
         </div>
 
         {/* Right cluster */}
-        <div className="flex items-center justify-end gap-5">
+        <div className={cn("flex items-center justify-end gap-5", overlay && "[&>*]:text-white")}>
           <Link
             href={routes.wishlist}
             aria-label={wishCount > 0 ? `Wishlist (${wishCount} items)` : "Wishlist"}
             className={cn(iconButton, "hidden md:inline-flex")}
           >
             <HeartIcon size={20} strokeWidth={1.5} />
-            {wishCount > 0 && <span className={bubble}>{wishCount}</span>}
+            {wishCount > 0 && <span className={cn(bubble, overlay && "bg-white text-ink")}>{wishCount}</span>}
           </Link>
           <Link
             href={accountHref}
@@ -109,7 +128,7 @@ export function Header() {
             className={iconButton}
           >
             <BagIcon size={20} strokeWidth={1.5} />
-            <span className={bubble}>{bagCount}</span>
+            <span className={cn(bubble, overlay && "bg-white text-ink")}>{bagCount}</span>
           </button>
         </div>
       </div>

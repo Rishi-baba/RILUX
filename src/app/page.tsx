@@ -21,11 +21,11 @@ export default function Home() {
         <HeadingStack lines={[headings.shopByCategory]} size="md" />
         <CategoryGrid />
         <HeroProductScroller />
-        <SingleImageBanner tone="cool" aspect="tall" title="Banner Headline" href={bannerLinks.one} />
-        <SingleImageBanner tone="warm" aspect="tall" overline="Overline" title="Banner Title" href={bannerLinks.two} />
+        <SingleImageBanner tone="cool" aspect="tall" title="Banner Headline" href={bannerLinks.one} className="py-4 md:py-5" />
+        <SingleImageBanner tone="warm" aspect="tall" overline="Overline" title="Banner Title" href={bannerLinks.two} className="pb-4 md:pb-5" />
         <HeadingStack lines={[headings.wardrobe]} size="xl" />
         <TileSlider />
-        <SingleImageBanner tone="sand" aspect="tall" overline="Overline" title="Banner Title" href={bannerLinks.three} />
+        <SingleImageBanner tone="sand" aspect="tall" overline="Overline" title="Banner Title" href={bannerLinks.three} mobileRatio="aspect-[390/495]" className="md:pb-[30px]" />
         <SingleImageBanner tone="olive" aspect="medium" title="Promo Banner" href={bannerLinks.promo} />
         <div aria-hidden className="h-[25px]" />
         <SingleImageBanner tone="stone" aspect="short" title="Banner" align="center" href={bannerLinks.short} />
@@ -34,7 +34,7 @@ export default function Home() {
         <HeadingStack lines={headings.signature} />
         <FeaturedSlider />
         <FeaturedProductHero />
-        <HeadingStack lines={headings.fabric} />
+        <HeadingStack lines={headings.fabric} className="pb-[11px] md:pt-[36px] md:pb-[24px]" />
         <FabricFeature />
         <AppDownload />
     </>

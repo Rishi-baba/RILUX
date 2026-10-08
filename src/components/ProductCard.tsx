@@ -96,8 +96,8 @@ export function ProductCard({
             </span>
           ) : null}
         </div>
-        <div className="px-[8px] pb-[16px] pt-[10px]">
-          <h3 className="mb-[2px] truncate font-display text-[14px] font-normal capitalize text-black">
+        <div className="px-[8px] pb-[12px] pt-[2px]">
+          <h3 className="mb-[2px] line-clamp-2 font-display text-[14px] font-normal capitalize leading-[1.15] text-black [font-variant-caps:small-caps]">
             {product.title}
           </h3>
           <p className="font-ui text-[12px] font-normal capitalize leading-[18px] text-stone">

@@ -44,9 +44,9 @@ export function FeaturedSlider() {
   };
 
   return (
-    <section className="relative flex items-center justify-center overflow-hidden pb-10 md:h-[831px]">
+    <section className="relative flex items-start justify-center overflow-hidden pb-[18px] pt-[20px] md:pb-[39px] md:pt-[15px]">
       <div
-        className="relative aspect-[420/777] w-[78vw] touch-pan-y select-none md:aspect-auto md:h-[777px] md:w-[420px]"
+        className="relative aspect-[478/884] w-[62.6vw] touch-pan-y select-none [--fs-gap:-21px] md:w-[33.2vw] md:[--fs-gap:2.64vw]"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -84,11 +84,11 @@ export function FeaturedSlider() {
                 visible ? "opacity-100" : "pointer-events-none opacity-0",
               )}
               style={{
-                transform: `translateX(calc(${offset} * (92.5% + 24px))) scale(${isActive ? 1 : 0.85})`,
+                transform: `translateX(calc(${offset} * (92.5% + var(--fs-gap)))) scale(${isActive ? 1 : 0.85})`,
               }}
             >
               <Placeholder tone={slide.tone} />
-              <span className="absolute inset-x-0 bottom-[20%] px-4 text-center font-display text-[32px] font-normal uppercase leading-[1.1] text-white md:text-[44px]">
+              <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 px-4 text-center font-display text-[22px] font-normal uppercase leading-[1.1] text-white md:text-[44px]">
                 {slide.title}
               </span>
               {isActive ? (

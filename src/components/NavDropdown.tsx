@@ -9,7 +9,16 @@ import { cn } from "@/lib/utils";
 const hoverFade = "transition-opacity duration-[250ms] ease-theme hover:opacity-60";
 
 /** Desktop nav entry: the label link plus (when the item has children) a hover/focus sub-menu. */
-export function NavDropdown({ item, active }: { item: NavItem; active: boolean }) {
+export function NavDropdown({
+  item,
+  active,
+  inverted = false,
+}: {
+  item: NavItem;
+  active: boolean;
+  /** White label for the transparent header over the home hero (sub-menu stays dark on white) */
+  inverted?: boolean;
+}) {
   const [open, setOpen] = useState(false);
   const menuId = useId();
   const children = item.children ?? [];
@@ -45,8 +54,9 @@ export function NavDropdown({ item, active }: { item: NavItem; active: boolean }
         // Re-opening after Escape requires a fresh focus/hover; clicking navigates.
         onClick={() => setOpen(false)}
         className={cn(
-          "inline-flex items-center font-sans text-[16px] font-normal leading-[25.6px] text-ink",
+          "inline-flex items-center font-sans text-[16px] font-normal leading-[25.6px]",
           hoverFade,
+          inverted ? "text-white" : "text-ink",
         )}
       >
         <span className={cn(active && "underline decoration-1 underline-offset-4")}>{item.label}</span>
