@@ -7,7 +7,6 @@ import { FeaturedSlider } from "@/components/FeaturedSlider";
 import { HeadingStack } from "@/components/HeadingStack";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { HeroCollectionScroller } from "@/components/HeroCollectionScroller";
-import { HeroProductScroller } from "@/components/HeroProductScroller";
 import { ProductScroller } from "@/components/ProductScroller";
 import { SingleImageBanner } from "@/components/SingleImageBanner";
 import { StripTiles } from "@/components/StripTiles";
@@ -26,14 +25,13 @@ export default function Home() {
         <CategoryGrid />
         <HeadingStack lines={["Shop by Fabric"]} size="md" />
         <FabricTiles />
-        <HeroProductScroller />
+        <HeroCollectionScroller />
         <HeadingStack lines={[headings.wardrobe]} size="xl" />
         <TileSlider />
         <SingleImageBanner tone="sand" aspect="tall" overline="Off Duty" title="Easy Weekends" href={bannerLinks.three} mobileRatio="aspect-[390/495]" className="md:pb-[30px]" />
         <div aria-hidden className="h-[25px]" />
         <SingleImageBanner tone="stone" aspect="short" title="The RILUX Story" align="center" href={bannerLinks.short} />
         <StripTiles />
-        <HeroCollectionScroller />
         <HeadingStack lines={headings.signature} />
         <FeaturedSlider />
         <FeaturedProductHero />

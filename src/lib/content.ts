@@ -322,7 +322,6 @@ export const headings = {
   wardrobe: "In the Details",
   signature: ["The Mill", "Edit"],
   fabric: ["Cloth", "Matters"],
-  bestsellers: { lead: "Most", strong: "Loved" },
   occasion: "Dress for the Day",
 };
 

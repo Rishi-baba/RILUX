@@ -2,20 +2,23 @@
 
 import { useRef, useState } from "react";
 import { Placeholder } from "@/components/Placeholder";
+import { useAutoplay } from "@/hooks/useAutoplay";
 import { fabricSlides } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 const SWIPE_THRESHOLD = 50;
 
-// Single-slide fabric carousel: dots + pointer swipe, no autoplay.
+// Single-slide fabric slideshow: auto-advances every 4.5s and loops; dots + swipe pause it briefly.
 export function FabricFeature() {
   const [index, setIndex] = useState(0);
   const startX = useRef<number | null>(null);
   const count = fabricSlides.length;
 
-  const goTo = (i: number) => setIndex(Math.max(0, Math.min(count - 1, i)));
+  const goTo = (i: number) => setIndex(((i % count) + count) % count);
+  const nudge = useAutoplay(() => setIndex((i) => (i + 1) % count), { interval: 4500 });
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    nudge();
     startX.current = e.clientX;
   };
 
@@ -75,7 +78,10 @@ export function FabricFeature() {
             type="button"
             aria-label={`Go to slide ${i + 1}`}
             aria-current={i === index}
-            onClick={() => goTo(i)}
+            onClick={() => {
+              nudge();
+              goTo(i);
+            }}
             className={cn(
               "rounded-full bg-ink-soft transition-all",
               i === index ? "size-[9px] opacity-100" : "size-[7px] opacity-25",
