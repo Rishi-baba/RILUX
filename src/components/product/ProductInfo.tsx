@@ -144,14 +144,14 @@ export function ProductInfo({
         </div>
       </div>
       <p className="mt-[4px] font-ui text-[13px] text-stone">{product.category}</p>
-      <a href="#reviews" className="mt-[8px] inline-flex items-center gap-[8px] font-ui text-[12px] text-ink-soft hover:text-black">
-        <Stars rating={avgRating} size={13} />
-        <span className="underline underline-offset-[3px]">
-          {reviews.length
-            ? `${reviews.length} ${reviews.length === 1 ? "review" : "reviews"}${reviews.length > realCount ? " (incl. samples)" : ""}`
-            : "Write the first review"}
-        </span>
-      </a>
+      {reviews.length ? (
+        <a href="#reviews" className="mt-[8px] inline-flex items-center gap-[8px] font-ui text-[12px] text-ink-soft hover:text-black">
+          <Stars rating={avgRating} size={13} />
+          <span className="underline underline-offset-[3px]">
+            {`${reviews.length} ${reviews.length === 1 ? "review" : "reviews"}${reviews.length > realCount ? " (incl. samples)" : ""}`}
+          </span>
+        </a>
+      ) : null}
 
       {product.features.length ? (
         <ul className="mt-[16px] flex flex-wrap items-center gap-[18px] rounded-[4px] border border-black/10 px-[12px] py-[10px]">
