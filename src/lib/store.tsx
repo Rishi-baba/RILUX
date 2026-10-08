@@ -47,7 +47,7 @@ interface StoreValue extends Persisted {
   // account (mock)
   signIn: (user: MockUser) => void;
   signOut: () => void;
-  /** `total` = amount charged after discount + shipping (defaults to subtotal) */
+  /** `total` = amount charged incl. shipping (defaults to subtotal) */
   placeOrder: (total?: number) => MockOrder | null;
   // ui
   openPanel: Panel;

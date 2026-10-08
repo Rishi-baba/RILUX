@@ -14,11 +14,8 @@ import {
 import { RadioCard, TextField } from "@/components/checkout/fields";
 import { OrderSummary, type Totals } from "@/components/checkout/OrderSummary";
 import {
-  COUPON_KEY,
   EXPRESS_FEE,
   LAST_ORDER_KEY,
-  couponPercent,
-  discountFor,
   paymentLabels,
   shippingFor,
   shippingLabels,
@@ -28,7 +25,7 @@ import {
   type ShippingAddress,
   type ShippingMethod,
 } from "@/components/checkout/pricing";
-import { useSessionValue, writeSession } from "@/components/checkout/useSessionValue";
+import { writeSession } from "@/components/checkout/useSessionValue";
 import { formatPrice, routes } from "@/lib/content";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -94,7 +91,6 @@ function CheckoutSkeleton() {
 export default function CheckoutPage() {
   const router = useRouter();
   const { cart, cartSubtotal, hydrated, user, placeOrder } = useStore();
-  const [coupon] = useSessionValue(COUPON_KEY);
   const placingRef = useRef(false);
 
   const [step, setStep] = useState<Step>(1);
@@ -119,15 +115,11 @@ export default function CheckoutPage() {
     if (hydrated && cart.length === 0 && !placingRef.current) router.replace(routes.cart);
   }, [hydrated, cart.length, router]);
 
-  const discountPercent = couponPercent(coupon);
-  const discount = discountFor(cartSubtotal, coupon);
   const shipping = step >= 2 ? shippingFor(cartSubtotal, method) : null;
   const totals: Totals = {
     subtotal: cartSubtotal,
-    discount,
-    discountPercent,
     shipping,
-    total: Math.max(0, cartSubtotal - discount) + (shipping ?? 0),
+    total: cartSubtotal + (shipping ?? 0),
   };
 
   const focusFirstError = () => {
@@ -170,7 +162,7 @@ export default function CheckoutPage() {
     }
     const lines = cart;
     const finalShipping = shippingFor(cartSubtotal, method);
-    const finalTotal = Math.max(0, cartSubtotal - discount) + finalShipping;
+    const finalTotal = cartSubtotal + finalShipping;
     placingRef.current = true;
     const order = placeOrder(finalTotal);
     if (!order) {
@@ -186,13 +178,10 @@ export default function CheckoutPage() {
       payment,
       lines,
       subtotal: cartSubtotal,
-      discount,
-      coupon: discountPercent ? (coupon ?? "").toUpperCase() : null,
       shipping: finalShipping,
       total: finalTotal,
     };
     writeSession(LAST_ORDER_KEY, JSON.stringify(snapshot));
-    writeSession(COUPON_KEY, null);
     router.push(routes.checkoutSuccess);
   };
 

@@ -1,14 +1,11 @@
 "use client";
 
 import { Placeholder } from "@/components/Placeholder";
-import { CouponField } from "@/components/checkout/CouponField";
 import { formatPrice, getProductById } from "@/lib/content";
 import type { CartLine } from "@/types/content";
 
 export interface Totals {
   subtotal: number;
-  discount: number;
-  discountPercent: number | null;
   /** null until a shipping method has been chosen */
   shipping: number | null;
   total: number;
@@ -55,12 +52,6 @@ export function TotalsList({ totals, shippingPending = "Calculated at next step"
         <dt className="text-ink-soft">Subtotal</dt>
         <dd>{formatPrice(totals.subtotal)}</dd>
       </div>
-      {totals.discount > 0 ? (
-        <div className="flex justify-between">
-          <dt className="text-ink-soft">Discount{totals.discountPercent ? ` (${totals.discountPercent}%)` : ""}</dt>
-          <dd className="text-brand">−{formatPrice(totals.discount)}</dd>
-        </div>
-      ) : null}
       <div className="flex justify-between">
         <dt className="text-ink-soft">Shipping</dt>
         <dd className={totals.shipping === null ? "text-[12px] text-stone" : undefined}>
@@ -78,12 +69,11 @@ export function TotalsList({ totals, shippingPending = "Calculated at next step"
   );
 }
 
-/** Checkout right column: line items, discount code, totals. */
+/** Checkout right column: line items and totals. */
 export function OrderSummary({ lines, totals }: { lines: CartLine[]; totals: Totals }) {
   return (
     <div>
       <SummaryLines lines={lines} />
-      <CouponField className="mt-6 border-t border-black/10 pt-6" />
       <div className="mt-6 border-t border-black/10 pt-6">
         <TotalsList totals={totals} />
       </div>

@@ -3,24 +3,10 @@ import type { CartLine } from "@/types/content";
 
 // Demo pricing rules shared by the cart, checkout and success pages.
 
-export const COUPON_KEY = "rilux-coupon";
 export const LAST_ORDER_KEY = "rilux-last-order";
 
 export const STANDARD_FEE = 99;
 export const EXPRESS_FEE = 249;
-
-const coupons: Record<string, number> = { CODE10: 10, CODE20: 20, CODE30: 30, CODE40: 40 };
-
-/** Percent off for a valid code, otherwise null. Case-insensitive. */
-export function couponPercent(code: string | null | undefined): number | null {
-  if (!code) return null;
-  return coupons[code.trim().toUpperCase()] ?? null;
-}
-
-export function discountFor(subtotal: number, code: string | null | undefined): number {
-  const pct = couponPercent(code);
-  return pct ? Math.round(subtotal * pct) / 100 : 0;
-}
 
 export type ShippingMethod = "standard" | "express";
 
@@ -66,8 +52,6 @@ export interface LastOrder {
   payment: PaymentMethod;
   lines: CartLine[];
   subtotal: number;
-  discount: number;
-  coupon: string | null;
   shipping: number;
   total: number;
 }

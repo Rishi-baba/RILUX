@@ -7,7 +7,6 @@ import { formatAddress } from "@/components/checkout/AddressFields";
 import { SummaryLines, TotalsList } from "@/components/checkout/OrderSummary";
 import {
   LAST_ORDER_KEY,
-  couponPercent,
   paymentLabels,
   shippingLabels,
   type LastOrder,
@@ -21,8 +20,6 @@ interface ViewOrder {
   id: string;
   lines: CartLine[];
   subtotal: number;
-  discount: number;
-  coupon: string | null;
   shipping: number | null;
   total: number;
   detail: Pick<LastOrder, "email" | "address" | "method" | "payment"> | null;
@@ -61,8 +58,6 @@ export default function CheckoutSuccessPage() {
         id: last.id,
         lines: last.lines,
         subtotal: last.subtotal,
-        discount: last.discount,
-        coupon: last.coupon,
         shipping: last.shipping,
         total: last.total,
         detail: { email: last.email, address: last.address, method: last.method, payment: last.payment },
@@ -74,8 +69,6 @@ export default function CheckoutSuccessPage() {
       id: latest.id,
       lines: latest.lines,
       subtotal: latest.total,
-      discount: 0,
-      coupon: null,
       shipping: null,
       total: latest.total,
       detail: null,
@@ -142,8 +135,6 @@ export default function CheckoutSuccessPage() {
           <TotalsList
             totals={{
               subtotal: order.subtotal,
-              discount: order.discount,
-              discountPercent: couponPercent(order.coupon),
               shipping: order.shipping,
               total: order.total,
             }}

@@ -2,20 +2,15 @@
 
 import Link from "next/link";
 import { Headphones, RotateCcw, ShieldCheck, Truck, type LucideIcon } from "lucide-react";
-import { CouponField } from "@/components/checkout/CouponField";
-import { COUPON_KEY, couponPercent, discountFor, standardFee } from "@/components/checkout/pricing";
-import { useSessionValue } from "@/components/checkout/useSessionValue";
+import { standardFee } from "@/components/checkout/pricing";
 import { formatPrice, freeShippingThreshold, routes, trustPoints } from "@/lib/content";
 
 const trustIcons: LucideIcon[] = [RotateCcw, Headphones, Truck, ShieldCheck];
 
-/** Right-hand summary card on /cart: free-shipping progress, note, coupon, totals, checkout CTA. */
+/** Right-hand summary card on /cart: free-shipping progress, note, totals, checkout CTA. */
 export function CartSummary({ subtotal }: { subtotal: number }) {
-  const [coupon] = useSessionValue(COUPON_KEY);
-  const pct = couponPercent(coupon);
-  const discount = discountFor(subtotal, coupon);
   const shipping = standardFee(subtotal);
-  const total = Math.max(0, subtotal - discount) + shipping;
+  const total = subtotal + shipping;
   const remaining = Math.max(0, freeShippingThreshold - subtotal);
   const progress = Math.min(100, (subtotal / freeShippingThreshold) * 100);
 
@@ -53,19 +48,11 @@ export function CartSummary({ subtotal }: { subtotal: number }) {
         className="mt-1.5 w-full resize-none rounded-[5px] border border-black/20 bg-white px-[14px] py-3 font-ui text-[14px] text-black outline-none focus:border-black focus:ring-1 focus:ring-black"
       />
 
-      <CouponField className="mt-5" />
-
       <dl className="mt-6 space-y-2.5 border-t border-black/10 pt-5 font-ui text-[14px]">
         <div className="flex justify-between">
           <dt className="text-ink-soft">Subtotal</dt>
           <dd>{formatPrice(subtotal)}</dd>
         </div>
-        {discount > 0 ? (
-          <div className="flex justify-between">
-            <dt className="text-ink-soft">Discount ({pct}%)</dt>
-            <dd className="text-brand">−{formatPrice(discount)}</dd>
-          </div>
-        ) : null}
         <div className="flex justify-between">
           <dt className="text-ink-soft">Shipping</dt>
           <dd>{shipping === 0 ? "Free" : formatPrice(shipping)}</dd>
