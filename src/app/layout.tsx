@@ -38,7 +38,8 @@ export default function RootLayout({
       lang="en"
       className={`${archivoNarrow.variable} ${cormorant.variable} ${montserrat.variable} antialiased`}
     >
-      <body>{children}</body>
+      {/* Extensions (e.g. ColorZilla) inject attributes on <body> before hydration */}
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }
