@@ -370,3 +370,14 @@ export const whatsappHref = (message = "Hi! I have a question about your product
 export const deliveryDays = { min: 3, max: 6 };
 
 export const paymentMethods = ["UPI", "Cards", "Net Banking", "Cash on Delivery"];
+
+/**
+ * Home page testimonials. SAMPLE SLOTS ONLY — replace each with a real customer's words and
+ * name (with their permission) before launch. Do not publish invented testimonials.
+ */
+export const testimonials: { quote: string; name: string; detail: string }[] = [
+  { quote: "Replace with a real customer quote about how the shirt fits and feels on a long day.", name: "Customer name", detail: "City" },
+  { quote: "Replace with a real customer quote about the Giza cotton and how it wears over time.", name: "Customer name", detail: "City" },
+  { quote: "Replace with a real customer quote about delivery, exchanges or service.", name: "Customer name", detail: "City" },
+  { quote: "Replace with a real customer quote about the details: collar, placket or finish.", name: "Customer name", detail: "City" },
+];

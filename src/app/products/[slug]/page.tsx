@@ -5,6 +5,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { ProductScroller } from "@/components/ProductScroller";
 import { Breadcrumbs } from "@/components/product/Breadcrumbs";
 import { ProductMain } from "@/components/product/ProductMain";
+import { ProductReviews } from "@/components/product/ProductReviews";
 import { ProductStory } from "@/components/product/ProductStory";
 import { TrustStrip } from "@/components/product/TrustStrip";
 import { getCollection, getProduct, products, productsIn, routes } from "@/lib/content";
@@ -83,6 +84,7 @@ export default async function ProductPage({ params }: Props) {
       <ProductMain product={product} />
       <TrustStrip />
       <ProductStory tone={product.altTone} />
+      <ProductReviews product={product} />
       <ProductScroller title="You May Also Like" items={recommendations(product)} />
       <section className="px-[16px] pb-[40px] md:px-[36px]">
         <h2 className="mb-[20px] text-center font-display text-[34px] font-normal uppercase leading-[42px] text-black">

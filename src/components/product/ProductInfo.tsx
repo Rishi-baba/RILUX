@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Feather, Minus, Plus, Ruler, Share2, Shirt, Sparkles, type LucideIcon } from "lucide-react";
 
 import { HeartIcon } from "@/components/icons";
+import { Stars } from "@/components/Stars";
 import { DeliveryEstimate } from "@/components/product/DeliveryEstimate";
 import { Placeholder } from "@/components/Placeholder";
 import { ProductAccordion } from "@/components/product/ProductAccordion";
@@ -29,7 +30,9 @@ export function ProductInfo({
   onColorChange: (i: number) => void;
 }) {
   const router = useRouter();
-  const { addToCart, setOpenPanel, toggleWishlist, isWishlisted, notify } = useStore();
+  const { addToCart, setOpenPanel, toggleWishlist, isWishlisted, notify, reviewsFor, hydrated } = useStore();
+  const reviews = hydrated ? reviewsFor(product.id) : [];
+  const avgRating = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0;
   const [size, setSize] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [sizeError, setSizeError] = useState(false);
@@ -139,6 +142,12 @@ export function ProductInfo({
         </div>
       </div>
       <p className="mt-[4px] font-ui text-[13px] text-stone">{product.category}</p>
+      <a href="#reviews" className="mt-[8px] inline-flex items-center gap-[8px] font-ui text-[12px] text-ink-soft hover:text-black">
+        <Stars rating={avgRating} size={13} />
+        <span className="underline underline-offset-[3px]">
+          {reviews.length ? `${reviews.length} ${reviews.length === 1 ? "review" : "reviews"}` : "Write the first review"}
+        </span>
+      </a>
 
       {product.features.length ? (
         <ul className="mt-[16px] flex flex-wrap items-center gap-[18px] rounded-[4px] border border-black/10 px-[12px] py-[10px]">

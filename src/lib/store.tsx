@@ -11,7 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { getProductById } from "@/lib/content";
-import type { CartLine, MockOrder, MockUser } from "@/types/content";
+import type { CartLine, MockOrder, MockUser, ProductReview } from "@/types/content";
 
 // Front-end only store: cart, wishlist, a mock signed-in user and mock orders.
 // Persisted to localStorage; there is no backend, auth or payment.
@@ -23,6 +23,7 @@ interface Persisted {
   wishlist: string[];
   user: MockUser | null;
   orders: MockOrder[];
+  reviews: ProductReview[];
 }
 
 export interface Toast {
@@ -49,6 +50,9 @@ interface StoreValue extends Persisted {
   signOut: () => void;
   /** `total` = amount charged incl. shipping (defaults to subtotal) */
   placeOrder: (total?: number) => MockOrder | null;
+  // reviews (demo, browser-only)
+  addReview: (review: Omit<ProductReview, "id" | "createdAt">) => void;
+  reviewsFor: (productId: string) => ProductReview[];
   // ui
   openPanel: Panel;
   setOpenPanel: (panel: Panel) => void;
@@ -58,7 +62,7 @@ interface StoreValue extends Persisted {
 
 const StoreContext = createContext<StoreValue | null>(null);
 
-const empty: Persisted = { cart: [], wishlist: [], user: null, orders: [] };
+const empty: Persisted = { cart: [], wishlist: [], user: null, orders: [], reviews: [] };
 
 function readStorage(): Persisted {
   try {
@@ -70,6 +74,7 @@ function readStorage(): Persisted {
       wishlist: Array.isArray(parsed.wishlist) ? parsed.wishlist : [],
       user: parsed.user ?? null,
       orders: Array.isArray(parsed.orders) ? parsed.orders : [],
+      reviews: Array.isArray(parsed.reviews) ? parsed.reviews : [],
     };
   } catch {
     return empty;
@@ -153,6 +158,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const signIn = useCallback((user: MockUser) => setData((d) => ({ ...d, user })), []);
   const signOut = useCallback(() => setData((d) => ({ ...d, user: null })), []);
 
+  const addReview = useCallback<StoreValue["addReview"]>((review) => {
+    const full: ProductReview = { ...review, id: `r-${Date.now()}`, createdAt: new Date().toISOString() };
+    setData((d) => ({ ...d, reviews: [full, ...d.reviews] }));
+  }, []);
+
   const cartSubtotal = useMemo(
     () =>
       data.cart.reduce((sum, l) => sum + (getProductById(l.productId)?.priceValue ?? 0) * l.quantity, 0),
@@ -187,12 +197,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       signIn,
       signOut,
       placeOrder,
+      addReview,
+      reviewsFor: (productId: string) => data.reviews.filter((r) => r.productId === productId),
       openPanel,
       setOpenPanel,
       toasts,
       notify,
     }),
-    [data, hydrated, addToCart, updateQuantity, removeLine, clearCart, cartSubtotal, toggleWishlist, signIn, signOut, placeOrder, openPanel, toasts, notify],
+    [data, hydrated, addToCart, updateQuantity, removeLine, clearCart, cartSubtotal, toggleWishlist, signIn, signOut, placeOrder, addReview, openPanel, toasts, notify],
   );
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

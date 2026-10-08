@@ -110,3 +110,18 @@ export interface MockOrder {
   total: number;
   status: "Confirmed" | "Packed" | "Shipped" | "Delivered";
 }
+
+export type ReviewFit = "Runs small" | "True to size" | "Runs large";
+
+/** A customer review written on the product page (stored in the browser in this demo) */
+export interface ProductReview {
+  id: string;
+  productId: string;
+  rating: number;
+  title: string;
+  body: string;
+  name: string;
+  size?: string;
+  fit?: ReviewFit;
+  createdAt: string;
+}

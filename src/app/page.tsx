@@ -10,6 +10,7 @@ import { DressForTheDay } from "@/components/DressForTheDay";
 import { ProductScroller } from "@/components/ProductScroller";
 import { SingleImageBanner } from "@/components/SingleImageBanner";
 import { StripTiles } from "@/components/StripTiles";
+import { Testimonials } from "@/components/Testimonials";
 import { TileSlider } from "@/components/TileSlider";
 import { WhyBrand } from "@/components/WhyBrand";
 import { bannerLinks, headings, routes } from "@/lib/content";
@@ -35,6 +36,7 @@ export default function Home() {
         <HeadingStack lines={headings.signature} />
         <FeaturedSlider />
         <FeaturedProductHero />
+        <Testimonials />
         <HeadingStack lines={headings.fabric} className="pb-[11px] md:pt-[36px] md:pb-[24px]" />
         <FabricFeature />
     </>
