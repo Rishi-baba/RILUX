@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Feather, Minus, Plus, Ruler, Share2, Shirt, Sparkles, type LucideIcon } from "lucide-react";
 
 import { HeartIcon } from "@/components/icons";
+import { DeliveryEstimate } from "@/components/product/DeliveryEstimate";
 import { Placeholder } from "@/components/Placeholder";
 import { OfferCards } from "@/components/product/OfferCards";
 import { ProductAccordion } from "@/components/product/ProductAccordion";
@@ -161,6 +162,8 @@ export function ProductInfo({
         <p className="font-ui text-[24px] text-black">{product.price}</p>
         <p className="font-ui text-[12px] text-stone">Inclusive of all taxes</p>
       </div>
+
+      <DeliveryEstimate />
 
       <OfferCards />
 
@@ -322,7 +325,7 @@ export function ProductInfo({
         </button>
       </div>
 
-      {guideOpen ? <SizeGuide onClose={() => setGuideOpen(false)} /> : null}
+      <SizeGuide open={guideOpen} onClose={() => setGuideOpen(false)} />
     </div>
   );
 }

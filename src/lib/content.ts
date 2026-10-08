@@ -328,11 +328,47 @@ export const headings = {
 
 /** Trust strip used on product and cart pages */
 export const trustPoints = [
-  { title: "Easy Returns", body: "Placeholder line about the returns window." },
+  { title: "Cash on Delivery", body: "Pay when your order arrives." },
+  { title: "Free Shipping", body: "On every order, across India." },
+  { title: "7-Day Exchange", body: "Easy size or style swaps." },
   { title: "Customer Care", body: "Placeholder line about support hours." },
-  { title: "Free Delivery", body: "Placeholder line about delivery terms." },
-  { title: "Secure Payments", body: "Placeholder line about payment options." },
 ];
 
 export const shippingNote = "Placeholder dispatch and delivery note";
 export const freeShippingThreshold = 1999;
+
+/* ---------------------------------------------- additions from the brief */
+
+/** Shop-by-fabric tiles on the home page */
+export const fabrics: Tile[] = [
+  { title: "Giza Cotton", href: routes.collection("formal-shirts"), tone: "stone" },
+  { title: "Linen", href: routes.collection("linen"), tone: "sand" },
+  { title: "Oxford", href: routes.collection("shirts"), tone: "cool" },
+  { title: "Stretch", href: routes.collection("stretch"), tone: "olive" },
+  { title: "Flannel", href: routes.collection("casual-shirts"), tone: "warm" },
+  { title: "Denim", href: routes.collection("denim"), tone: "dark" },
+];
+
+/** "Why us" brand points on the home page */
+export const brandPoints = [
+  { title: "Premium Fabrics", body: "Placeholder line about sourcing the finest fabrics." },
+  { title: "Precise Tailoring", body: "Placeholder line about fit and finishing." },
+  { title: "Made to Last", body: "Placeholder line about durability and quality checks." },
+  { title: "Thoughtful Service", body: "Placeholder line about delivery and exchanges." },
+];
+
+/** Placeholder contact details — replace before launch */
+export const contact = {
+  email: "hello@example.com",
+  phone: "+91 00000 00000",
+  /** Digits only, with country code, for the WhatsApp link */
+  whatsapp: "910000000000",
+};
+
+export const whatsappHref = (message = "Hi! I have a question about your products.") =>
+  `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(message)}`;
+
+/** Business days from today used for the estimated delivery window on product pages */
+export const deliveryDays = { min: 3, max: 6 };
+
+export const paymentMethods = ["UPI", "Cards", "Net Banking", "Cash on Delivery"];

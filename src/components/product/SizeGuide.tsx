@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { X } from "lucide-react";
+import { useEffect } from "react";
+import { SidePanel } from "@/components/SidePanel";
 
 const rows = [
   { size: "S", chest: "38", length: "28" },
@@ -11,58 +11,30 @@ const rows = [
   { size: "XXL", chest: "46", length: "32" },
 ];
 
-export function SizeGuide({ onClose }: { onClose: () => void }) {
-  const closeRef = useRef<HTMLButtonElement>(null);
+const tips = [
+  { title: "Chest", body: "Measure around the fullest part of the chest, keeping the tape level." },
+  { title: "Length", body: "Measure from the highest point of the shoulder down to the hem." },
+];
 
+// Size chart in a right-hand drawer (the brief preferred a side panel over a centred modal).
+export function SizeGuide({ open, onClose }: { open: boolean; onClose: () => void }) {
+  // SidePanel doesn't lock page scroll on its own; lock it while the guide is open.
   useEffect(() => {
-    const previous = document.activeElement as HTMLElement | null;
+    if (!open) return;
     const root = document.documentElement;
-    const prevOverflow = root.style.overflow;
+    const prev = root.style.overflow;
     root.style.overflow = "hidden";
-    closeRef.current?.focus();
     return () => {
-      root.style.overflow = prevOverflow;
-      previous?.focus();
+      root.style.overflow = prev;
     };
-  }, []);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  }, [open]);
 
   return (
-    <div
-      className="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 p-[16px]"
-      onClick={onClose}
-    >
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="size-guide-title"
-        className="relative w-full max-w-[480px] rounded-[4px] bg-white p-[24px]"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="mb-[16px] flex items-center justify-between">
-          <h2 id="size-guide-title" className="font-display text-[24px] text-black">
-            Size guide
-          </h2>
-          <button
-            ref={closeRef}
-            type="button"
-            aria-label="Close size guide"
-            onClick={onClose}
-            className="flex size-[36px] items-center justify-center text-black"
-          >
-            <X className="size-[20px]" strokeWidth={1.5} />
-          </button>
-        </div>
+    <SidePanel open={open} onClose={onClose} title="Size Guide">
+      <div className="px-[20px] py-[24px]">
         <table className="w-full border-collapse font-ui text-[13px] text-black">
-          <caption className="mb-[8px] text-left text-[12px] text-stone">
-            Placeholder measurements in inches
+          <caption className="mb-[10px] text-left text-[12px] text-stone">
+            Placeholder garment measurements in inches
           </caption>
           <thead>
             <tr className="bg-mist">
@@ -81,7 +53,17 @@ export function SizeGuide({ onClose }: { onClose: () => void }) {
             ))}
           </tbody>
         </table>
+
+        <h3 className="mt-[28px] font-display text-[18px] uppercase tracking-[0.04em] text-black">How to measure</h3>
+        <ul className="mt-[12px] flex flex-col gap-[14px]">
+          {tips.map((tip) => (
+            <li key={tip.title}>
+              <p className="font-ui text-[13px] font-semibold text-black">{tip.title}</p>
+              <p className="mt-[2px] font-ui text-[13px] leading-[1.6] text-stone">{tip.body}</p>
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
+    </SidePanel>
   );
 }

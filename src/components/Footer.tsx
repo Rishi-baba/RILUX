@@ -1,38 +1,81 @@
 import Link from "next/link";
-import { brandName, footerColumns } from "@/lib/content";
+import { Mail, MessageCircle, Phone } from "lucide-react";
+import { NewsletterForm } from "@/components/NewsletterForm";
 import { SocialButtons } from "@/components/SocialButtons";
+import { brandName, contact, footerColumns, paymentMethods, whatsappHref } from "@/lib/content";
+
+const heading =
+  "mb-[19px] font-display text-[16px] font-normal capitalize leading-[20px] text-black [font-variant-caps:small-caps]";
+const link =
+  "font-ui text-[14px] font-normal capitalize leading-[21px] text-black underline-offset-[3px] hover:underline";
 
 export function Footer() {
   return (
-    <footer className="bg-mist px-[11px] pb-[71px] pt-[42px] md:pb-[61px] text-black md:px-[35px] md:pt-[70px]">
-      <Link href="/" className="mb-[83px] block w-fit font-display text-[38px] uppercase leading-[32px] text-brand md:text-[64px] md:leading-[53px]">
-        {brandName}
-      </Link>
-      <div className="grid grid-cols-1 gap-[23px] md:grid-cols-[247px_247px] md:gap-0">
+    <footer className="bg-mist px-[11px] pb-[71px] pt-[42px] text-black md:px-[35px] md:pb-[40px] md:pt-[70px]">
+      {/* Logo + newsletter */}
+      <div className="mb-[56px] flex flex-col gap-[32px] md:mb-[72px] md:flex-row md:items-start md:justify-between">
+        <Link href="/" className="block w-fit font-display text-[38px] uppercase leading-[32px] text-brand md:text-[64px] md:leading-[53px]">
+          {brandName}
+        </Link>
+        <NewsletterForm />
+      </div>
+
+      {/* Link columns + contact */}
+      <div className="grid grid-cols-1 gap-[32px] md:grid-cols-[247px_247px_1fr] md:gap-0">
         {footerColumns.map((col) => (
           <div key={col.heading}>
-            <h4 className="mb-[19px] font-display text-[16px] font-normal capitalize leading-[20px] text-black [font-variant-caps:small-caps]">
-              {col.heading}
-            </h4>
+            <h4 className={heading}>{col.heading}</h4>
             <ul className="flex flex-col gap-3 leading-[21px]">
-              {col.links.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="font-ui text-[14px] font-normal capitalize leading-[21px] text-black underline-offset-[3px] hover:underline"
-                  >
-                    {link.label}
+              {col.links.map((item) => (
+                <li key={item.label}>
+                  <Link href={item.href} className={link}>
+                    {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
         ))}
+        <div>
+          <h4 className={heading}>Contact</h4>
+          <ul className="flex flex-col gap-3 leading-[21px]">
+            <li>
+              <a href={`mailto:${contact.email}`} className={`${link} inline-flex items-center gap-2 normal-case`}>
+                <Mail className="size-[15px]" strokeWidth={1.5} aria-hidden />
+                {contact.email}
+              </a>
+            </li>
+            <li>
+              <a href={`tel:${contact.phone.replace(/\s/g, "")}`} className={`${link} inline-flex items-center gap-2`}>
+                <Phone className="size-[15px]" strokeWidth={1.5} aria-hidden />
+                {contact.phone}
+              </a>
+            </li>
+            <li>
+              <a href={whatsappHref()} target="_blank" rel="noopener noreferrer" className={`${link} inline-flex items-center gap-2`}>
+                <MessageCircle className="size-[15px]" strokeWidth={1.5} aria-hidden />
+                Chat on WhatsApp
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <SocialButtons />
-      <p className="mt-[36px] font-ui text-[13px] leading-[20.8px] text-black">
-        © 2026 {brandName}. All rights reserved.
-      </p>
+
+      {/* Bottom bar */}
+      <div className="mt-[56px] flex flex-col gap-[20px] border-t border-black/10 pt-[24px] md:mt-[72px] md:flex-row md:items-center md:justify-between md:pr-[72px]">
+        <SocialButtons />
+        <ul aria-label="Payment methods" className="flex flex-wrap gap-[8px]">
+          {paymentMethods.map((method) => (
+            <li
+              key={method}
+              className="rounded-[4px] border border-black/15 bg-white px-[10px] py-[4px] font-ui text-[11px] uppercase tracking-[0.06em] text-ink-soft"
+            >
+              {method}
+            </li>
+          ))}
+        </ul>
+        <p className="font-ui text-[13px] leading-[20.8px] text-black">© 2026 {brandName}. All rights reserved.</p>
+      </div>
     </footer>
   );
 }

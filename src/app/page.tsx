@@ -1,6 +1,7 @@
 import { AppDownload } from "@/components/AppDownload";
 import { CategoryGrid } from "@/components/CategoryGrid";
 import { FabricFeature } from "@/components/FabricFeature";
+import { FabricTiles } from "@/components/FabricTiles";
 import { FeaturedProductHero } from "@/components/FeaturedProductHero";
 import { FeaturedSlider } from "@/components/FeaturedSlider";
 import { HeadingStack } from "@/components/HeadingStack";
@@ -11,15 +12,19 @@ import { ProductScroller } from "@/components/ProductScroller";
 import { SingleImageBanner } from "@/components/SingleImageBanner";
 import { StripTiles } from "@/components/StripTiles";
 import { TileSlider } from "@/components/TileSlider";
+import { WhyBrand } from "@/components/WhyBrand";
 import { bannerLinks, headings } from "@/lib/content";
 
 export default function Home() {
   return (
     <>
         <HeroCarousel />
+        <WhyBrand />
         <ProductScroller />
         <HeadingStack lines={[headings.shopByCategory]} size="md" />
         <CategoryGrid />
+        <HeadingStack lines={["Shop by Fabric"]} size="md" />
+        <FabricTiles />
         <HeroProductScroller />
         <SingleImageBanner tone="cool" aspect="tall" title="Banner Headline" href={bannerLinks.one} className="py-4 md:py-5" />
         <SingleImageBanner tone="warm" aspect="tall" overline="Overline" title="Banner Title" href={bannerLinks.two} className="pb-4 md:pb-5" />

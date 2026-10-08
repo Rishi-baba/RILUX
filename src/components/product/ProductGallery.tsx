@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/icons";
+import { Play } from "lucide-react";
 import { Placeholder, type PlaceholderTone } from "@/components/Placeholder";
 import { cn } from "@/lib/utils";
 
@@ -54,6 +55,7 @@ export function ProductGallery({
           >
             <Placeholder tone={tone} />
             {i === 0 && tag ? <FitTag label={tag} /> : null}
+            {i === 1 ? <VideoBadge /> : null}
           </button>
         ))}
       </div>
@@ -76,6 +78,7 @@ export function ProductGallery({
             >
               <Placeholder tone={tone} />
               {i === 0 && tag ? <FitTag label={tag} /> : null}
+              {i === 1 ? <VideoBadge /> : null}
             </button>
           ))}
         </div>
@@ -201,5 +204,19 @@ function Lightbox({
         <ChevronRightIcon className="size-[22px]" />
       </button>
     </div>
+  );
+}
+
+/** Marks the gallery slot reserved for the product video (swap in a <video> once clips exist) */
+function VideoBadge() {
+  return (
+    <span aria-hidden className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-[10px]">
+      <span className="flex size-[60px] items-center justify-center rounded-full bg-white/85 text-black shadow-[0_4px_16px_rgba(0,0,0,0.15)]">
+        <Play className="ml-[3px] size-[22px]" fill="currentColor" strokeWidth={0} />
+      </span>
+      <span className="rounded-full bg-black/45 px-[10px] py-[4px] font-ui text-[11px] uppercase tracking-[0.12em] text-white">
+        Product video
+      </span>
+    </span>
   );
 }

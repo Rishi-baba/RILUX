@@ -1,8 +1,8 @@
-import { CreditCard, Headphones, RefreshCcw, Truck, type LucideIcon } from "lucide-react";
+import { Banknote, Headphones, RefreshCcw, Truck, type LucideIcon } from "lucide-react";
 
 import { trustPoints } from "@/lib/content";
 
-const icons: LucideIcon[] = [RefreshCcw, Headphones, Truck, CreditCard];
+const icons: LucideIcon[] = [Banknote, Truck, RefreshCcw, Headphones];
 
 export function TrustStrip() {
   return (

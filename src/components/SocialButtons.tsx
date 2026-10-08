@@ -12,7 +12,7 @@ export function SocialButtons() {
   const { notify } = useStore();
 
   return (
-    <div className="mt-[86px] flex gap-4">
+    <div className="flex gap-4">
       {socials.map(({ label, Icon }) => (
         <button
           key={label}
