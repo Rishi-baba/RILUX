@@ -353,7 +353,7 @@ export const brandPoints = [
   { title: "Premium Fabrics", body: "Extra-long-staple Giza cotton and fine satin weaves, chosen for softness and sheen." },
   { title: "Precise Tailoring", body: "Clean plackets, sharp collars and a fit refined until it sits just right." },
   { title: "Made to Last", body: "Dense weaves and careful stitching that hold their shape wash after wash." },
-  { title: "Thoughtful Service", body: "Free shipping, cash on delivery and easy 7-day exchanges." },
+  { title: "Thoughtful Service", body: "Free shipping, cash on delivery and easy 7‑day exchanges." },
 ];
 
 /** Placeholder contact details — replace before launch */

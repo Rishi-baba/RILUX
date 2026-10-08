@@ -1,37 +1,26 @@
-import { Gem, Ruler, ShieldCheck, Sparkles, type LucideIcon } from "lucide-react";
-
 import { brandName, brandPoints } from "@/lib/content";
 
-const icons: LucideIcon[] = [Gem, Ruler, ShieldCheck, Sparkles];
-
-// Short brand-story band: a statement line plus four points, so the home page carries
-// more text than imagery (the brief asked for "why us" copy rather than a photo wall).
+// Brand pillars: statement on the left, four numbered points in a 2×2 grid on the right.
 export function WhyBrand() {
   return (
-    <section className="bg-linen px-[20px] py-[40px] md:px-[36px] md:py-[64px]">
-      <div className="mx-auto max-w-[1100px] text-center">
-        <p className="font-ui text-[11px] uppercase tracking-[0.2em] text-stone md:text-[12px]">
-          Why {brandName}
-        </p>
-        <h2 className="mx-auto mt-[12px] max-w-[760px] font-display text-[24px] uppercase leading-[1.2] text-black md:text-[36px]">
-          Shirts cut from the world&apos;s finest cottons, made to be worn for years.
-        </h2>
-        <ul className="mt-[32px] grid grid-cols-2 gap-x-[16px] gap-y-[28px] md:mt-[48px] md:grid-cols-4 md:gap-x-[32px]">
-          {brandPoints.map((point, i) => {
-            const Icon = icons[i % icons.length];
-            return (
-              <li key={point.title} className="flex flex-col items-center">
-                <Icon className="size-[26px] text-ink" strokeWidth={1.25} aria-hidden />
-                <h3 className="mt-[12px] font-ui text-[12px] font-semibold uppercase tracking-[0.1em] text-black md:text-[13px]">
-                  {point.title}
-                </h3>
-                <p className="mt-[6px] max-w-[220px] font-ui text-[12px] leading-[1.6] text-stone md:text-[13px]">
-                  {point.body}
-                </p>
-              </li>
-            );
-          })}
-        </ul>
+    <section className="bg-linen px-[20px] py-[56px] md:px-[36px] md:py-[88px]">
+      <div className="mx-auto grid max-w-[1200px] gap-[40px] md:grid-cols-[5fr_7fr] md:gap-[80px]">
+        <div>
+          <p className="font-ui text-[11px] uppercase tracking-[0.24em] text-ink-soft/70 md:text-[12px]">Why {brandName}</p>
+          <h2 className="mt-[14px] font-display text-[30px] leading-[1.15] text-black md:text-[42px]">
+            Shirts cut from the world&apos;s finest cottons, made to be worn for years.
+          </h2>
+        </div>
+
+        <ol className="grid gap-x-[40px] gap-y-[32px] sm:grid-cols-2 md:gap-y-[44px]">
+          {brandPoints.map((point, i) => (
+            <li key={point.title} className="border-t border-black/15 pt-[18px]">
+              <span className="font-display text-[15px] text-ink-soft/60">{String(i + 1).padStart(2, "0")}</span>
+              <h3 className="mt-[8px] font-ui text-[13px] font-semibold uppercase tracking-[0.12em] text-black">{point.title}</h3>
+              <p className="mt-[8px] font-ui text-[14px] leading-[1.7] text-ink-soft">{point.body}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
