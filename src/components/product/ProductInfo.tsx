@@ -117,7 +117,7 @@ export function ProductInfo({
   };
 
   return (
-    <div className="self-start px-[16px] pb-[32px] pt-[8px] md:sticky md:top-[86px] md:px-0 md:pb-0 md:pt-0">
+    <div className="self-start px-[16px] pb-[32px] pt-[8px] md:sticky md:top-[86px] md:max-w-[560px] md:px-0 md:pb-0 md:pt-0">
       <p className="font-ui text-[13px] italic text-[rgb(150,95,50)]">{shippingNote}</p>
 
       <div className="mt-[8px] flex items-start justify-between gap-[12px]">

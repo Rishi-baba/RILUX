@@ -13,7 +13,7 @@ export function ProductMain({ product }: { product: Product }) {
   const tones = color ? [color.tone, ...product.gallery.slice(1)] : product.gallery;
 
   return (
-    <section className="mx-auto grid max-w-[1100px] md:grid-cols-[55fr_45fr] md:gap-[28px] md:px-[24px] md:pb-[48px] md:pt-[24px]">
+    <section className="grid md:grid-cols-[58fr_42fr] md:gap-[40px] md:px-[36px] md:pb-[56px] md:pt-[8px] lg:grid-cols-[62fr_38fr] lg:gap-[56px]">
       <ProductGallery tones={tones} title={product.title} tag={product.tag ? "Fit Label" : undefined} />
       <ProductInfo product={product} colorIndex={colorIndex} onColorChange={setColorIndex} />
     </section>

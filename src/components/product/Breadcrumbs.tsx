@@ -7,7 +7,7 @@ export interface Crumb {
 
 export function Breadcrumbs({ items }: { items: Crumb[] }) {
   return (
-    <nav aria-label="Breadcrumb" className="mx-auto max-w-[1100px] px-[16px] py-[16px] md:px-[24px]">
+    <nav aria-label="Breadcrumb" className="px-[16px] py-[16px] md:px-[36px]">
       <ol className="flex flex-wrap items-center gap-x-[6px] font-ui text-[12px] text-stone">
         {items.map((item, i) => {
           const last = i === items.length - 1;
