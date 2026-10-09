@@ -13,6 +13,15 @@ export interface NavItem {
   children?: NavLink[];
 }
 
+/** Catalogue attributes used for filtering (from the Rilux style sheet) */
+export interface ProductAttributes {
+  fit: "Formal" | "Regular" | "Casual";
+  sleeve: "Full Sleeve" | "Half Sleeve";
+  fabric: string;
+  pocket: "No Pocket" | "Single Pocket" | "Double Pocket";
+  placket: "Standard Placket" | "Concealed Placket" | "Self-Fold Placket";
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -36,6 +45,7 @@ export interface Product {
   features: string[];
   materialCare: string[];
   details: string[];
+  attributes: ProductAttributes;
 }
 
 export interface ProductColor {

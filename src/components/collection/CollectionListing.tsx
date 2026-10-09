@@ -19,6 +19,8 @@ import {
   sortProducts,
   type Filters,
   type SortValue,
+  attributeFacets,
+  type ListKey,
 } from "./filters";
 
 const PAGE_SIZE = 12;
@@ -204,16 +206,16 @@ function activeChips(f: Filters, onChange: (f: Filters) => void) {
       remove: () => onChange({ ...f, priceMin: null, priceMax: null }),
     });
   }
-  const add = (key: "colors" | "sizes" | "categories", name: string) =>
+  const add = (key: ListKey, prefix?: string) =>
     f[key].forEach((v) =>
       chips.push({
         key: `${key}-${v}`,
-        label: `${name}: ${v}`,
+        label: prefix ? `${prefix}: ${v}` : v,
         remove: () => onChange({ ...f, [key]: f[key].filter((x) => x !== v) }),
       }),
     );
-  add("colors", "Color");
+  // catalogue values read on their own ("Formal", "Half Sleeve", "Concealed Placket")
+  attributeFacets.forEach((facet) => add(facet.key));
   add("sizes", "Size");
-  add("categories", "Category");
   return chips;
 }

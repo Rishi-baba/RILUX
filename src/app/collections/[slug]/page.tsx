@@ -8,6 +8,10 @@ import { collections, getCollection, productsIn } from "@/lib/content";
 
 export const dynamicParams = false;
 
+/** The main ways to browse the catalogue: by cut and by sleeve. Fabrics live in the menu and filters. */
+const pillSlugs = ["all", "formal", "regular", "casual", "full-sleeve", "half-sleeve"];
+const pillCollections = pillSlugs.map((s) => collections.find((c) => c.slug === s)).filter((c) => c !== undefined);
+
 export function generateStaticParams() {
   return collections.map((c) => ({ slug: c.slug }));
 }
@@ -38,7 +42,7 @@ export default async function CollectionPage({
 
   return (
     <main className="bg-white">
-      <CollectionPills items={collections} activeSlug={collection.slug} />
+      <CollectionPills items={pillCollections} activeSlug={collection.slug} />
       <h1 className="mx-4 mt-[36px] text-center font-display text-[30px] uppercase leading-tight text-ink md:text-[40px]">
         {collection.title}
       </h1>

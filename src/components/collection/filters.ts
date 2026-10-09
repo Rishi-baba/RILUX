@@ -1,5 +1,4 @@
-import type { PlaceholderTone } from "@/components/Placeholder";
-import type { Product } from "@/types/content";
+import type { Product, ProductAttributes } from "@/types/content";
 
 export const sortOptions = [
   { value: "featured", label: "Featured" },
@@ -12,19 +11,34 @@ export const sortOptions = [
 
 export type SortValue = (typeof sortOptions)[number]["value"];
 
-export interface Filters {
-  colors: string[];
-  sizes: string[];
-  categories: string[];
+/**
+ * Catalogue facets (from the Rilux style sheet). Each maps a Filters list to a product
+ * attribute and a URL parameter; `order` fixes the display order of the options.
+ */
+export const attributeFacets = [
+  { key: "fits", attr: "fit", param: "fit", label: "Fit", order: ["Formal", "Regular", "Casual"] },
+  { key: "sleeves", attr: "sleeve", param: "sleeve", label: "Sleeve", order: ["Full Sleeve", "Half Sleeve"] },
+  { key: "fabrics", attr: "fabric", param: "fabric", label: "Fabric", order: ["Giza Cotton", "Giza Satin", "Premium Cotton", "100% Cotton"] },
+  { key: "pockets", attr: "pocket", param: "pocket", label: "Pocket", order: ["No Pocket", "Single Pocket", "Double Pocket"] },
+  { key: "plackets", attr: "placket", param: "placket", label: "Placket", order: ["Standard Placket", "Concealed Placket", "Self-Fold Placket"] },
+] as const satisfies readonly { key: string; attr: keyof ProductAttributes; param: string; label: string; order: readonly string[] }[];
+
+export type AttributeKey = (typeof attributeFacets)[number]["key"];
+export type ListKey = AttributeKey | "sizes";
+
+export type Filters = Record<ListKey, string[]> & {
   /** null = no lower / upper bound */
   priceMin: number | null;
   priceMax: number | null;
-}
+};
 
 export const emptyFilters: Filters = {
-  colors: [],
+  fits: [],
+  sleeves: [],
+  fabrics: [],
+  pockets: [],
+  plackets: [],
   sizes: [],
-  categories: [],
   priceMin: null,
   priceMax: null,
 };
@@ -32,14 +46,12 @@ export const emptyFilters: Filters = {
 export interface FacetOption {
   value: string;
   count: number;
-  tone?: PlaceholderTone;
 }
 
 export interface Facets {
   maxPrice: number;
-  colors: FacetOption[];
   sizes: string[];
-  categories: FacetOption[];
+  attributes: Record<AttributeKey, FacetOption[]>;
 }
 
 const sizeOrder = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -55,27 +67,31 @@ const compareSizes = (a: string, b: string) => {
 };
 
 export function buildFacets(products: Product[]): Facets {
-  const colors = new Map<string, FacetOption>();
-  const categories = new Map<string, FacetOption>();
   const sizes = new Set<string>();
   let max = 0;
   for (const p of products) {
     max = Math.max(max, p.priceValue);
-    for (const c of p.colors) {
-      const entry = colors.get(c.name);
-      if (entry) entry.count += 1;
-      else colors.set(c.name, { value: c.name, count: 1, tone: c.tone });
-    }
-    const cat = categories.get(p.category);
-    if (cat) cat.count += 1;
-    else categories.set(p.category, { value: p.category, count: 1 });
     p.sizes.forEach((s) => sizes.add(s));
   }
+  const attributes = Object.fromEntries(
+    attributeFacets.map((f) => {
+      const counts = new Map<string, number>();
+      for (const p of products) {
+        const v = p.attributes[f.attr];
+        counts.set(v, (counts.get(v) ?? 0) + 1);
+      }
+      const order: readonly string[] = f.order;
+      const options = [...counts.entries()]
+        .map(([value, count]) => ({ value, count }))
+        .sort((a, b) => order.indexOf(a.value) - order.indexOf(b.value));
+      return [f.key, options];
+    }),
+  ) as Record<AttributeKey, FacetOption[]>;
+
   return {
     maxPrice: Math.ceil(max / 100) * 100,
-    colors: [...colors.values()].sort((a, b) => a.value.localeCompare(b.value)),
     sizes: [...sizes].sort(compareSizes),
-    categories: [...categories.values()].sort((a, b) => a.value.localeCompare(b.value)),
+    attributes,
   };
 }
 
@@ -84,9 +100,8 @@ export function applyFilters(products: Product[], f: Filters): Product[] {
     (p) =>
       (f.priceMin === null || p.priceValue >= f.priceMin) &&
       (f.priceMax === null || p.priceValue <= f.priceMax) &&
-      (!f.colors.length || p.colors.some((c) => f.colors.includes(c.name))) &&
       (!f.sizes.length || p.sizes.some((s) => f.sizes.includes(s))) &&
-      (!f.categories.length || f.categories.includes(p.category)),
+      attributeFacets.every((facet) => !f[facet.key].length || f[facet.key].includes(p.attributes[facet.attr])),
   );
 }
 
@@ -115,9 +130,8 @@ export function sortProducts(products: Product[], sort: SortValue): Product[] {
 }
 
 export const activeFilterCount = (f: Filters) =>
-  f.colors.length +
+  attributeFacets.reduce((n, facet) => n + f[facet.key].length, 0) +
   f.sizes.length +
-  f.categories.length +
   (f.priceMin !== null || f.priceMax !== null ? 1 : 0);
 
 /* ------------------------------------------------------------ URL helpers */
@@ -137,16 +151,9 @@ export function parseQuery(params: URLSearchParams): { sort: SortValue; filters:
     if (lo !== "" && Number.isFinite(nlo)) priceMin = nlo;
     if (hi !== undefined && hi !== "" && Number.isFinite(nhi)) priceMax = nhi;
   }
-  return {
-    sort,
-    filters: {
-      colors: list(params.get("color")),
-      sizes: list(params.get("size")),
-      categories: list(params.get("category")),
-      priceMin,
-      priceMax,
-    },
-  };
+  const filters: Filters = { ...emptyFilters, sizes: list(params.get("size")), priceMin, priceMax };
+  for (const facet of attributeFacets) filters[facet.key] = list(params.get(facet.param));
+  return { sort, filters };
 }
 
 export function buildQuery(base: URLSearchParams, sort: SortValue, f: Filters): string {
@@ -156,13 +163,15 @@ export function buildQuery(base: URLSearchParams, sort: SortValue, f: Filters): 
     else params.delete(key);
   };
   set("sort", sort === "featured" ? null : sort);
-  set("color", f.colors.join(","));
+  for (const facet of attributeFacets) set(facet.param, f[facet.key].join(","));
   set("size", f.sizes.join(","));
-  set("category", f.categories.join(","));
   set(
     "price",
     f.priceMin !== null || f.priceMax !== null ? `${f.priceMin ?? ""}-${f.priceMax ?? ""}` : null,
   );
+  // drop parameters from the old colour/category filters if an old link is opened
+  params.delete("color");
+  params.delete("category");
   // Keep list separators readable: ?size=M,L instead of ?size=M%2CL
   return params.toString().replace(/%2C/gi, ",");
 }

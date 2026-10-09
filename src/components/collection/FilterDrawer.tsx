@@ -1,14 +1,15 @@
 "use client";
 
 import { useId, useState } from "react";
-import { Placeholder } from "@/components/Placeholder";
 import { SidePanel } from "@/components/SidePanel";
 import { formatPrice } from "@/lib/content";
 import { cn } from "@/lib/utils";
-import { emptyFilters, type FacetOption, type Facets, type Filters } from "./filters";
+import { attributeFacets, emptyFilters, type AttributeKey, type FacetOption, type Facets, type Filters, type ListKey } from "./filters";
 
-const tabs = ["Price", "Color", "Size", "Category"] as const;
+// Tabs follow the catalogue: price, then each attribute facet, then size.
+const tabs = ["Price", ...attributeFacets.map((f) => f.label), "Size"] as const;
 type Tab = (typeof tabs)[number];
+const facetByLabel = new Map<string, AttributeKey>(attributeFacets.map((f) => [f.label, f.key]));
 
 export function FilterDrawer({
   open,
@@ -34,18 +35,19 @@ export function FilterDrawer({
     if (open) setDraft(filters);
   }
 
-  const toggle = (key: "colors" | "sizes" | "categories", value: string) =>
+  const toggle = (key: ListKey, value: string) =>
     setDraft((d) => ({
       ...d,
       [key]: d[key].includes(value) ? d[key].filter((v) => v !== value) : [...d[key], value],
     }));
 
-  const counts: Record<Tab, number> = {
-    Price: draft.priceMin !== null || draft.priceMax !== null ? 1 : 0,
-    Color: draft.colors.length,
-    Size: draft.sizes.length,
-    Category: draft.categories.length,
+  const countFor = (t: Tab) => {
+    if (t === "Price") return draft.priceMin !== null || draft.priceMax !== null ? 1 : 0;
+    if (t === "Size") return draft.sizes.length;
+    const key = facetByLabel.get(t);
+    return key ? draft[key].length : 0;
   };
+  const activeFacet = facetByLabel.get(tab);
 
   return (
     <SidePanel
@@ -98,8 +100,8 @@ export function FilterDrawer({
               )}
             >
               {t}
-              {counts[t] ? (
-                <span className="font-ui text-[11px] font-normal text-stone">{counts[t]}</span>
+              {countFor(t) ? (
+                <span className="font-ui text-[11px] font-normal text-stone">{countFor(t)}</span>
               ) : null}
             </button>
           ))}
@@ -125,12 +127,11 @@ export function FilterDrawer({
               }
             />
           ) : null}
-          {tab === "Color" ? (
+          {activeFacet ? (
             <CheckList
-              options={facets.colors}
-              selected={draft.colors}
-              onToggle={(v) => toggle("colors", v)}
-              swatches
+              options={facets.attributes[activeFacet]}
+              selected={draft[activeFacet]}
+              onToggle={(v) => toggle(activeFacet, v)}
             />
           ) : null}
           {tab === "Size" ? (
@@ -157,13 +158,6 @@ export function FilterDrawer({
               })}
             </div>
           ) : null}
-          {tab === "Category" ? (
-            <CheckList
-              options={facets.categories}
-              selected={draft.categories}
-              onToggle={(v) => toggle("categories", v)}
-            />
-          ) : null}
         </div>
       </div>
     </SidePanel>
@@ -174,12 +168,10 @@ function CheckList({
   options,
   selected,
   onToggle,
-  swatches,
 }: {
   options: FacetOption[];
   selected: string[];
   onToggle: (value: string) => void;
-  swatches?: boolean;
 }) {
   return (
     <ul className="flex flex-col gap-[14px]">
@@ -192,11 +184,6 @@ function CheckList({
               onChange={() => onToggle(o.value)}
               className="size-[16px] shrink-0 accent-black"
             />
-            {swatches && o.tone ? (
-              <span className="relative size-[16px] shrink-0 overflow-hidden rounded-[3px] ring-1 ring-black/10">
-                <Placeholder tone={o.tone} />
-              </span>
-            ) : null}
             <span className="min-w-0 flex-1 truncate">{o.value}</span>
             <span className="text-stone">({o.count})</span>
           </label>

@@ -6,6 +6,7 @@ import type {
   FooterColumn,
   NavItem,
   Product,
+  ProductAttributes,
   ProductReview,
   Slide,
   Tile,
@@ -57,7 +58,7 @@ export const collections: Collection[] = [
   { slug: "giza-cotton", title: "Giza Cotton", tone: "stone", related: ["giza-satin", "premium-cotton", "pure-cotton"], description: "Woven from extra-long-staple Egyptian Giza cotton, prized for its softness, strength and quiet natural sheen." },
   { slug: "giza-satin", title: "Giza Satin", tone: "warm", related: ["giza-cotton", "premium-cotton", "pure-cotton"], description: "Giza cotton in a satin weave, for a smooth, lustrous finish made for evenings and celebrations." },
   { slug: "premium-cotton", title: "Premium Cotton", tone: "cool", related: ["giza-cotton", "giza-satin", "pure-cotton"], description: "Dense, crisp premium cotton that holds its shape and stays sharp from morning to night." },
-  { slug: "pure-cotton", title: "Pure Cotton", tone: "olive", related: ["giza-cotton", "giza-satin", "premium-cotton"], description: "Breathable 100% cotton for everyday comfort, easy to wear and easy to care for." },
+  { slug: "pure-cotton", title: "100% Cotton", tone: "olive", related: ["giza-cotton", "giza-satin", "premium-cotton"], description: "Breathable 100% cotton for everyday comfort, easy to wear and easy to care for." },
 ];
 
 export const getCollection = (slug: string) => collections.find((c) => c.slug === slug);
@@ -68,22 +69,39 @@ type Cut = "formal" | "regular" | "casual";
 type Sleeve = "full-sleeve" | "half-sleeve";
 type FabricFamily = "giza-cotton" | "giza-satin" | "premium-cotton" | "pure-cotton";
 
-/** The 8 construction styles from the Rilux style sheet */
-const styles: Record<number, { cut: Cut; sleeve: Sleeve; label: string; details: string[] }> = {
-  1: { cut: "regular", sleeve: "full-sleeve", label: "Chambray Collar Shirt", details: ["Contrast chambray collar", "Full sleeves with button cuffs", "Regular fit"] },
-  2: { cut: "regular", sleeve: "full-sleeve", label: "Double Pocket Shirt", details: ["Two chest pockets", "Full sleeves with button cuffs", "Regular fit"] },
-  3: { cut: "formal", sleeve: "half-sleeve", label: "Half Sleeve Formal Shirt", details: ["Clean front, no pockets", "Half sleeves", "Formal fit"] },
-  4: { cut: "casual", sleeve: "half-sleeve", label: "Roll-Up Sleeve Shirt", details: ["Chest pocket", "Half sleeves with roll-up tab", "Relaxed casual fit"] },
-  5: { cut: "formal", sleeve: "full-sleeve", label: "Hidden Placket Shirt", details: ["Concealed button placket", "No pockets", "Full sleeves", "Formal fit"] },
-  6: { cut: "formal", sleeve: "full-sleeve", label: "Formal Shirt", details: ["Self-fold placket", "No pockets", "Full sleeves", "Formal fit"] },
-  7: { cut: "formal", sleeve: "full-sleeve", label: "Pocket Formal Shirt", details: ["Self-fold placket", "Chest pocket", "Full sleeves", "Formal fit"] },
-  8: { cut: "regular", sleeve: "full-sleeve", label: "Yoke Shirt", details: ["Back yoke", "Two chest pockets", "Self-fold placket", "Regular fit"] },
+/** The 8 construction styles from the Rilux style sheet and launch deck */
+const styles: Record<
+  number,
+  {
+    cut: Cut;
+    sleeve: Sleeve;
+    pocket: ProductAttributes["pocket"];
+    placket: ProductAttributes["placket"];
+    label: string;
+    details: string[];
+  }
+> = {
+  1: { cut: "regular", sleeve: "full-sleeve", pocket: "Single Pocket", placket: "Standard Placket", label: "Chambray Collar Shirt", details: ["Regular collar with chambray trim", "Chest pocket", "Full sleeves with button cuffs", "Regular fit"] },
+  2: { cut: "regular", sleeve: "full-sleeve", pocket: "Double Pocket", placket: "Standard Placket", label: "Double Pocket Shirt", details: ["Regular collar", "Two chest pockets", "Full sleeves with button cuffs", "Regular fit"] },
+  3: { cut: "formal", sleeve: "half-sleeve", pocket: "No Pocket", placket: "Standard Placket", label: "Half Sleeve Formal Shirt", details: ["Clean front, no pockets", "Half sleeves", "Formal fit"] },
+  4: { cut: "casual", sleeve: "half-sleeve", pocket: "Single Pocket", placket: "Standard Placket", label: "Roll-Up Sleeve Shirt", details: ["Chest pocket", "Half sleeves with roll-up tab", "Relaxed casual fit"] },
+  5: { cut: "formal", sleeve: "full-sleeve", pocket: "No Pocket", placket: "Concealed Placket", label: "Hidden Placket Shirt", details: ["Concealed button placket", "No pockets", "Full sleeves", "Formal fit"] },
+  6: { cut: "formal", sleeve: "full-sleeve", pocket: "No Pocket", placket: "Self-Fold Placket", label: "Formal Shirt", details: ["Self-fold placket", "No pockets", "Full sleeves", "Formal fit"] },
+  7: { cut: "formal", sleeve: "full-sleeve", pocket: "Single Pocket", placket: "Self-Fold Placket", label: "Pocket Formal Shirt", details: ["Self-fold placket", "Single chest pocket", "Full sleeves", "Formal fit"] },
+  8: { cut: "regular", sleeve: "full-sleeve", pocket: "Double Pocket", placket: "Self-Fold Placket", label: "Yoke Shirt", details: ["Front yoke", "Two flap chest pockets", "Self-fold placket", "Regular fit"] },
 };
 
 const fabricLabel: Record<FabricFamily, string> = {
   "giza-cotton": "100% Giza Cotton",
   "giza-satin": "Giza Satin",
   "premium-cotton": "100% Premium Cotton",
+  "pure-cotton": "100% Cotton",
+};
+
+const fabricTitle: Record<FabricFamily, string> = {
+  "giza-cotton": "Giza Cotton",
+  "giza-satin": "Giza Satin",
+  "premium-cotton": "Premium Cotton",
   "pure-cotton": "100% Cotton",
 };
 
@@ -157,6 +175,13 @@ export const products: Product[] = catalogue.map((entry, i) => {
     features: [fabricName, style.sleeve === "full-sleeve" ? "Full Sleeve" : "Half Sleeve", cutLabel[style.cut].replace(" Shirts", " Fit")],
     materialCare: [fabricName, "Machine wash cold, gentle cycle", "Do not bleach", "Iron on medium heat"],
     details: [...style.details, "Model is 6'0\" wearing size M"],
+    attributes: {
+      fit: style.cut === "formal" ? "Formal" : style.cut === "regular" ? "Regular" : "Casual",
+      sleeve: style.sleeve === "full-sleeve" ? "Full Sleeve" : "Half Sleeve",
+      fabric: fabricTitle[entry.fabric],
+      pocket: style.pocket,
+      placket: style.placket,
+    },
   } satisfies Product;
 });
 
@@ -201,7 +226,7 @@ export const navItems: NavItem[] = [
       { label: "Giza Cotton", href: routes.collection("giza-cotton") },
       { label: "Giza Satin", href: routes.collection("giza-satin") },
       { label: "Premium Cotton", href: routes.collection("premium-cotton") },
-      { label: "Pure Cotton", href: routes.collection("pure-cotton") },
+      { label: "100% Cotton", href: routes.collection("pure-cotton") },
     ],
   },
   { label: "New In", href: routes.collection("new-in"), badge: "New" },
@@ -336,7 +361,7 @@ export const fabrics: Tile[] = [
   { title: "Giza Cotton", href: routes.collection("giza-cotton"), tone: "stone" },
   { title: "Giza Satin", href: routes.collection("giza-satin"), tone: "warm" },
   { title: "Premium Cotton", href: routes.collection("premium-cotton"), tone: "cool" },
-  { title: "Pure Cotton", href: routes.collection("pure-cotton"), tone: "olive" },
+  { title: "100% Cotton", href: routes.collection("pure-cotton"), tone: "olive" },
 ];
 
 /** "Why us" brand points on the home page */
