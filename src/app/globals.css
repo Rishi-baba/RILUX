@@ -147,6 +147,11 @@
   html {
     @apply font-sans;
   }
+  html,
+  body {
+    /* safety net: no section may widen the page on phones (clip keeps sticky header working) */
+    overflow-x: clip;
+  }
   body {
     font-size: 17px;
     line-height: 1.6;

@@ -30,7 +30,8 @@ export function DressForTheDay() {
     <section className="bg-[rgb(250,249,247)] px-[16px] py-[56px] md:px-[36px] md:py-[96px]">
       <div className="mx-auto grid max-w-[1280px] gap-[32px] md:grid-cols-[5fr_7fr] md:gap-[64px]">
         {/* Intro + timeline */}
-        <div className="flex flex-col">
+        {/* min-w-0 lets the chip row scroll inside its grid column instead of widening the page */}
+        <div className="flex min-w-0 flex-col">
           <h2 className="font-display text-[36px] uppercase leading-[1.05] text-black md:text-[56px]">
             Dress for
             <br />
@@ -57,6 +58,8 @@ export function DressForTheDay() {
               ))}
             </ul>
           </div>
+
+          <p className="mt-[16px] font-ui text-[14px] leading-[1.6] text-ink-soft md:hidden">{current.blurb}</p>
 
           {/* Desktop: occasion list */}
           <ol className="mt-[40px] hidden border-t border-black/10 md:block">
@@ -104,7 +107,7 @@ export function DressForTheDay() {
         </div>
 
         {/* Visual + pick */}
-        <div className="relative">
+        <div className="relative min-w-0">
           <div className="relative aspect-[4/5] w-full overflow-hidden md:aspect-[7/6]">
             {occasions.map((o, i) => (
               <div
@@ -120,9 +123,6 @@ export function DressForTheDay() {
                 {current.title}
               </p>
             </div>
-            <p className="absolute bottom-[112px] left-[20px] right-[20px] font-ui text-[14px] leading-[1.6] text-white md:hidden">
-              {current.blurb}
-            </p>
           </div>
 
           {/* Our pick card */}
