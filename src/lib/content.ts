@@ -47,17 +47,17 @@ const tone = (i: number) => tones[((i % tones.length) + tones.length) % tones.le
 // Shirts only. Structure follows the Rilux style sheet: 3 cuts (formal / regular / casual),
 // 2 sleeve lengths and 4 fabric families.
 export const collections: Collection[] = [
-  { slug: "all", title: "All Shirts", tone: "stone", related: ["formal", "regular", "casual", "giza-cotton"] },
-  { slug: "new-in", title: "New In", tone: "warm", related: ["formal", "regular", "casual"] },
-  { slug: "formal", title: "Formal Shirts", tone: "cool", related: ["regular", "casual", "full-sleeve", "giza-cotton"] },
-  { slug: "regular", title: "Regular Shirts", tone: "sand", related: ["formal", "casual", "full-sleeve"] },
-  { slug: "casual", title: "Casual Shirts", tone: "olive", related: ["formal", "regular", "half-sleeve"] },
-  { slug: "full-sleeve", title: "Full Sleeve", tone: "dark", related: ["half-sleeve", "formal", "regular"] },
-  { slug: "half-sleeve", title: "Half Sleeve", tone: "sand", related: ["full-sleeve", "casual", "formal"] },
-  { slug: "giza-cotton", title: "Giza Cotton", tone: "stone", related: ["giza-satin", "premium-cotton", "pure-cotton"] },
-  { slug: "giza-satin", title: "Giza Satin", tone: "warm", related: ["giza-cotton", "premium-cotton", "pure-cotton"] },
-  { slug: "premium-cotton", title: "Premium Cotton", tone: "cool", related: ["giza-cotton", "giza-satin", "pure-cotton"] },
-  { slug: "pure-cotton", title: "Pure Cotton", tone: "olive", related: ["giza-cotton", "giza-satin", "premium-cotton"] },
+  { slug: "all", title: "All Shirts", tone: "stone", related: ["formal", "regular", "casual", "giza-cotton"], description: "Every RILUX shirt in one place: formal, regular and casual cuts in Giza cotton, satin and premium cotton." },
+  { slug: "new-in", title: "New In", tone: "warm", related: ["formal", "regular", "casual"], description: "The latest additions to the collection, from new fabric lines to fresh shades of our signature shirts." },
+  { slug: "formal", title: "Formal Shirts", tone: "cool", related: ["regular", "casual", "full-sleeve", "giza-cotton"], description: "Sharp collars, clean plackets and a close, tailored line. Made for the boardroom, the office and every occasion that calls for a little polish." },
+  { slug: "regular", title: "Regular Shirts", tone: "sand", related: ["formal", "casual", "full-sleeve"], description: "Easy, versatile shirts with a comfortable regular fit. Thoughtful details like double pockets, back yokes and contrast collars take them from the workweek to the weekend." },
+  { slug: "casual", title: "Casual Shirts", tone: "olive", related: ["formal", "regular", "half-sleeve"], description: "Relaxed cuts and roll-up sleeves for slower days. Soft, breathable cotton that looks put-together without trying too hard." },
+  { slug: "full-sleeve", title: "Full Sleeve", tone: "dark", related: ["half-sleeve", "formal", "regular"], description: "Full sleeves with button cuffs, wear them buttoned for the office or rolled for the evening." },
+  { slug: "half-sleeve", title: "Half Sleeve", tone: "sand", related: ["full-sleeve", "casual", "formal"], description: "Half sleeves for warm days and travel, with all the finish of our full-sleeve shirts." },
+  { slug: "giza-cotton", title: "Giza Cotton", tone: "stone", related: ["giza-satin", "premium-cotton", "pure-cotton"], description: "Woven from extra-long-staple Egyptian Giza cotton, prized for its softness, strength and quiet natural sheen." },
+  { slug: "giza-satin", title: "Giza Satin", tone: "warm", related: ["giza-cotton", "premium-cotton", "pure-cotton"], description: "Giza cotton in a satin weave, for a smooth, lustrous finish made for evenings and celebrations." },
+  { slug: "premium-cotton", title: "Premium Cotton", tone: "cool", related: ["giza-cotton", "giza-satin", "pure-cotton"], description: "Dense, crisp premium cotton that holds its shape and stays sharp from morning to night." },
+  { slug: "pure-cotton", title: "Pure Cotton", tone: "olive", related: ["giza-cotton", "giza-satin", "premium-cotton"], description: "Breathable 100% cotton for everyday comfort, easy to wear and easy to care for." },
 ];
 
 export const getCollection = (slug: string) => collections.find((c) => c.slug === slug);

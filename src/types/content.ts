@@ -49,6 +49,8 @@ export interface Collection {
   tone: PlaceholderTone;
   /** Sibling/sub collections shown in the pill scroller at the top of the page */
   related?: string[];
+  /** Short intro shown under the title on the collection page */
+  description?: string;
 }
 
 export interface Tile {

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Mail, MessageCircle, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
+import { WhatsAppLogo } from "@/components/WhatsAppLogo";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { SocialButtons } from "@/components/SocialButtons";
 import { brandName, contact, footerColumns, paymentMethods, whatsappHref } from "@/lib/content";
@@ -53,7 +54,7 @@ export function Footer() {
             </li>
             <li>
               <a href={whatsappHref()} target="_blank" rel="noopener noreferrer" className={`${link} inline-flex items-center gap-2`}>
-                <MessageCircle className="size-[15px]" strokeWidth={1.5} aria-hidden />
+                <WhatsAppLogo className="size-[15px]" />
                 Chat on WhatsApp
               </a>
             </li>

@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { MessageCircle } from "lucide-react";
+import { WhatsAppLogo } from "@/components/WhatsAppLogo";
 import { whatsappHref } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
@@ -23,7 +23,7 @@ export function WhatsAppButton() {
         onProduct ? "bottom-[136px]" : "bottom-[76px]",
       )}
     >
-      <MessageCircle className="size-[26px]" strokeWidth={1.75} aria-hidden />
+      <WhatsAppLogo className="size-[28px]" />
     </a>
   );
 }
