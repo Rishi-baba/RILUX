@@ -33,7 +33,6 @@ export function ProductInfo({
 }) {
   const router = useRouter();
   const { addToCart, setOpenPanel, toggleWishlist, isWishlisted, notify, reviewsFor, hydrated } = useStore();
-  const realCount = hydrated ? reviewsFor(product.id).length : 0;
   const preview = useSamplePreview();
   const reviews = [...(hydrated ? reviewsFor(product.id) : []), ...(preview ? sampleReviewsFor(product.id) : [])];
   const avgRating = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0;
@@ -150,7 +149,7 @@ export function ProductInfo({
         <a href="#reviews" className="mt-[8px] inline-flex items-center gap-[8px] font-ui text-[12px] text-ink-soft hover:text-black">
           <Stars rating={avgRating} size={13} />
           <span className="underline underline-offset-[3px]">
-            {`${reviews.length} ${reviews.length === 1 ? "review" : "reviews"}${reviews.length > realCount ? " (incl. samples)" : ""}`}
+            {`${reviews.length} ${reviews.length === 1 ? "review" : "reviews"}`}
           </span>
         </a>
       ) : null}

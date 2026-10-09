@@ -9,7 +9,7 @@ import type { Product } from "@/types/content";
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
 
-// Customer reviews list (read-only). Sample reviews appear only on local preview hosts.
+// Customer reviews list (read-only). Sample reviews appear on preview hosts (local + Vercel demo link).
 export function ProductReviews({ product }: { product: Product }) {
   const { reviewsFor, hydrated } = useStore();
   const preview = useSamplePreview();
