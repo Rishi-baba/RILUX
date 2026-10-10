@@ -16,6 +16,9 @@ export function SidePanel({
   headerAction,
   titleIcon,
   titleClassName,
+  header,
+  bodyClassName,
+  footerClassName,
   rail,
   className,
   children,
@@ -29,6 +32,10 @@ export function SidePanel({
   /** Small icon shown before the title */
   titleIcon?: ReactNode;
   titleClassName?: string;
+  /** Replaces the default title bar (must include its own close button) */
+  header?: ReactNode;
+  bodyClassName?: string;
+  footerClassName?: string;
   /** Desktop-only column attached to the panel's inner edge (right-side panels); scrolls on its own. */
   rail?: ReactNode;
   className?: string;
@@ -79,6 +86,7 @@ export function SidePanel({
             className,
           )}
         >
+          {header ?? (
           <div className="sticky top-0 z-10 flex h-[60px] items-center justify-between border-b border-black/10 bg-white px-5">
             <h2 className={cn("flex items-center gap-[10px] font-display text-[21px] uppercase tracking-[0.04em] text-navy", titleClassName)}>
               {titleIcon}
@@ -91,8 +99,9 @@ export function SidePanel({
               </button>
             </div>
           </div>
-          <div className="flex-1 overflow-y-auto">{children}</div>
-          {footer ? <div className="border-t border-black/10 bg-white p-4">{footer}</div> : null}
+          )}
+          <div className={cn("flex-1 overflow-y-auto", bodyClassName)}>{children}</div>
+          {footer ? <div className={cn("border-t border-black/10 bg-white p-4", footerClassName)}>{footer}</div> : null}
         </div>
       </div>
     </div>,

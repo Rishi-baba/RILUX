@@ -6,7 +6,8 @@ import { cn } from "@/lib/utils";
  * Cart reward bar: three checkpoints (free shipping, 10% off, 15% off) unlocked by number of shirts.
  * Used in the cart drawer and on the cart page.
  */
-export function RewardsProgress({ shirts, className }: { shirts: number; className?: string }) {
+export function RewardsProgress({ shirts, className, tone = "light" }: { shirts: number; className?: string; tone?: "light" | "dark" }) {
+  const dark = tone === "dark";
   const next = rewardTiers.find((t) => shirts < t.shirts);
   const last = rewardTiers[rewardTiers.length - 1];
   // Checkpoints sit at 1/3, 2/3 and the end of the bar.
@@ -14,7 +15,7 @@ export function RewardsProgress({ shirts, className }: { shirts: number; classNa
 
   return (
     <div className={cn("flow-root", className)}>
-      <p className="font-ui text-[12.5px] leading-[1.45] text-ink">
+      <p className={cn("font-ui text-[12.5px] leading-[1.45]", dark ? "text-cream" : "text-ink")}>
         {next ? (
           <>
             Add <strong className="font-semibold">{next.shirts - shirts}</strong> more{" "}
@@ -35,7 +36,7 @@ export function RewardsProgress({ shirts, className }: { shirts: number; classNa
           aria-valuemin={0}
           aria-valuemax={last.shirts}
           aria-valuenow={Math.min(shirts, last.shirts)}
-          className="h-[4px] w-full overflow-hidden rounded-full bg-navy/10"
+          className={cn("h-[4px] w-full overflow-hidden rounded-full", dark ? "bg-white/15" : "bg-navy/10")}
         >
           <div
             className="h-full rounded-full bg-gradient-to-r from-gold-deep to-gold transition-[width] duration-500 ease-theme"
@@ -54,7 +55,9 @@ export function RewardsProgress({ shirts, className }: { shirts: number; classNa
               <span
                 className={cn(
                   "flex size-[24px] items-center justify-center rounded-full border transition-colors duration-300",
-                  unlocked ? "border-navy bg-navy text-gold" : "border-navy/20 bg-white text-navy/45",
+                  unlocked
+                    ? dark ? "border-gold bg-gold text-navy" : "border-navy bg-navy text-gold"
+                    : dark ? "border-white/25 bg-navy text-cream/60" : "border-navy/20 bg-white text-navy/45",
                 )}
               >
                 <Icon size={13} weight={unlocked ? "bold" : "regular"} aria-hidden />
@@ -62,7 +65,7 @@ export function RewardsProgress({ shirts, className }: { shirts: number; classNa
               <span
                 className={cn(
                   "absolute top-[28px] whitespace-nowrap font-ui text-[10px] font-medium uppercase tracking-[0.06em]",
-                  unlocked ? "text-navy" : "text-stone",
+                  unlocked ? (dark ? "text-gold" : "text-navy") : dark ? "text-cream/55" : "text-stone",
                   tier === last && "right-0",
                 )}
               >
