@@ -120,6 +120,8 @@ export function CartDrawer() {
       open={openPanel === "cart"}
       onClose={close}
       title={`Your Cart (${count})`}
+      titleIcon={<BagIcon size={22} weight="regular" aria-hidden />}
+      titleClassName="font-semibold"
       footer={footer}
       className="md:max-w-[380px]"
     >

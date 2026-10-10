@@ -17,9 +17,10 @@ const columns = "sm:grid sm:grid-cols-[minmax(0,1fr)_128px_112px_40px] sm:items-
 function PageHeading({ count }: { count?: number }) {
   return (
     <div className="mx-auto max-w-[1180px] px-[16px] pb-[24px] pt-[32px] md:px-[24px] md:pb-[32px] md:pt-[48px]">
-      <h1 className="font-display text-[36px] leading-none text-navy md:text-[46px]">
+      <h1 className="flex items-center gap-[12px] font-display text-[36px] font-semibold leading-none text-navy md:text-[46px]">
+        <ShoppingBag className="size-[30px] flex-none md:size-[36px]" weight="regular" aria-hidden />
         Your Cart
-        {count ? <span className="ml-[10px] align-middle font-ui text-[14px] text-stone md:text-[15px]">({count})</span> : null}
+        {count ? <span className="font-ui text-[14px] font-normal text-stone md:text-[15px]">({count})</span> : null}
       </h1>
     </div>
   );
