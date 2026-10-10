@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, LayoutGrid } from "lucide-react";
+import { Home, LayoutGrid } from "@/components/icons";
 import { HeartIcon, UserIcon } from "@/components/icons";
 import { routes } from "@/lib/content";
 import { useStore } from "@/lib/store";

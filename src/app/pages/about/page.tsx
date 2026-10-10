@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Leaf, Ruler, Scissors, Sparkles } from "lucide-react";
+import { Leaf, Ruler, Scissors, Sparkles } from "@/components/icons";
 import { primaryButtonClass } from "@/components/info/fields";
 import { PageHero } from "@/components/info/PageHero";
 import { Placeholder, type PlaceholderTone } from "@/components/Placeholder";
@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "The story behind RILUX: premium shirts in Giza cotton, tailored to last.",
+  description: "RILUX is an Indian label that makes men's shirts in Giza and pure cotton.",
 };
 
 const rows: { heading: string; tone: PlaceholderTone; body: [string, string] }[] = [
@@ -18,33 +18,33 @@ const rows: { heading: string; tone: PlaceholderTone; body: [string, string] }[]
     heading: "It Starts With the Cloth",
     tone: "sand",
     body: [
-      "Most of our shirts are woven from Giza cotton, an extra-long-staple Egyptian cotton prized for its softness, strength and natural lustre.",
-      "Alongside it sit satin weaves and premium cottons, each chosen for how it feels against the skin and how it wears over time.",
+      "Many of our shirts use Giza cotton from Egypt. Its fibres are longer than regular cotton, which makes the cloth softer, stronger and slightly shiny.",
+      "We also use Giza satin for evening shirts, a crisp premium cotton for office wear and 100% cotton for everyday shirts.",
     ],
   },
   {
-    heading: "Cut for the Way You Move",
+    heading: "Fit Comes First",
     tone: "olive",
     body: [
-      "Formal, regular or casual, every RILUX shirt is cut to sit cleanly through the shoulders and chest without restricting you.",
-      "Full sleeves for the boardroom, half sleeves for warmer days, all finished to the same standard.",
+      "We try every pattern on people of different builds before it goes into production, and adjust until the shoulders and chest sit right.",
+      "Formal shirts are cut closer. Regular and casual shirts have more room. The size guide tells you exactly how each one measures.",
     ],
   },
   {
-    heading: "Small Details, Done Properly",
+    heading: "The Small Things",
     tone: "cool",
     body: [
-      "Hidden plackets, self-fold fronts, double pockets and contrast collars: the details are what make a shirt yours.",
-      "We keep them simple and execute them carefully, so the shirt looks right every time you wear it.",
+      "Hidden plackets, French fronts, double pockets and chambray-lined collars. Each style has one or two details that set it apart.",
+      "Buttons are sewn on tight, seams are finished inside, and every shirt is checked by hand before it's folded and packed.",
     ],
   },
 ];
 
 const values = [
-  { icon: Scissors, title: "Craft", line: "Patterns refined and finished with care." },
-  { icon: Leaf, title: "Fabric First", line: "Only fine, long-staple cottons make the cut." },
-  { icon: Ruler, title: "Fit", line: "Shapes that flatter without feeling tight." },
-  { icon: Sparkles, title: "Longevity", line: "Shirts that look better the more you wear them." },
+  { icon: Scissors, title: "Craft", line: "Cut and stitched in India." },
+  { icon: Leaf, title: "Fabric", line: "Giza, satin and premium cottons." },
+  { icon: Ruler, title: "Fit", line: "Tested on real people, S to XXL." },
+  { icon: Sparkles, title: "Durability", line: "Holds up wash after wash." },
 ];
 
 export default function AboutPage() {
@@ -56,8 +56,7 @@ export default function AboutPage() {
 
       <section className="mx-auto max-w-[760px] px-4 py-12 text-center md:py-16">
         <p className="font-display text-[22px] leading-[1.4] text-black md:text-[28px]">
-          RILUX makes one thing: the shirt. We start with the finest cottons we can find and cut them into shirts
-          that feel as good at the end of the day as they did when you put them on.
+          RILUX is a shirt label from India. We make formal, regular and casual shirts for men, and nothing else.
         </p>
       </section>
 

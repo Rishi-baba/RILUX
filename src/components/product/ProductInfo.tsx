@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Feather, Minus, Plus, Ruler, Share2, Shirt, Sparkles, type LucideIcon } from "lucide-react";
+import { Feather, Minus, Plus, Ruler, Share2, Shirt, Sparkles, type IconType as LucideIcon } from "@/components/icons";
 
 import { HeartIcon } from "@/components/icons";
 import { Stars } from "@/components/Stars";
@@ -32,24 +32,23 @@ export function ProductInfo({
   onColorChange: (i: number) => void;
 }) {
   const router = useRouter();
-  const { addToCart, setOpenPanel, toggleWishlist, isWishlisted, notify, reviewsFor, hydrated } = useStore();
+  const { cart, addToCart, updateQuantity, toggleWishlist, isWishlisted, notify, reviewsFor, hydrated } = useStore();
   const preview = useSamplePreview();
   const reviews = [...(hydrated ? reviewsFor(product.id) : []), ...(preview ? sampleReviewsFor(product.id) : [])];
   const avgRating = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0;
   const [size, setSize] = useState<string | null>(null);
-  const [quantity, setQuantity] = useState(1);
   const [sizeError, setSizeError] = useState(false);
   const [guideOpen, setGuideOpen] = useState(false);
   const [showBar, setShowBar] = useState(false);
   const sizeGridRef = useRef<HTMLDivElement>(null);
-  const addBtnRef = useRef<HTMLButtonElement>(null);
+  const actionsRef = useRef<HTMLDivElement>(null);
 
   const wishlisted = isWishlisted(product.id);
   const color = product.colors[colorIndex];
 
   // Mobile sticky bar: show once the main Add to cart button has scrolled above the viewport.
   useEffect(() => {
-    const el = addBtnRef.current;
+    const el = actionsRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(([entry]) => {
       setShowBar(!entry.isIntersecting && entry.boundingClientRect.top < 0);
@@ -76,21 +75,74 @@ export function ProductInfo({
     return false;
   };
 
-  const add = () => {
-    if (!size) return false;
-    addToCart({ productId: product.id, size, color: color?.name ?? "" }, quantity);
-    return true;
-  };
+  // Cart line for the selected size + colour; once it exists the Add button becomes a stepper.
+  const lineIndex = hydrated && size
+    ? cart.findIndex((l) => l.productId === product.id && l.size === size && l.color === (color?.name ?? ""))
+    : -1;
+  const inCart = lineIndex >= 0 ? cart[lineIndex].quantity : 0;
 
   const onAddToCart = () => {
-    if (!requireSize() || !add()) return;
-    setOpenPanel("cart");
+    if (!requireSize() || !size) return;
+    addToCart({ productId: product.id, size, color: color?.name ?? "" });
+    notify(`Added to cart · Size ${size}`);
+  };
+
+  const changeQty = (delta: 1 | -1) => {
+    if (lineIndex < 0) return;
+    const next = Math.min(10, inCart + delta);
+    updateQuantity(lineIndex, next);
+    if (next === 0) notify("Removed from cart");
   };
 
   const onBuyNow = () => {
-    if (!requireSize() || !add()) return;
+    if (!requireSize() || !size) return;
+    if (!inCart) addToCart({ productId: product.id, size, color: color?.name ?? "" });
     router.push(routes.checkout);
   };
+
+  /** Add to cart, or a −/+ stepper when this size is already in the cart. */
+  const cartControl = (variant: "main" | "bar") =>
+    inCart > 0 ? (
+      <div
+        className={cn(
+          "flex items-center justify-between bg-navy text-white",
+          variant === "main" ? "h-[50px] flex-1" : "h-[44px] w-[150px] flex-none",
+        )}
+      >
+        <button
+          type="button"
+          onClick={() => changeQty(-1)}
+          aria-label="Remove one"
+          className="flex h-full w-[48px] items-center justify-center transition-colors hover:bg-white/10"
+        >
+          <Minus className="size-[16px]" weight="bold" />
+        </button>
+        <span aria-live="polite" className="font-ui text-[13px] font-medium tracking-[0.06em]">
+          {inCart} in cart
+        </span>
+        <button
+          type="button"
+          onClick={() => changeQty(1)}
+          disabled={inCart >= 10}
+          aria-label="Add one more"
+          className="flex h-full w-[48px] items-center justify-center transition-colors hover:bg-white/10 disabled:opacity-40"
+        >
+          <Plus className="size-[16px]" weight="bold" />
+        </button>
+      </div>
+    ) : variant === "main" ? (
+      <button type="button" onClick={onAddToCart} className={cn(actionBtn, "border border-navy bg-white text-navy")}>
+        Add to cart
+      </button>
+    ) : (
+      <button
+        type="button"
+        onClick={onAddToCart}
+        className="h-[44px] flex-none bg-navy px-[22px] font-ui text-[13px] uppercase tracking-[0.1em] text-white"
+      >
+        Add to cart
+      </button>
+    );
 
   const onWishlist = () => {
     toggleWishlist(product.id);
@@ -130,7 +182,8 @@ export function ProductInfo({
             className="flex size-[36px] items-center justify-center text-black"
           >
             <HeartIcon
-              className={cn("size-[20px]", wishlisted && "fill-black")}
+              className="size-[20px]"
+              fill={wishlisted ? "currentColor" : "none"}
               strokeWidth={1.5}
             />
           </button>
@@ -214,7 +267,7 @@ export function ProductInfo({
                 className={cn(
                   "h-[44px] border font-ui text-[14px] transition-colors",
                   selected
-                    ? "border-[1.5px] border-black bg-black text-white"
+                    ? "border-[1.5px] border-navy bg-navy text-white"
                     : "border-black/20 text-black hover:border-black",
                 )}
               >
@@ -260,40 +313,10 @@ export function ProductInfo({
         </div>
       ) : null}
 
-      {/* Quantity + actions */}
-      <div className="mt-[24px] flex h-[46px] w-[130px] items-center justify-between border border-black/20">
-        <button
-          type="button"
-          aria-label="Decrease quantity"
-          disabled={quantity <= 1}
-          onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-          className="flex h-full w-[42px] items-center justify-center text-black disabled:opacity-30"
-        >
-          <Minus className="size-[16px]" strokeWidth={1.5} />
-        </button>
-        <span aria-live="polite" aria-label={`Quantity ${quantity}`} className="font-ui text-[14px] text-black">
-          {quantity}
-        </span>
-        <button
-          type="button"
-          aria-label="Increase quantity"
-          onClick={() => setQuantity((q) => Math.min(10, q + 1))}
-          className="flex h-full w-[42px] items-center justify-center text-black"
-        >
-          <Plus className="size-[16px]" strokeWidth={1.5} />
-        </button>
-      </div>
-
-      <div className="mt-[12px] flex gap-[10px]">
-        <button
-          ref={addBtnRef}
-          type="button"
-          onClick={onAddToCart}
-          className={cn(actionBtn, "border border-black bg-white text-black")}
-        >
-          Add to cart
-        </button>
-        <button type="button" onClick={onBuyNow} className={cn(actionBtn, "bg-brand text-white")}>
+      {/* Actions */}
+      <div ref={actionsRef} className="mt-[24px] flex gap-[10px]">
+        {cartControl("main")}
+        <button type="button" onClick={onBuyNow} className={cn(actionBtn, "bg-navy text-white")}>
           Buy it now
         </button>
       </div>
@@ -327,13 +350,7 @@ export function ProductInfo({
           <p className="truncate font-display text-[15px] capitalize text-black">{product.title}</p>
           <p className="font-ui text-[14px] text-black">{product.price}</p>
         </div>
-        <button
-          type="button"
-          onClick={onAddToCart}
-          className="h-[44px] flex-none bg-brand px-[22px] font-ui text-[13px] uppercase tracking-[0.1em] text-white"
-        >
-          Add to cart
-        </button>
+        {cartControl("bar")}
       </div>
 
       <SizeGuide open={guideOpen} onClose={() => setGuideOpen(false)} />

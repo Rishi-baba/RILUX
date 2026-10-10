@@ -14,7 +14,7 @@ export const primaryButtonClass =
   "flex h-[50px] w-full items-center justify-center bg-brand font-ui text-[14px] uppercase tracking-[0.1em] text-white transition-opacity duration-200 ease-theme hover:opacity-90 disabled:opacity-60";
 
 export const secondaryButtonClass =
-  "inline-flex h-[44px] items-center justify-center border border-black px-[20px] font-ui text-[13px] uppercase tracking-[0.1em] text-black transition-colors duration-200 ease-theme hover:bg-black hover:text-white";
+  "inline-flex h-[44px] items-center justify-center border border-black px-[20px] font-ui text-[13px] uppercase tracking-[0.1em] text-black transition-colors duration-200 ease-theme hover:bg-navy hover:border-navy hover:text-white";
 
 export const linkClass = "font-ui text-[13px] text-black underline underline-offset-4 hover:text-brand";
 

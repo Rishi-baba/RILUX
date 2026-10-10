@@ -62,7 +62,7 @@ function QuickAdd({ product }: { product: Product }) {
             notify("Added to cart");
             setOpenPanel("cart");
           }}
-          className="min-w-[28px] border border-black/20 px-[5px] py-[3px] leading-none transition-colors duration-200 hover:border-black hover:bg-black hover:text-white"
+          className="min-w-[28px] border border-black/20 px-[5px] py-[3px] leading-none transition-colors duration-200 hover:border-navy hover:bg-navy hover:text-white"
         >
           {size}
         </button>

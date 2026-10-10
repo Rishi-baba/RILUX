@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 // Shared form styling for the info pages (front-end only forms).
@@ -15,7 +15,7 @@ export const primaryButtonClass =
   "inline-flex h-[50px] items-center justify-center gap-2 rounded-[4px] bg-brand px-8 font-ui text-[13px] font-semibold uppercase tracking-[0.1em] text-white transition-opacity hover:opacity-90 disabled:opacity-50";
 
 export const secondaryButtonClass =
-  "inline-flex h-[50px] items-center justify-center gap-2 rounded-[4px] border border-black px-8 font-ui text-[13px] font-semibold uppercase tracking-[0.1em] text-black transition-colors hover:bg-black hover:text-white";
+  "inline-flex h-[50px] items-center justify-center gap-2 rounded-[4px] border border-black px-8 font-ui text-[13px] font-semibold uppercase tracking-[0.1em] text-black transition-colors hover:bg-navy hover:border-navy hover:text-white";
 
 export const isEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 

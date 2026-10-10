@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Banknote, RefreshCcw, Truck } from "lucide-react";
+import { Banknote, RefreshCcw, Truck } from "@/components/icons";
 import { deliveryDays } from "@/lib/content";
 
 const fmt = (d: Date) => d.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" });

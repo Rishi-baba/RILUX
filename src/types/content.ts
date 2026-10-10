@@ -90,6 +90,8 @@ export interface FabricSlide {
   title: string;
   body: string;
   tone: PlaceholderTone;
+  /** small line under the text, e.g. the shirt a customer bought */
+  meta?: string;
 }
 
 export interface FooterLink {
@@ -136,4 +138,9 @@ export interface ProductReview {
   size?: string;
   fit?: ReviewFit;
   createdAt: string;
+  city?: string;
+  /** e.g. 5'10", 75 kg */
+  build?: string;
+  helpful?: number;
+  verified?: boolean;
 }

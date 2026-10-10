@@ -39,10 +39,10 @@ const categories: FaqCategory[] = [
   {
     name: "Products",
     items: [
-      { q: "What is Giza cotton?", a: "Giza cotton is an extra-long-staple Egyptian cotton. Its long fibres make a fabric that is softer, stronger and more lustrous than regular cotton." },
+      { q: "What is Giza cotton?", a: "A cotton grown in Egypt with extra-long fibres. Fabric made from it is softer and stronger than regular cotton, and has a slight shine." },
       { q: "How do I find my size?", a: "Open the size guide on any product page for garment measurements and tips on how to measure." },
-      { q: "How should I care for my shirt?", a: "Machine wash cold on a gentle cycle, avoid bleach and iron on medium heat. Care details are listed on every product page." },
-      { q: "What is the difference between formal, regular and casual fits?", a: "Formal shirts have a cleaner, sharper line for the office; regular shirts are versatile everyday fits; casual shirts are relaxed for off-duty days." },
+      { q: "How should I care for my shirt?", a: "Machine wash warm on a delicate cycle with similar colours. Don't bleach. Iron on medium heat. The care label inside every shirt says the same." },
+      { q: "What is the difference between formal, regular and casual fits?", a: "Formal shirts are cut closer to the body for a neat look when tucked in. Regular shirts have a bit more room. Casual shirts are the loosest and are meant to be worn untucked." },
     ],
   },
   {
@@ -51,6 +51,7 @@ const categories: FaqCategory[] = [
       { q: "Which payment methods do you accept?", a: "We accept UPI, cards, net banking and cash on delivery." },
       { q: "Is it safe to pay online?", a: "Online payments are handled by a secure payment provider; we never see or store your card details." },
       { q: "Are prices inclusive of taxes?", a: "Yes, all prices shown include applicable taxes." },
+      { q: "Do you have any multi-buy offers?", a: "Yes. Buy any 2 shirts and get 10% off. Buy 3 or more and get 15% off. The discount is applied automatically in your cart." },
     ],
   },
 ];

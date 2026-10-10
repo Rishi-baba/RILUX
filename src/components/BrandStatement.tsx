@@ -3,17 +3,16 @@ export function BrandStatement() {
   return (
     <section className="mx-auto max-w-[1000px] px-[20px] py-[48px] text-center md:py-[72px]">
       <h2 className="font-display text-[30px] font-normal leading-[1.15] text-black md:text-[48px]">
-        Shirts, Considered From the Thread Up.
+        We Only Make Shirts.
       </h2>
       <div className="mx-auto mt-[20px] max-w-[880px] space-y-[18px] font-ui text-[15px] leading-[1.75] text-ink-soft md:mt-[28px] md:text-[17px]">
         <p>
-          A great shirt does its work quietly. It holds a crisp line through a long day, softens with every wash, and
-          never asks for attention it hasn&apos;t earned.
+          That&apos;s on purpose. When you make one thing, you can spend your time on what matters: the fabric, the fit
+          and the small bits most people never notice, like how the collar sits or whether a button stays on.
         </p>
         <p>
-          At RILUX we start with extra-long-staple Giza cotton and fine satin weaves, cut them into formal, regular and
-          casual shapes, and finish every collar, cuff and placket to the same standard. The result is a shirt you reach
-          for without thinking, and keep wearing for years.
+          Our shirts are made in Giza cotton, Giza satin, premium cotton and pure cotton, in formal, regular and casual
+          fits. Every one is cut and stitched in India and checked by hand before it is packed.
         </p>
       </div>
     </section>

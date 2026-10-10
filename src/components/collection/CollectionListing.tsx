@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
-import { X } from "lucide-react";
+import { X } from "@/components/icons";
 import { ProductCard } from "@/components/ProductCard";
 import { formatPrice } from "@/lib/content";
 import { cn } from "@/lib/utils";

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, ChevronDown, Info, ShoppingBag } from "lucide-react";
+import { ArrowLeft, ChevronDown, Info, ShoppingBag } from "@/components/icons";
 import {
   AddressFields,
   emptyAddress,
@@ -17,6 +17,7 @@ import {
   EXPRESS_FEE,
   LAST_ORDER_KEY,
   paymentLabels,
+  rewardDiscount,
   shippingFor,
   shippingLabels,
   standardFee,
@@ -90,7 +91,7 @@ function CheckoutSkeleton() {
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { cart, cartSubtotal, hydrated, user, placeOrder } = useStore();
+  const { cart, cartSubtotal, cartCount, hydrated, user, placeOrder } = useStore();
   const placingRef = useRef(false);
 
   const [step, setStep] = useState<Step>(1);
@@ -116,10 +117,12 @@ export default function CheckoutPage() {
   }, [hydrated, cart.length, router]);
 
   const shipping = step >= 2 ? shippingFor(cartSubtotal, method) : null;
+  const discount = rewardDiscount(cartSubtotal, cartCount);
   const totals: Totals = {
     subtotal: cartSubtotal,
+    discount,
     shipping,
-    total: cartSubtotal + (shipping ?? 0),
+    total: cartSubtotal - discount + (shipping ?? 0),
   };
 
   const focusFirstError = () => {
@@ -162,7 +165,7 @@ export default function CheckoutPage() {
     }
     const lines = cart;
     const finalShipping = shippingFor(cartSubtotal, method);
-    const finalTotal = cartSubtotal + finalShipping;
+    const finalTotal = cartSubtotal - discount + finalShipping;
     placingRef.current = true;
     const order = placeOrder(finalTotal);
     if (!order) {
@@ -178,6 +181,7 @@ export default function CheckoutPage() {
       payment,
       lines,
       subtotal: cartSubtotal,
+      discount,
       shipping: finalShipping,
       total: finalTotal,
     };

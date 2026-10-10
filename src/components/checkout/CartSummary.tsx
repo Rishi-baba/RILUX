@@ -1,43 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { Headphones, RotateCcw, ShieldCheck, Truck, type LucideIcon } from "lucide-react";
-import { standardFee } from "@/components/checkout/pricing";
-import { formatPrice, freeShippingThreshold, routes, trustPoints } from "@/lib/content";
+import { Headphones, RotateCcw, ShieldCheck, Truck, type IconType as LucideIcon } from "@/components/icons";
+import { RewardsProgress } from "@/components/RewardsProgress";
+import { rewardDiscount, rewardPercent, standardFee } from "@/components/checkout/pricing";
+import { formatPrice, routes, trustPoints } from "@/lib/content";
 
 const trustIcons: LucideIcon[] = [RotateCcw, Headphones, Truck, ShieldCheck];
 
-/** Right-hand summary card on /cart: free-shipping progress, note, totals, checkout CTA. */
-export function CartSummary({ subtotal }: { subtotal: number }) {
+/** Right-hand summary card on /cart: reward progress, note, totals, checkout CTA. */
+export function CartSummary({ subtotal, shirts }: { subtotal: number; shirts: number }) {
   const shipping = standardFee(subtotal);
-  const total = subtotal + shipping;
-  const remaining = Math.max(0, freeShippingThreshold - subtotal);
-  const progress = Math.min(100, (subtotal / freeShippingThreshold) * 100);
+  const discount = rewardDiscount(subtotal, shirts);
+  const total = subtotal - discount + shipping;
 
   return (
     <aside className="bg-mist p-[28px] md:sticky md:top-[90px]" aria-label="Order summary">
-      <p className="font-ui text-[13px] text-black">
-        {remaining > 0 ? (
-          <>
-            You are <strong className="font-semibold">{formatPrice(remaining)}</strong> away from free shipping
-          </>
-        ) : (
-          "Your order qualifies for free shipping"
-        )}
-      </p>
-      <div
-        className="mt-2.5 h-[4px] w-full overflow-hidden rounded-full bg-black/10"
-        role="progressbar"
-        aria-label="Progress to free shipping"
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={Math.round(progress)}
-      >
-        <div
-          className="h-full origin-left bg-brand transition-transform duration-500 ease-theme"
-          style={{ transform: `scaleX(${progress / 100})` }}
-        />
-      </div>
+      <RewardsProgress shirts={shirts} />
 
       <label htmlFor="cart-note" className="mt-6 block font-ui text-[12px] text-stone">
         Add a note to your order
@@ -53,6 +32,12 @@ export function CartSummary({ subtotal }: { subtotal: number }) {
           <dt className="text-ink-soft">Subtotal</dt>
           <dd>{formatPrice(subtotal)}</dd>
         </div>
+        {discount > 0 ? (
+          <div className="flex justify-between text-[#2f6b3a]">
+            <dt>Multi-shirt offer ({rewardPercent(shirts)}% off)</dt>
+            <dd>−{formatPrice(discount)}</dd>
+          </div>
+        ) : null}
         <div className="flex justify-between">
           <dt className="text-ink-soft">Shipping</dt>
           <dd>{shipping === 0 ? "Free" : formatPrice(shipping)}</dd>

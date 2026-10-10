@@ -1,10 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { X } from "lucide-react";
+import { X } from "@/components/icons";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/icons";
-import { Play } from "lucide-react";
+import { Play } from "@/components/icons";
 import { Placeholder, type PlaceholderTone } from "@/components/Placeholder";
 import { cn } from "@/lib/utils";
 

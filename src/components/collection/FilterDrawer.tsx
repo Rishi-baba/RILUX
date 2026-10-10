@@ -143,7 +143,7 @@ export function FilterDrawer({
                     key={s}
                     className={cn(
                       "flex h-[40px] min-w-[48px] cursor-pointer items-center justify-center border px-[10px] font-ui text-[13px] transition-colors has-[:focus-visible]:outline has-[:focus-visible]:outline-2",
-                      checked ? "border-black bg-black text-white" : "border-black/20 text-ink hover:border-black",
+                      checked ? "border-navy bg-navy text-white" : "border-black/20 text-ink hover:border-black",
                     )}
                   >
                     <input
@@ -194,7 +194,7 @@ function CheckList({
 }
 
 const thumb =
-  "[&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:size-[16px] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:bg-black [&::-webkit-slider-thumb]:shadow [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:size-[14px] [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:bg-black";
+  "[&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:size-[16px] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:bg-navy [&::-webkit-slider-thumb]:shadow [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:size-[14px] [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:bg-navy";
 
 function PriceFacet({
   max,
@@ -222,7 +222,7 @@ function PriceFacet({
       <div className="relative mb-[24px] h-[20px]">
         <div className="absolute inset-x-0 top-1/2 h-[2px] -translate-y-1/2 bg-black/10" />
         <div
-          className="absolute top-1/2 h-[2px] -translate-y-1/2 bg-black"
+          className="absolute top-1/2 h-[2px] -translate-y-1/2 bg-navy"
           style={{ left: `${pct(lo)}%`, right: `${100 - pct(hi)}%` }}
         />
         <input

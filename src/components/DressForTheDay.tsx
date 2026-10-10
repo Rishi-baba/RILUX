@@ -49,7 +49,7 @@ export function DressForTheDay() {
                     aria-pressed={i === active}
                     className={cn(
                       "rounded-full border px-[18px] py-[10px] transition-colors",
-                      i === active ? "border-black bg-black text-white" : "border-black/15 text-ink",
+                      i === active ? "border-navy bg-navy text-white" : "border-black/15 text-ink",
                     )}
                   >
                     <span className="font-display text-[15px] uppercase tracking-[0.04em]">{o.title}</span>

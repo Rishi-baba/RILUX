@@ -2,7 +2,7 @@
 
 import { useMemo, type ReactNode } from "react";
 import Link from "next/link";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "@/components/icons";
 import { formatAddress } from "@/components/checkout/AddressFields";
 import { SummaryLines, TotalsList } from "@/components/checkout/OrderSummary";
 import {
@@ -20,6 +20,7 @@ interface ViewOrder {
   id: string;
   lines: CartLine[];
   subtotal: number;
+  discount?: number;
   shipping: number | null;
   total: number;
   detail: Pick<LastOrder, "email" | "address" | "method" | "payment"> | null;
@@ -58,6 +59,7 @@ export default function CheckoutSuccessPage() {
         id: last.id,
         lines: last.lines,
         subtotal: last.subtotal,
+        discount: last.discount,
         shipping: last.shipping,
         total: last.total,
         detail: { email: last.email, address: last.address, method: last.method, payment: last.payment },
@@ -135,6 +137,7 @@ export default function CheckoutSuccessPage() {
           <TotalsList
             totals={{
               subtotal: order.subtotal,
+              discount: order.discount,
               shipping: order.shipping,
               total: order.total,
             }}

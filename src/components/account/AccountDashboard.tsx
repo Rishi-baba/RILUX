@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Heart } from "lucide-react";
+import { ArrowRight, Heart } from "@/components/icons";
 
 import { AddressesPanel } from "@/components/account/AddressesPanel";
 import { DetailsPanel } from "@/components/account/DetailsPanel";

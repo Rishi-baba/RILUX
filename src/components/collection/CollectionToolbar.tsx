@@ -1,6 +1,6 @@
 "use client";
 
-import { SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { SortMenu } from "./SortMenu";
 import type { SortValue } from "./filters";

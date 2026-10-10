@@ -1,4 +1,4 @@
-import { Banknote, Headphones, RefreshCcw, Truck, type LucideIcon } from "lucide-react";
+import { Banknote, Headphones, RefreshCcw, Truck, type IconType as LucideIcon } from "@/components/icons";
 
 import { trustPoints } from "@/lib/content";
 

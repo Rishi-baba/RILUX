@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo_Narrow, Cormorant_Garamond, Montserrat } from "next/font/google";
+import { EB_Garamond, Montserrat } from "next/font/google";
 import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -9,30 +9,24 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { StoreProvider } from "@/lib/store";
 import "./globals.css";
 
-// Body/nav face (matches source exactly — free Google font)
-const archivoNarrow = Archivo_Narrow({
-  variable: "--font-archivo-narrow",
+// Brand typography (RILUX brand sheet): Garamond for headlines, Montserrat for body text.
+// EB Garamond is the open-licence stand-in for Garamond Premier Pro.
+const garamond = EB_Garamond({
+  variable: "--font-garamond",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
-// Display serif — open stand-in for the source's licensed display face
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-});
-
-// UI sans — open stand-in for the source's licensed geometric sans
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: { default: "Rilux", template: "%s | Rilux" },
-  description: "RILUX — premium men's shirts in Giza cotton, tailored to last.",
+  title: { default: "RILUX | Men's Shirts", template: "%s | RILUX" },
+  description: "RILUX makes men's shirts in Giza and pure cotton: formal, regular and casual cuts, made in India.",
 };
 
 export default function RootLayout({
@@ -43,7 +37,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${archivoNarrow.variable} ${cormorant.variable} ${montserrat.variable} antialiased`}
+      className={`${garamond.variable} ${montserrat.variable} antialiased`}
     >
       {/* Extensions (e.g. ColorZilla) inject attributes on <body> before hydration */}
       <body suppressHydrationWarning>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ClipboardList, PackageCheck, RefreshCcw } from "lucide-react";
+import { ClipboardList, PackageCheck, RefreshCcw } from "@/components/icons";
 import { PageHero } from "@/components/info/PageHero";
 import { ReturnForm } from "@/components/info/ReturnForm";
 import { routes } from "@/lib/content";

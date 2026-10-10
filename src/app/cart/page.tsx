@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag } from "@/components/icons";
 import { CartLineItem } from "@/components/CartLineItem";
 import { ProductScroller } from "@/components/ProductScroller";
 import { CartSummary } from "@/components/checkout/CartSummary";
@@ -33,7 +33,7 @@ function CartSkeleton() {
 }
 
 export default function CartPage() {
-  const { cart, cartSubtotal, clearCart, hydrated } = useStore();
+  const { cart, cartSubtotal, cartCount, clearCart, hydrated } = useStore();
   const [confirmClear, setConfirmClear] = useState(false);
 
   const alsoLike = useMemo(() => {
@@ -128,7 +128,7 @@ export default function CartPage() {
             )}
           </div>
         </section>
-        <CartSummary subtotal={cartSubtotal} />
+        <CartSummary subtotal={cartSubtotal} shirts={cartCount} />
       </div>
       {alsoLike.length > 0 ? <ProductScroller title="You May Also Like" items={alsoLike} /> : null}
     </>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useMemo, useState } from "react";
-import { Plus, Search } from "lucide-react";
+import { Plus, Search } from "@/components/icons";
 import { inputClass } from "@/components/info/fields";
 import { cn } from "@/lib/utils";
 

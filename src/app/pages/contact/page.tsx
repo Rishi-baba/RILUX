@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "@/components/icons";
 import { ContactForm } from "@/components/info/ContactForm";
 import { PageHero } from "@/components/info/PageHero";
 

@@ -24,6 +24,8 @@ interface Persisted {
   user: MockUser | null;
   orders: MockOrder[];
   reviews: ProductReview[];
+  /** product ids, most recent first */
+  recent: string[];
 }
 
 export interface Toast {
@@ -53,6 +55,8 @@ interface StoreValue extends Persisted {
   // reviews (demo, browser-only)
   addReview: (review: Omit<ProductReview, "id" | "createdAt">) => void;
   reviewsFor: (productId: string) => ProductReview[];
+  // recently viewed
+  markViewed: (productId: string) => void;
   // ui
   openPanel: Panel;
   setOpenPanel: (panel: Panel) => void;
@@ -62,7 +66,7 @@ interface StoreValue extends Persisted {
 
 const StoreContext = createContext<StoreValue | null>(null);
 
-const empty: Persisted = { cart: [], wishlist: [], user: null, orders: [], reviews: [] };
+const empty: Persisted = { cart: [], wishlist: [], user: null, orders: [], reviews: [], recent: [] };
 
 function readStorage(): Persisted {
   try {
@@ -75,6 +79,7 @@ function readStorage(): Persisted {
       user: parsed.user ?? null,
       orders: Array.isArray(parsed.orders) ? parsed.orders : [],
       reviews: Array.isArray(parsed.reviews) ? parsed.reviews : [],
+      recent: Array.isArray(parsed.recent) ? parsed.recent : [],
     };
   } catch {
     return empty;
@@ -163,6 +168,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setData((d) => ({ ...d, reviews: [full, ...d.reviews] }));
   }, []);
 
+  const markViewed = useCallback((productId: string) => {
+    setData((d) =>
+      d.recent[0] === productId ? d : { ...d, recent: [productId, ...d.recent.filter((id) => id !== productId)].slice(0, 12) },
+    );
+  }, []);
+
   const cartSubtotal = useMemo(
     () =>
       data.cart.reduce((sum, l) => sum + (getProductById(l.productId)?.priceValue ?? 0) * l.quantity, 0),
@@ -199,12 +210,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       placeOrder,
       addReview,
       reviewsFor: (productId: string) => data.reviews.filter((r) => r.productId === productId),
+      markViewed,
       openPanel,
       setOpenPanel,
       toasts,
       notify,
     }),
-    [data, hydrated, addToCart, updateQuantity, removeLine, clearCart, cartSubtotal, toggleWishlist, signIn, signOut, placeOrder, addReview, openPanel, toasts, notify],
+    [data, hydrated, addToCart, updateQuantity, removeLine, clearCart, cartSubtotal, toggleWishlist, signIn, signOut, placeOrder, addReview, markViewed, openPanel, toasts, notify],
   );
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;

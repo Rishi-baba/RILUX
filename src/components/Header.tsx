@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
+import { Menu } from "@/components/icons";
 import { CartDrawer } from "@/components/CartDrawer";
+import { Logo } from "@/components/Logo";
 import { MobileMenu } from "@/components/MobileMenu";
 import { NavDropdown } from "@/components/NavDropdown";
 import { SearchOverlay } from "@/components/SearchOverlay";
@@ -73,11 +74,11 @@ export function Header() {
           <Link
             href={routes.home}
             className={cn(
-              "justify-self-center whitespace-nowrap font-display text-[30px] uppercase leading-none tracking-[0.02em] text-ink transition-colors duration-[250ms] lg:mr-8 lg:min-w-[120px]",
-              overlay && "text-white",
+              "justify-self-center text-gold-deep transition-colors duration-[250ms] lg:mr-10",
+              overlay && "text-gold",
             )}
           >
-            {brandName}
+            <Logo title={brandName} className="h-[30px] w-auto md:h-[36px]" />
           </Link>
 
           <nav aria-label="Main" className="hidden lg:block">

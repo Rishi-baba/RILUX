@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { X } from "lucide-react";
+import { X } from "@/components/icons";
 import { Placeholder } from "@/components/Placeholder";
 import { SearchIcon } from "@/components/icons";
 import { collections, routes, searchProducts } from "@/lib/content";

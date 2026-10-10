@@ -1,4 +1,4 @@
-import { Gem, Ruler, ShieldCheck, Sparkles, type LucideIcon } from "lucide-react";
+import { Gem, Ruler, ShieldCheck, Sparkles, type IconType as LucideIcon } from "@/components/icons";
 
 import { brandName, brandPoints } from "@/lib/content";
 
@@ -14,7 +14,7 @@ export function WhyBrand() {
           Why {brandName}
         </p>
         <h2 className="mx-auto mt-[12px] max-w-[760px] font-display text-[24px] uppercase leading-[1.2] text-black md:text-[36px]">
-          Shirts cut from the world&apos;s finest cottons, made to be worn for years.
+          Good shirts, fairly priced, that still look right after a year of wear.
         </h2>
         <ul className="mt-[32px] grid grid-cols-2 gap-x-[16px] gap-y-[28px] md:mt-[48px] md:grid-cols-4 md:gap-x-[32px]">
           {brandPoints.map((point, i) => {

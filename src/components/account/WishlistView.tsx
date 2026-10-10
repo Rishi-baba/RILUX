@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Heart, X } from "lucide-react";
+import { Heart, X } from "@/components/icons";
 
 import { productGridClass } from "@/components/account/grid";
 import { ProductCard } from "@/components/ProductCard";
@@ -65,7 +65,7 @@ export function WishlistView() {
                 <button
                   type="button"
                   onClick={() => moveToCart(p)}
-                  className="flex h-[40px] flex-1 items-center justify-center border border-black font-ui text-[12px] uppercase tracking-[0.08em] text-black transition-colors duration-200 ease-theme hover:bg-black hover:text-white"
+                  className="flex h-[40px] flex-1 items-center justify-center border border-black font-ui text-[12px] uppercase tracking-[0.08em] text-black transition-colors duration-200 ease-theme hover:bg-navy hover:border-navy hover:text-white"
                 >
                   Move to cart
                 </button>

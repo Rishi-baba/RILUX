@@ -12,7 +12,7 @@ A reusable template for reverse-engineering any website and rebuilding it as a f
 ## Tech Stack
 - **Framework:** Next.js 16 (App Router, React 19, TypeScript strict)
 - **UI:** shadcn/ui (Radix primitives, Tailwind CSS v4, `cn()` utility)
-- **Icons:** Lucide React (default — will be replaced/supplemented by extracted SVGs)
+- **Icons:** Phosphor Icons (light weight) via `src/components/icons.tsx`; brand marks from simple-icons
 - **Styling:** Tailwind CSS v4 with oklch design tokens
 - **Deployment:** Vercel
 

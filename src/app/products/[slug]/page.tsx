@@ -6,6 +6,7 @@ import { Breadcrumbs } from "@/components/product/Breadcrumbs";
 import { ProductMain } from "@/components/product/ProductMain";
 import { ProductReviews } from "@/components/product/ProductReviews";
 import { ProductStory } from "@/components/product/ProductStory";
+import { RecentlyViewed } from "@/components/product/RecentlyViewed";
 import { TrustStrip } from "@/components/product/TrustStrip";
 import { getCollection, getProduct, products, productsIn, routes } from "@/lib/content";
 import type { Product } from "@/types/content";
@@ -70,9 +71,10 @@ export default async function ProductPage({ params }: Props) {
       />
       <ProductMain product={product} />
       <TrustStrip />
-      <ProductStory tone={product.altTone} />
+      <ProductStory product={product} />
       <ProductReviews product={product} />
       <ProductScroller title="You May Also Like" items={recommendations(product)} />
+      <RecentlyViewed productId={product.id} />
     </>
   );
 }

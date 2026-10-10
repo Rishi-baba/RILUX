@@ -48,17 +48,17 @@ const tone = (i: number) => tones[((i % tones.length) + tones.length) % tones.le
 // Shirts only. Structure follows the Rilux style sheet: 3 cuts (formal / regular / casual),
 // 2 sleeve lengths and 4 fabric families.
 export const collections: Collection[] = [
-  { slug: "all", title: "All Shirts", tone: "stone", related: ["formal", "regular", "casual", "giza-cotton"], description: "Every RILUX shirt in one place: formal, regular and casual cuts in Giza cotton, satin and premium cotton." },
-  { slug: "new-in", title: "New In", tone: "warm", related: ["formal", "regular", "casual"], description: "The latest additions to the collection, from new fabric lines to fresh shades of our signature shirts." },
-  { slug: "formal", title: "Formal Shirts", tone: "cool", related: ["regular", "casual", "full-sleeve", "giza-cotton"], description: "Sharp collars, clean plackets and a close, tailored line. Made for the boardroom, the office and every occasion that calls for a little polish." },
-  { slug: "regular", title: "Regular Shirts", tone: "sand", related: ["formal", "casual", "full-sleeve"], description: "Easy, versatile shirts with a comfortable regular fit. Thoughtful details like double pockets, back yokes and contrast collars take them from the workweek to the weekend." },
-  { slug: "casual", title: "Casual Shirts", tone: "olive", related: ["formal", "regular", "half-sleeve"], description: "Relaxed cuts and roll-up sleeves for slower days. Soft, breathable cotton that looks put-together without trying too hard." },
-  { slug: "full-sleeve", title: "Full Sleeve", tone: "dark", related: ["half-sleeve", "formal", "regular"], description: "Full sleeves with button cuffs, wear them buttoned for the office or rolled for the evening." },
-  { slug: "half-sleeve", title: "Half Sleeve", tone: "sand", related: ["full-sleeve", "casual", "formal"], description: "Half sleeves for warm days and travel, with all the finish of our full-sleeve shirts." },
-  { slug: "giza-cotton", title: "Giza Cotton", tone: "stone", related: ["giza-satin", "premium-cotton", "pure-cotton"], description: "Woven from extra-long-staple Egyptian Giza cotton, prized for its softness, strength and quiet natural sheen." },
-  { slug: "giza-satin", title: "Giza Satin", tone: "warm", related: ["giza-cotton", "premium-cotton", "pure-cotton"], description: "Giza cotton in a satin weave, for a smooth, lustrous finish made for evenings and celebrations." },
-  { slug: "premium-cotton", title: "Premium Cotton", tone: "cool", related: ["giza-cotton", "giza-satin", "pure-cotton"], description: "Dense, crisp premium cotton that holds its shape and stays sharp from morning to night." },
-  { slug: "pure-cotton", title: "100% Cotton", tone: "olive", related: ["giza-cotton", "giza-satin", "premium-cotton"], description: "Breathable 100% cotton for everyday comfort, easy to wear and easy to care for." },
+  { slug: "all", title: "All Shirts", tone: "stone", related: ["formal", "regular", "casual", "giza-cotton"], description: "All our shirts in one place. Formal, regular and casual, in Giza cotton, Giza satin, premium cotton and 100% cotton." },
+  { slug: "new-in", title: "New In", tone: "warm", related: ["formal", "regular", "casual"], description: "Shirts added in the last few weeks, including new shades of our best sellers." },
+  { slug: "formal", title: "Formal Shirts", tone: "cool", related: ["regular", "casual", "full-sleeve", "giza-cotton"], description: "Shirts for work and formal occasions. Firm collars, neat plackets and a fit that stays tucked in." },
+  { slug: "regular", title: "Regular Shirts", tone: "sand", related: ["formal", "casual", "full-sleeve"], description: "A regular fit that works at the office and on weekends. Look for double pockets, front yokes and chambray-trim collars." },
+  { slug: "casual", title: "Casual Shirts", tone: "olive", related: ["formal", "regular", "half-sleeve"], description: "Looser half-sleeve shirts in soft cotton, for weekends, trips and warm days." },
+  { slug: "full-sleeve", title: "Full Sleeve", tone: "dark", related: ["half-sleeve", "formal", "regular"], description: "Full-sleeve shirts with button cuffs. Wear them buttoned at work and rolled up after." },
+  { slug: "half-sleeve", title: "Half Sleeve", tone: "sand", related: ["full-sleeve", "casual", "formal"], description: "Half-sleeve shirts for hot days, stitched and finished the same way as our full sleeves." },
+  { slug: "giza-cotton", title: "Giza Cotton", tone: "stone", related: ["giza-satin", "premium-cotton", "pure-cotton"], description: "Made from Egyptian Giza cotton. The long fibres make the fabric softer and stronger, and it keeps a slight shine." },
+  { slug: "giza-satin", title: "Giza Satin", tone: "warm", related: ["giza-cotton", "premium-cotton", "pure-cotton"], description: "Giza cotton woven as satin, so it feels smooth and has a soft shine. Good for evenings and functions." },
+  { slug: "premium-cotton", title: "Premium Cotton", tone: "cool", related: ["giza-cotton", "giza-satin", "pure-cotton"], description: "A tightly woven cotton that feels crisp and doesn't crease easily." },
+  { slug: "pure-cotton", title: "100% Cotton", tone: "olive", related: ["giza-cotton", "giza-satin", "premium-cotton"], description: "Pure cotton that breathes well and is easy to wash and iron. Our everyday shirts." },
 ];
 
 export const getCollection = (slug: string) => collections.find((c) => c.slug === slug);
@@ -138,16 +138,16 @@ export const formatPrice = (value: number) =>
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
 const cutCopy: Record<Cut, string> = {
-  formal: "A crisp formal shirt with a sharp collar, made for long days at the office and the evenings that follow.",
-  regular: "A versatile regular-fit shirt that moves easily from the workweek into the weekend.",
-  casual: "An easy, relaxed shirt for warm afternoons and unhurried weekends.",
+  formal: "A formal shirt with a firm collar that stays neat through a full working day.",
+  regular: "A regular-fit shirt you can wear to work and on weekends.",
+  casual: "A relaxed half-sleeve shirt for weekends and warm days.",
 };
 
 const fabricCopy: Record<FabricFamily, string> = {
-  "giza-cotton": "Woven from extra-long-staple Giza cotton for a soft hand and a quiet sheen.",
-  "giza-satin": "A satin weave of Giza cotton gives it a smooth, lustrous finish.",
-  "premium-cotton": "Dense premium cotton keeps it crisp from the first meeting to the last.",
-  "pure-cotton": "Breathable 100% cotton keeps it comfortable from morning to night.",
+  "giza-cotton": "Made in Giza cotton, which is soft, strong and has a slight natural shine.",
+  "giza-satin": "The satin weave gives it a smooth feel and a soft shine.",
+  "premium-cotton": "The tightly woven premium cotton keeps it crisp and slow to crease.",
+  "pure-cotton": "100% cotton, so it breathes well and is easy to care for.",
 };
 
 // Deterministic (no randomness) so SSR and client match.
@@ -173,7 +173,7 @@ export const products: Product[] = catalogue.map((entry, i) => {
     collections: ["all", style.cut, style.sleeve, entry.fabric, ...(entry.isNew ? ["new-in"] : [])],
     description: `${cutCopy[style.cut]} ${fabricCopy[entry.fabric]}`,
     features: [fabricName, style.sleeve === "full-sleeve" ? "Full Sleeve" : "Half Sleeve", cutLabel[style.cut].replace(" Shirts", " Fit")],
-    materialCare: [fabricName, "Machine wash cold, gentle cycle", "Do not bleach", "Iron on medium heat"],
+    materialCare: [fabricName, "Machine wash warm, delicate cycle", "Wash with similar colours", "Do not bleach", "Iron on medium heat", "Made in India"],
     details: [...style.details, "Model is 6'0\" wearing size M"],
     attributes: {
       fit: style.cut === "formal" ? "Formal" : style.cut === "regular" ? "Regular" : "Casual",
@@ -199,7 +199,7 @@ export const searchProducts = (query: string) => {
 /* -------------------------------------------------------------- navigation */
 
 export const announcement = {
-  message: "Complimentary shipping across India",
+  message: "Free shipping · Buy 2, get 10% off",
   cta: "Shop now",
   href: routes.collection("all"),
 };
@@ -269,20 +269,20 @@ export const roundedTiles: Tile[] = [
 ];
 
 export const stripTiles: Tile[] = [
-  { title: "Egyptian Giza Cotton", href: routes.about, tone: tone(3) },
-  { title: "Precision Tailoring", href: routes.about, tone: tone(4) },
-  { title: "Considered Details", href: routes.about, tone: tone(5) },
+  { title: "Giza Cotton", href: routes.about, tone: tone(3) },
+  { title: "Stitched in India", href: routes.about, tone: tone(4) },
+  { title: "Real Buttons, Real Cuffs", href: routes.about, tone: tone(5) },
 ];
 
 /** Dress for the Day: occasions through a day, each linked to a shirt category */
 /** `pick` = start of the recommended shirt's title */
 export const occasions: { title: string; blurb: string; slug: string; tone: PlaceholderTone; pick: string }[] = [
-  { title: "Boardroom", blurb: "Sharp collars and hidden plackets for the meetings that matter.", slug: "formal", tone: "dark", pick: "Lyon" },
-  { title: "Everyday Office", blurb: "Full sleeves that stay crisp from the first email to the last call.", slug: "full-sleeve", tone: "cool", pick: "Classic Hidden Placket" },
-  { title: "Travel", blurb: "Breathable half sleeves for long days on the move.", slug: "half-sleeve", tone: "sand", pick: "Leece" },
-  { title: "Weekend", blurb: "Relaxed cuts and roll-up sleeves for slower days.", slug: "casual", tone: "olive", pick: "Weekend" },
-  { title: "Celebrations", blurb: "Fine Giza cotton that looks as good in photographs as it feels.", slug: "giza-cotton", tone: "stone", pick: "Wilson" },
-  { title: "Evenings", blurb: "The quiet sheen of Giza satin, made for the night.", slug: "giza-satin", tone: "warm", pick: "Satin" },
+  { title: "Boardroom", blurb: "Firm collars and hidden plackets. Looks right with a blazer and a tie.", slug: "formal", tone: "dark", pick: "Lyon" },
+  { title: "Everyday Office", blurb: "Full sleeves that are easy to iron and don't crease much at the desk.", slug: "full-sleeve", tone: "cool", pick: "Classic Hidden Placket" },
+  { title: "Travel", blurb: "Half sleeves in light cotton for flights, trains and long drives.", slug: "half-sleeve", tone: "sand", pick: "Leece" },
+  { title: "Weekend", blurb: "Loose fit and roll-up sleeves. Wear it untucked.", slug: "casual", tone: "olive", pick: "Weekend" },
+  { title: "Celebrations", blurb: "Giza cotton for weddings and family functions.", slug: "giza-cotton", tone: "stone", pick: "Wilson" },
+  { title: "Evenings", blurb: "Giza satin has a soft shine that looks good under evening lights.", slug: "giza-satin", tone: "warm", pick: "Satin" },
 ];
 
 /** Named fabric lines from the style sheet, linking to their shirt */
@@ -347,12 +347,11 @@ export const headings = {
 export const trustPoints = [
   { title: "Cash on Delivery", body: "Pay when your order arrives." },
   { title: "Free Shipping", body: "On every order, across India." },
-  { title: "7-Day Exchange", body: "Easy size or style swaps." },
+  { title: "7-Day Exchange", body: "Wrong size? We'll swap it." },
   { title: "Customer Care", body: "Reach us on WhatsApp or email." },
 ];
 
 export const shippingNote = "Dispatched within 2 business days · Free shipping across India";
-export const freeShippingThreshold = 1999;
 
 /* ---------------------------------------------- additions from the brief */
 
@@ -366,15 +365,15 @@ export const fabrics: Tile[] = [
 
 /** "Why us" brand points on the home page */
 export const brandPoints = [
-  { title: "Premium Fabrics", body: "Extra-long-staple Giza cotton and fine satin weaves, chosen for softness and sheen." },
-  { title: "Precise Tailoring", body: "Clean plackets, sharp collars and a fit refined until it sits just right." },
-  { title: "Made to Last", body: "Dense weaves and careful stitching that hold their shape wash after wash." },
-  { title: "Thoughtful Service", body: "Free shipping, cash on delivery and easy 7‑day exchanges." },
+  { title: "Better Fabric", body: "Giza cotton, Giza satin and premium cotton. You can feel the difference the first time you wear it." },
+  { title: "A Fit That Works", body: "We test every pattern on real people across sizes S to XXL before it goes on sale." },
+  { title: "Lasts Longer", body: "Tight stitching and firmly sewn buttons, so the shirt still looks right after many washes." },
+  { title: "Easy to Buy", body: "Free shipping, cash on delivery, and size exchanges within 7 days." },
 ];
 
 /** Placeholder contact details — replace before launch */
 export const contact = {
-  email: "hello@example.com",
+  email: "customerservice.in@rilux.com",
   phone: "+91 00000 00000",
   /** Digits only, with country code, for the WhatsApp link */
   whatsapp: "910000000000",
@@ -395,50 +394,68 @@ export const paymentMethods = ["UPI", "Cards", "Net Banking", "Cash on Delivery"
  */
 export const showSampleReviews = true;
 
+/** Store-wide rating shown in the cart drawer. Same rule as the sample reviews: preview hosts only. */
+export const storeRating = { rating: 4.8, customers: "50,000+" };
+
 /** Brand-level testimonials (service, experience) — deliberately different from product reviews. */
-export const testimonials: { quote: string; name: string; detail: string }[] = [
+export const testimonials: { quote: string; name: string; detail: string; bought: string }[] = [
   {
-    quote: "The exchange was effortless. I messaged on WhatsApp in the morning and the new size was on its way the next day.",
+    quote: "Ordered M, it was a bit tight on the chest. Sent a WhatsApp and the L reached in 3 days, no questions asked. Fits perfectly now.",
     name: "Sameer A.",
     detail: "Pune",
+    bought: "Lyon Formal Shirt",
   },
   {
-    quote: "Opening the box felt like receiving a gift. Even the tissue and the little card were thought through.",
-    name: "Imran Q.",
-    detail: "Hyderabad",
-  },
-  {
-    quote: "I have quietly replaced most of my office shirts with these. They still look sharp at seven in the evening.",
+    quote: "I wear formal shirts five days a week and these are the first ones that don't look tired by evening. I have four now.",
     name: "Dev N.",
     detail: "Bengaluru",
+    bought: "Classic Hidden Placket Shirt",
   },
   {
-    quote: "Honest pricing for this level of fabric. It is rare to find Giza cotton finished this well from an Indian label.",
+    quote: "Was unsure about buying shirts online without trying them. The size guide was spot on, and the collar is firm without being uncomfortable.",
     name: "Pranav G.",
     detail: "Mumbai",
+    bought: "Verona Double Pocket Shirt",
+  },
+  {
+    quote: "Gifted two to my father on his birthday. He wore one to a wedding and kept talking about the fabric all evening.",
+    name: "Imran Q.",
+    detail: "Hyderabad",
+    bought: "Satin Pocket Formal Shirt",
   },
 ];
 
-/** Pool of product-level review texts (fit, fabric, construction). */
+/** Pool of product-level reviews, written the way customers actually write them. */
 const reviewPool: Omit<ProductReview, "id" | "productId" | "createdAt">[] = [
-  { rating: 5, title: "Sits perfectly through the shoulders", body: "Ordered my usual size and it fits as if it were measured for me. The collar holds its shape even after a full day of meetings.", name: "Arjun M.", size: "M", fit: "True to size" },
-  { rating: 5, title: "Softer than I expected", body: "The fabric has a smooth hand and a slight sheen. I have washed it twice and it has only become softer.", name: "Rohan K.", size: "L", fit: "True to size" },
-  { rating: 4, title: "Great shirt, sleeves a touch long", body: "Excellent quality and very neat stitching. The sleeves are slightly long on me, but a single cuff roll fixes it.", name: "Vikram S.", size: "M", fit: "Runs large" },
-  { rating: 5, title: "My new office favourite", body: "Crisp, breathable and it barely creases on the commute. I have already ordered a second shade.", name: "Aditya P.", size: "XL", fit: "True to size" },
-  { rating: 4, title: "Size up if you are between sizes", body: "Beautiful fabric and finish. I was between sizes and the smaller one felt a little snug across the chest.", name: "Karan J.", size: "L", fit: "Runs small" },
-  { rating: 5, title: "Looks even better in person", body: "The details are clean and understated. I wore it to a reception and got more compliments than I expected.", name: "Siddharth R.", size: "M", fit: "True to size" },
-  { rating: 5, title: "You can feel the quality", body: "The weave is dense and even, the buttons are firmly attached and every seam lies flat.", name: "Nikhil T.", size: "XXL", fit: "True to size" },
-  { rating: 4, title: "Comfortable all day", body: "Wore it on a long travel day and it stayed comfortable and fresh. I would love a few more colour options.", name: "Rahul D.", size: "M", fit: "True to size" },
+  { rating: 5, title: "Good fit", body: "Took M. Fits well on the shoulders and the sleeve length is right. Fabric feels nice, not too thin.", name: "Rohit S.", city: "Delhi", build: "5'10\", 75 kg", size: "M", fit: "True to size", helpful: 14 },
+  { rating: 4, title: "Nice shirt, delivery took time", body: "Quality is really good, stitching is neat. Took 6 days to reach Guwahati though. Otherwise happy with it.", name: "Ankit B.", city: "Guwahati", size: "L", fit: "True to size", helpful: 6 },
+  { rating: 5, title: "Second purchase", body: "Bought the white one last month and came back for blue. Washed it maybe 8 times, no fading so far.", name: "Mohammed F.", city: "Lucknow", size: "XL", fit: "True to size", helpful: 21 },
+  { rating: 3, title: "Runs a little small", body: "Chest is snug. I wear L in most brands, should have taken XL here. No complaints about the fabric. Exchanging it.", name: "Harsh V.", city: "Ahmedabad", build: "5'11\", 84 kg", size: "L", fit: "Runs small", helpful: 9 },
+  { rating: 5, title: "worth the price", body: "honestly i was hesitant at this price but the fabric is clearly better than what i usually buy. wore it a full day, office AC and outside heat, stayed comfortable", name: "Karthik R.", city: "Chennai", size: "M", fit: "True to size", helpful: 17 },
+  { rating: 4, title: "Colour slightly darker", body: "The shade is a little darker than in the photos. Still looks good. Fit is perfect.", name: "Aman G.", city: "Jaipur", size: "M", fit: "True to size", helpful: 4 },
+  { rating: 5, title: "Great for office", body: "Doesn't crease much even after an hour in the car. Collar stays in place all day.", name: "Sandeep N.", city: "Pune", build: "5'8\", 70 kg", size: "M", fit: "True to size", helpful: 11 },
+  { rating: 5, title: "Fits well", body: "Perfect fit. Will order again.", name: "Varun", city: "Indore", size: "S", fit: "True to size", helpful: 2 },
+  { rating: 4, title: "One button was loose", body: "Overall a good shirt. One cuff button was a bit loose, took two minutes to fix at home. Fabric and fit are excellent.", name: "Prakash M.", city: "Kochi", size: "XL", fit: "True to size", helpful: 8 },
+  { rating: 5, title: "Very soft", body: "Soft right out of the box, no stiffness at all. Easy to iron too.", name: "Nitin K.", city: "Nagpur", size: "M", fit: "True to size", helpful: 5 },
+  { rating: 5, title: "Exchange was smooth", body: "Ordered the wrong size. They picked it up and the new one came in 4 days. The shirt itself is great.", name: "Abhishek T.", city: "Kolkata", size: "L", fit: "True to size", helpful: 13 },
+  { rating: 4, title: "Want more colours", body: "Fit and fabric are great. Would buy more if this style came in a few more colours.", name: "Rajat D.", city: "Chandigarh", build: "6'1\", 92 kg", size: "XXL", fit: "Runs large", helpful: 3 },
 ];
 
-const sampleDates = ["2026-09-28", "2026-09-14", "2026-08-30", "2026-08-11"];
+const sampleDates = ["2026-10-03", "2026-09-26", "2026-09-17", "2026-09-05", "2026-08-22", "2026-08-09", "2026-07-28", "2026-07-11"];
 
-/** Three sample reviews per product, chosen deterministically so server and client match. */
+/** 4 to 7 sample reviews per product, chosen deterministically so server and client match. */
 export const sampleReviewsFor = (productId: string): ProductReview[] => {
   if (!showSampleReviews) return [];
   const seed = Number(productId.replace(/\D/g, "")) || 0;
-  return [0, 1, 2].map((k) => {
-    const r = reviewPool[(seed * 3 + k * 5) % reviewPool.length];
-    return { ...r, id: `sample-${productId}-${k}`, productId, createdAt: sampleDates[(seed + k) % sampleDates.length] };
-  });
+  const count = 4 + ((seed * 7) % 4);
+  return Array.from({ length: count }, (_, k) => {
+    const r = reviewPool[(seed * 5 + k * 7) % reviewPool.length];
+    return {
+      ...r,
+      verified: true,
+      id: `sample-${productId}-${k}`,
+      productId,
+      createdAt: sampleDates[(seed + k) % sampleDates.length],
+    };
+  }).sort((x, y) => y.createdAt.localeCompare(x.createdAt));
 };

@@ -6,6 +6,8 @@ import type { CartLine } from "@/types/content";
 
 export interface Totals {
   subtotal: number;
+  /** multi-shirt reward discount in rupees */
+  discount?: number;
   /** null until a shipping method has been chosen */
   shipping: number | null;
   total: number;
@@ -52,6 +54,12 @@ export function TotalsList({ totals, shippingPending = "Calculated at next step"
         <dt className="text-ink-soft">Subtotal</dt>
         <dd>{formatPrice(totals.subtotal)}</dd>
       </div>
+      {totals.discount ? (
+        <div className="flex justify-between text-[#2f6b3a]">
+          <dt>Multi-shirt offer</dt>
+          <dd>−{formatPrice(totals.discount)}</dd>
+        </div>
+      ) : null}
       <div className="flex justify-between">
         <dt className="text-ink-soft">Shipping</dt>
         <dd className={totals.shipping === null ? "text-[12px] text-stone" : undefined}>

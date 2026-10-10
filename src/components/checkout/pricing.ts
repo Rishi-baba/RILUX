@@ -1,4 +1,3 @@
-import { freeShippingThreshold } from "@/lib/content";
 import type { CartLine } from "@/types/content";
 
 // Demo pricing rules shared by the cart, checkout and success pages.
@@ -10,8 +9,25 @@ export const EXPRESS_FEE = 249;
 
 export type ShippingMethod = "standard" | "express";
 
+/** Standard shipping is free on every order (the first reward tier unlocks with one shirt). */
 export function standardFee(subtotal: number): number {
-  return subtotal >= freeShippingThreshold ? 0 : STANDARD_FEE;
+  return subtotal > 0 ? 0 : STANDARD_FEE;
+}
+
+/** Cart rewards, unlocked by number of shirts: shown as checkpoints on the cart progress bar. */
+export const rewardTiers = [
+  { shirts: 1, label: "Free shipping", percent: 0 },
+  { shirts: 2, label: "10% off", percent: 10 },
+  { shirts: 3, label: "15% off", percent: 15 },
+] as const;
+
+export function rewardPercent(shirts: number): number {
+  return rewardTiers.reduce((pct, t) => (shirts >= t.shirts ? t.percent : pct), 0);
+}
+
+/** Rupee discount for the current cart (rounded to whole rupees). */
+export function rewardDiscount(subtotal: number, shirts: number): number {
+  return Math.round((subtotal * rewardPercent(shirts)) / 100);
 }
 
 export function shippingFor(subtotal: number, method: ShippingMethod = "standard"): number {
@@ -52,6 +68,8 @@ export interface LastOrder {
   payment: PaymentMethod;
   lines: CartLine[];
   subtotal: number;
+  /** multi-shirt reward discount in rupees */
+  discount?: number;
   shipping: number;
   total: number;
 }

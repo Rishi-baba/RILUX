@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Fragment, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown } from "@/components/icons";
 
 import { secondaryButtonClass } from "@/components/account/form";
 import { Placeholder } from "@/components/Placeholder";

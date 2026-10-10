@@ -1,27 +1,31 @@
 "use client";
 
-import { AtSign, Globe } from "lucide-react";
+import { siFacebook, siInstagram, siPinterest, siYoutube } from "simple-icons";
 import { useStore } from "@/lib/store";
 
 const socials = [
-  { label: "Website", Icon: Globe },
-  { label: "Social", Icon: AtSign },
+  { label: "Instagram", path: siInstagram.path },
+  { label: "Facebook", path: siFacebook.path },
+  { label: "YouTube", path: siYoutube.path },
+  { label: "Pinterest", path: siPinterest.path },
 ];
 
 export function SocialButtons() {
   const { notify } = useStore();
 
   return (
-    <div className="flex gap-4">
-      {socials.map(({ label, Icon }) => (
+    <div className="flex gap-[10px]">
+      {socials.map(({ label, path }) => (
         <button
           key={label}
           type="button"
-          aria-label={label}
-          onClick={() => notify("Social links coming soon")}
-          className="text-white/75 transition-colors hover:text-white"
+          aria-label={`RILUX on ${label}`}
+          onClick={() => notify(`${label} page coming soon`)}
+          className="flex size-[38px] items-center justify-center rounded-full border border-gold/50 text-gold transition-colors duration-200 hover:border-gold hover:bg-gold hover:text-navy"
         >
-          <Icon className="size-[18px]" aria-hidden />
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className="size-[16px]">
+            <path d={path} />
+          </svg>
         </button>
       ))}
     </div>

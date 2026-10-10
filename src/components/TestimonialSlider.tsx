@@ -15,8 +15,9 @@ export function TestimonialSlider() {
   if (!preview) return null;
 
   const slides = testimonials.map((t, i) => ({
-    title: `${t.name} · ${t.detail}`,
-    body: `“${t.quote}”`,
+    title: `${t.name}, ${t.detail}`,
+    body: t.quote,
+    meta: `Bought the ${t.bought}`,
     tone: tones[i % tones.length],
   }));
 

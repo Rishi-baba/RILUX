@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
-import { Check } from "lucide-react";
+import { Check } from "@/components/icons";
 import { useStore } from "@/lib/store";
 import { formatPrice, getProductById, routes } from "@/lib/content";
 import type { MockOrder } from "@/types/content";
