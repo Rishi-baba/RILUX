@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Headphones, RotateCcw, ShieldCheck, Truck, type IconType as LucideIcon } from "@/components/icons";
+import { Banknote, Headphones, RefreshCcw, Truck, type IconType } from "@/components/icons";
 import { RewardsProgress } from "@/components/RewardsProgress";
 import { rewardDiscount, rewardPercent, standardFee } from "@/components/checkout/pricing";
 import { formatPrice, routes, trustPoints } from "@/lib/content";
 
-const trustIcons: LucideIcon[] = [RotateCcw, Headphones, Truck, ShieldCheck];
+const trustIcons: IconType[] = [Banknote, Truck, RefreshCcw, Headphones];
 
 /** Right-hand summary card on /cart: reward progress, note, totals, checkout CTA. */
 export function CartSummary({ subtotal, shirts }: { subtotal: number; shirts: number }) {
@@ -15,22 +15,20 @@ export function CartSummary({ subtotal, shirts }: { subtotal: number; shirts: nu
   const total = subtotal - discount + shipping;
 
   return (
-    <aside className="bg-mist p-[28px] md:sticky md:top-[90px]" aria-label="Order summary">
-      <RewardsProgress shirts={shirts} />
+    <aside
+      className="rounded-[10px] border border-navy/12 bg-white p-[20px] md:p-[28px] lg:sticky lg:top-[90px]"
+      aria-labelledby="order-summary-title"
+    >
+      <h2 id="order-summary-title" className="font-ui text-[11px] font-semibold uppercase tracking-[0.16em] text-navy">
+        Order summary
+      </h2>
 
-      <label htmlFor="cart-note" className="mt-6 block font-ui text-[12px] text-stone">
-        Add a note to your order
-      </label>
-      <textarea
-        id="cart-note"
-        rows={3}
-        className="mt-1.5 w-full resize-none rounded-[5px] border border-black/20 bg-white px-[14px] py-3 font-ui text-[14px] text-black outline-none focus:border-black focus:ring-1 focus:ring-black"
-      />
+      <RewardsProgress shirts={shirts} className="mt-[16px] rounded-[8px] bg-[#faf7ef] px-[14px] pt-[12px]" />
 
-      <dl className="mt-6 space-y-2.5 border-t border-black/10 pt-5 font-ui text-[14px]">
+      <dl className="mt-[22px] space-y-[10px] font-ui text-[13.5px]">
         <div className="flex justify-between">
           <dt className="text-ink-soft">Subtotal</dt>
-          <dd>{formatPrice(subtotal)}</dd>
+          <dd className="text-ink">{formatPrice(subtotal)}</dd>
         </div>
         {discount > 0 ? (
           <div className="flex justify-between text-[#2f6b3a]">
@@ -40,28 +38,37 @@ export function CartSummary({ subtotal, shirts }: { subtotal: number; shirts: nu
         ) : null}
         <div className="flex justify-between">
           <dt className="text-ink-soft">Shipping</dt>
-          <dd>{shipping === 0 ? "Free" : formatPrice(shipping)}</dd>
+          <dd className="text-ink">{shipping === 0 ? "Free" : formatPrice(shipping)}</dd>
         </div>
-        <div className="flex justify-between border-t border-black/10 pt-3 text-[16px] font-semibold">
-          <dt>Total</dt>
-          <dd>{formatPrice(total)}</dd>
+        <div className="flex items-baseline justify-between border-t border-navy/10 pt-[14px]">
+          <dt className="text-[15px] font-semibold text-navy">Total</dt>
+          <dd className="font-display text-[26px] leading-none text-navy">{formatPrice(total)}</dd>
         </div>
       </dl>
-      <p className="mt-1.5 font-ui text-[11px] text-stone">Taxes included. Final shipping set at checkout.</p>
+      <p className="mt-[6px] font-ui text-[11px] text-stone">Taxes included. Final shipping set at checkout.</p>
 
       <Link
         href={routes.checkout}
-        className="mt-5 flex h-[50px] w-full items-center justify-center bg-brand font-ui text-[14px] font-medium uppercase tracking-[0.1em] text-white transition-opacity duration-200 ease-theme hover:opacity-90"
+        className="mt-[20px] flex h-[52px] w-full items-center justify-center bg-navy font-ui text-[13px] font-medium uppercase tracking-[0.14em] text-white transition-opacity duration-200 ease-theme hover:opacity-90"
       >
         Checkout
       </Link>
 
-      <ul className="mt-6 grid grid-cols-4 gap-2">
+      <label htmlFor="cart-note" className="mt-[22px] block font-ui text-[12px] text-ink-soft">
+        Add a note to your order
+      </label>
+      <textarea
+        id="cart-note"
+        rows={2}
+        className="mt-[6px] w-full resize-none rounded-[6px] border border-navy/15 bg-white px-[12px] py-[10px] font-ui text-[13px] text-ink outline-none transition-colors focus:border-navy"
+      />
+
+      <ul className="mt-[20px] grid grid-cols-4 gap-[6px] border-t border-navy/10 pt-[18px]">
         {trustPoints.map((point, i) => {
           const Icon = trustIcons[i % trustIcons.length];
           return (
-            <li key={point.title} className="flex flex-col items-center gap-1.5 text-center">
-              <Icon size={20} strokeWidth={1.4} aria-hidden className="text-black" />
+            <li key={point.title} className="flex flex-col items-center gap-[6px] text-center">
+              <Icon size={20} aria-hidden className="text-navy" />
               <span className="font-ui text-[10px] leading-tight text-ink-soft">{point.title}</span>
             </li>
           );

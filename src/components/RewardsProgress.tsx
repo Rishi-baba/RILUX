@@ -13,7 +13,7 @@ export function RewardsProgress({ shirts, className }: { shirts: number; classNa
   const progress = Math.min(100, (shirts / last.shirts) * 100);
 
   return (
-    <div className={className}>
+    <div className={cn("flow-root", className)}>
       <p className="font-ui text-[12.5px] leading-[1.45] text-ink">
         {next ? (
           <>

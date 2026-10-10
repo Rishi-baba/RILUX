@@ -80,20 +80,6 @@ export function CartDrawer() {
     .filter((p, i, all) => !inCart.has(p.id) && all.findIndex((x) => x.id === p.id) === i)
     .slice(0, 8);
 
-  const rail =
-    lines.length > 0 ? (
-      <>
-        <p className="flex-none border-b border-navy/10 px-[14px] py-[19px] font-ui text-[11px] font-semibold uppercase tracking-[0.18em] text-navy">
-          You may also like
-        </p>
-        <div className="flex-1 space-y-[22px] overflow-y-auto px-[14px] py-[16px]">
-          {suggestions.map((p) => (
-            <SuggestionCard key={p.id} product={p} onNavigate={close} />
-          ))}
-        </div>
-      </>
-    ) : undefined;
-
   const footer =
     lines.length > 0 ? (
       <div>
@@ -135,8 +121,7 @@ export function CartDrawer() {
       onClose={close}
       title={`Your Cart (${count})`}
       footer={footer}
-      rail={rail}
-      className="md:max-w-[350px]"
+      className="md:max-w-[380px]"
     >
       {lines.length > 0 ? (
         <>
@@ -148,12 +133,12 @@ export function CartDrawer() {
               </li>
             ))}
           </ul>
-          {/* Phones: recommendations scroll sideways inside the drawer */}
-          <div className="border-t border-navy/10 py-[16px] md:hidden">
+          {/* Recommendations scroll sideways below the cart lines */}
+          <div className="border-t border-navy/10 bg-[#faf7ef] py-[16px]">
             <p className="px-[18px] font-ui text-[11px] font-semibold uppercase tracking-[0.18em] text-navy">You may also like</p>
             <div className="scrollbar-none mt-[12px] flex gap-[12px] overflow-x-auto px-[18px]">
               {suggestions.map((p) => (
-                <SuggestionCard key={p.id} product={p} onNavigate={close} className="w-[132px] flex-none" />
+                <SuggestionCard key={p.id} product={p} onNavigate={close} className="w-[136px] flex-none" />
               ))}
             </div>
           </div>
