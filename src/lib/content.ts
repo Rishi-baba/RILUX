@@ -190,11 +190,44 @@ export const getProductById = (id: string) => products.find((p) => p.id === id);
 export const productsIn = (collectionSlug: string) =>
   products.filter((p) => p.collections.includes(collectionSlug));
 
+const searchTerms = (query: string) => query.trim().toLowerCase().split(/\s+/).filter(Boolean);
+
+const productHaystack = new Map(
+  products.map((p) => [
+    p.id,
+    [
+      p.title,
+      p.category,
+      p.features.join(" "),
+      Object.values(p.attributes).join(" "),
+      p.collections.map((slug) => getCollection(slug)?.title ?? "").join(" "),
+    ]
+      .join(" ")
+      .toLowerCase(),
+  ]),
+);
+
+/** Every word of the query must appear in the product's title, category, fabric, fit or collections; title hits rank first. */
 export const searchProducts = (query: string) => {
-  const q = query.trim().toLowerCase();
-  if (!q) return [];
-  return products.filter((p) => `${p.title} ${p.category} ${p.features.join(" ")}`.toLowerCase().includes(q));
+  const terms = searchTerms(query);
+  if (!terms.length) return [];
+  const score = (p: Product) => terms.filter((t) => p.title.toLowerCase().includes(t)).length;
+  return products
+    .filter((p) => terms.every((t) => productHaystack.get(p.id)?.includes(t)))
+    .sort((a, b) => score(b) - score(a));
 };
+
+export const searchCollections = (query: string) => {
+  const terms = searchTerms(query);
+  if (!terms.length) return [];
+  return collections.filter((c) => terms.every((t) => c.title.toLowerCase().includes(t)));
+};
+
+/** Shown in the search panel before anything is typed: new arrivals first, then the rest of the range. */
+export const trendingProducts = [
+  ...products.filter((p) => p.collections.includes("new-in")),
+  ...products.filter((p) => !p.collections.includes("new-in")),
+].slice(0, 4);
 
 /* -------------------------------------------------------------- navigation */
 
@@ -453,6 +486,8 @@ export const sampleReviewsFor = (productId: string): ProductReview[] => {
     return {
       ...r,
       verified: true,
+      // Roughly two in three reviews carry 1–3 photos.
+      photos: Array.from({ length: (seed + k * 2) % 4 === 3 ? 0 : ((seed + k) % 3) + 1 }, (_, j) => tone(seed + k + j * 2)),
       id: `sample-${productId}-${k}`,
       productId,
       createdAt: sampleDates[(seed + k) % sampleDates.length],

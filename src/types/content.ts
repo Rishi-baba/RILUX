@@ -143,4 +143,6 @@ export interface ProductReview {
   build?: string;
   helpful?: number;
   verified?: boolean;
+  /** Customer photos, shown as placeholder blocks in this build */
+  photos?: PlaceholderTone[];
 }

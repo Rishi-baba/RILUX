@@ -1,6 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { SealCheck, ThumbsUp } from "@phosphor-icons/react/ssr";
+import { ChevronLeft, ChevronRight, X } from "@/components/icons";
+import { Placeholder, type PlaceholderTone } from "@/components/Placeholder";
 import { Stars } from "@/components/Stars";
 import { useSamplePreview } from "@/hooks/useSamplePreview";
 import { sampleReviewsFor } from "@/lib/content";
@@ -19,13 +22,77 @@ function fitSummary(reviews: ProductReview[]) {
   return { pct, label: pct >= 60 ? "Most people say it's true to size" : "Check the size guide before ordering" };
 }
 
+type ReviewPhoto = { tone: PlaceholderTone; review: ProductReview; key: string };
+
+/** Full-screen photo viewer with prev/next, the review it came from, and Esc / arrow-key support. */
+function PhotoViewer({ photos, index, onIndex, onClose }: { photos: ReviewPhoto[]; index: number; onIndex: (i: number) => void; onClose: () => void }) {
+  const photo = photos[index];
+  const step = (d: number) => onIndex((index + d + photos.length) % photos.length);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") onIndex((index + 1) % photos.length);
+      if (e.key === "ArrowLeft") onIndex((index - 1 + photos.length) % photos.length);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [index, photos.length, onIndex, onClose]);
+
+  const navBtn = "absolute top-1/2 flex size-[40px] -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-navy shadow transition-colors hover:bg-white";
+
+  return (
+    <div role="dialog" aria-modal="true" aria-label="Customer photo" className="fixed inset-0 z-[80] flex items-center justify-center p-[16px]">
+      <div onClick={onClose} className="absolute inset-0 bg-black/70" />
+      <div className="relative flex w-full max-w-[860px] flex-col overflow-hidden rounded-[8px] bg-white md:flex-row">
+        <div className="relative aspect-[4/5] w-full md:w-[56%]">
+          <Placeholder tone={photo.tone} label="Customer photo" />
+          {photos.length > 1 ? (
+            <>
+              <button type="button" onClick={() => step(-1)} aria-label="Previous photo" className={`${navBtn} left-[12px]`}>
+                <ChevronLeft size={18} />
+              </button>
+              <button type="button" onClick={() => step(1)} aria-label="Next photo" className={`${navBtn} right-[12px]`}>
+                <ChevronRight size={18} />
+              </button>
+            </>
+          ) : null}
+        </div>
+        <div className="flex flex-1 flex-col p-[20px] md:p-[28px]">
+          <div className="flex items-center justify-between">
+            <Stars rating={photo.review.rating} size={13} />
+            <button type="button" onClick={onClose} aria-label="Close" className="-mr-[6px] flex size-[32px] items-center justify-center rounded-full text-ink hover:bg-black/5">
+              <X size={18} />
+            </button>
+          </div>
+          <p className="mt-[10px] font-ui text-[14px] font-semibold text-ink">{photo.review.title}</p>
+          <p className="mt-[4px] font-ui text-[13px] leading-[1.65] text-ink-soft">{photo.review.body}</p>
+          <p className="mt-[12px] font-ui text-[12px] text-stone">
+            <span className="font-medium text-ink">{photo.review.name}</span>
+            {photo.review.size ? ` · Size ${photo.review.size}` : null}
+          </p>
+          <p className="mt-auto pt-[16px] font-ui text-[11.5px] text-stone">
+            {index + 1} / {photos.length}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Customer reviews list (read-only) with a rating summary. Sample reviews appear on preview hosts only.
 export function ProductReviews({ product }: { product: Product }) {
   const { reviewsFor, hydrated } = useStore();
   const preview = useSamplePreview();
   const reviews = [...(hydrated ? reviewsFor(product.id) : []), ...(preview ? sampleReviewsFor(product.id) : [])];
 
+  const [viewing, setViewing] = useState<number | null>(null);
+
   if (!reviews.length) return null;
+
+  const photos: ReviewPhoto[] = reviews.flatMap((r) => (r.photos ?? []).map((tone, j) => ({ tone, review: r, key: `${r.id}-${j}` })));
+  const openPhoto = (key: string) => setViewing(photos.findIndex((p) => p.key === key));
+  const STRIP = 6;
 
   const avg = reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
   const fit = fitSummary(reviews);
@@ -78,8 +145,40 @@ export function ProductReviews({ product }: { product: Product }) {
           ) : null}
         </div>
 
+        <div className="min-w-0">
+        {/* All customer photos */}
+        {photos.length > 0 ? (
+          <div className="border-t border-navy/10 pb-[22px] pt-[22px] md:border-t-0 md:pt-0">
+            <p className="font-ui text-[12px] font-semibold text-navy">
+              Customer photos <span className="font-normal text-stone">({photos.length})</span>
+            </p>
+            <ul className="mt-[12px] grid grid-cols-4 gap-[6px] sm:grid-cols-6">
+              {photos.slice(0, STRIP).map((p, i) => {
+                const more = i === STRIP - 1 && photos.length > STRIP ? photos.length - STRIP : 0;
+                return (
+                  <li key={p.key} className={i >= 4 ? "hidden sm:block" : undefined}>
+                    <button
+                      type="button"
+                      onClick={() => setViewing(i)}
+                      aria-label={more ? `View all ${photos.length} photos` : `View photo from ${p.review.name}`}
+                      className="group relative block aspect-square w-full overflow-hidden rounded-[4px]"
+                    >
+                      <Placeholder tone={p.tone} className="transition-transform duration-300 group-hover:scale-105" />
+                      {more ? (
+                        <span className="absolute inset-0 flex items-center justify-center bg-navy/60 font-ui text-[13px] font-medium text-white">
+                          +{more}
+                        </span>
+                      ) : null}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : null}
+
         {/* List */}
-        <ul className="divide-y divide-navy/10 border-t border-navy/10 md:border-t-0">
+        <ul className="divide-y divide-navy/10 border-t border-navy/10">
           {reviews.map((r) => (
             <li key={r.id} className="py-[22px] first:pt-[22px] md:first:pt-0">
               <div className="flex items-center justify-between gap-[12px]">
@@ -88,6 +187,22 @@ export function ProductReviews({ product }: { product: Product }) {
               </div>
               <p className="mt-[8px] font-ui text-[14px] font-semibold text-ink">{r.title}</p>
               <p className="mt-[4px] font-ui text-[13.5px] leading-[1.65] text-ink-soft">{r.body}</p>
+              {r.photos?.length ? (
+                <ul className="mt-[12px] flex gap-[6px]">
+                  {r.photos.map((tone, j) => (
+                    <li key={j}>
+                      <button
+                        type="button"
+                        onClick={() => openPhoto(`${r.id}-${j}`)}
+                        aria-label={`View photo ${j + 1} from ${r.name}`}
+                        className="group relative block h-[80px] w-[64px] overflow-hidden rounded-[4px]"
+                      >
+                        <Placeholder tone={tone} className="transition-transform duration-300 group-hover:scale-105" />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
               <div className="mt-[10px] flex flex-wrap items-center gap-x-[10px] gap-y-[4px] font-ui text-[11.5px] text-stone">
                 <span className="font-medium text-ink">
                   {r.name}
@@ -111,7 +226,11 @@ export function ProductReviews({ product }: { product: Product }) {
             </li>
           ))}
         </ul>
+        </div>
       </div>
+      {viewing !== null && photos[viewing] ? (
+        <PhotoViewer photos={photos} index={viewing} onIndex={setViewing} onClose={() => setViewing(null)} />
+      ) : null}
     </section>
   );
 }

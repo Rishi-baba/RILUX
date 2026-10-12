@@ -69,7 +69,7 @@ export default async function ProductPage({ params }: Props) {
           { label: product.title },
         ]}
       />
-      <ProductMain product={product} />
+      <ProductMain key={product.id} product={product} />
       <TrustStrip />
       <ProductStory product={product} />
       <ProductReviews product={product} />

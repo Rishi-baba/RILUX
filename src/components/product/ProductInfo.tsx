@@ -37,7 +37,8 @@ export function ProductInfo({
   const preview = useSamplePreview();
   const reviews = [...(hydrated ? reviewsFor(product.id) : []), ...(preview ? sampleReviewsFor(product.id) : [])];
   const avgRating = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0;
-  const [size, setSize] = useState<string | null>(null);
+  // Pre-select M so Add to cart works straight away; fall back to the first size offered.
+  const [size, setSize] = useState<string | null>(product.sizes.includes("M") ? "M" : (product.sizes[0] ?? null));
   const [sizeError, setSizeError] = useState(false);
   const [guideOpen, setGuideOpen] = useState(false);
   const [showBar, setShowBar] = useState(false);
