@@ -46,7 +46,7 @@ export function WishlistToggle({
 }
 
 function QuickAdd({ product }: { product: Product }) {
-  const { addToCart, notify, setOpenPanel } = useStore();
+  const { addToCart, setOpenPanel } = useStore();
   const color = product.colors[0]?.name ?? "";
 
   return (
@@ -59,7 +59,6 @@ function QuickAdd({ product }: { product: Product }) {
           aria-label={`Add size ${size} to cart`}
           onClick={() => {
             addToCart({ productId: product.id, size, color });
-            notify("Added to cart");
             setOpenPanel("cart");
           }}
           className="min-w-[28px] border border-black/20 px-[5px] py-[3px] leading-none transition-colors duration-200 hover:border-navy hover:bg-navy hover:text-white"

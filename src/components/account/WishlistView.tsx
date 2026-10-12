@@ -20,7 +20,6 @@ export function WishlistView() {
   function moveToCart(p: Product) {
     addToCart({ productId: p.id, size: p.sizes[0] ?? "", color: p.colors[0]?.name ?? "" });
     toggleWishlist(p.id);
-    notify("Moved to cart");
     setOpenPanel("cart");
   }
 

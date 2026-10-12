@@ -32,7 +32,8 @@ export function ProductInfo({
   onColorChange: (i: number) => void;
 }) {
   const router = useRouter();
-  const { cart, addToCart, updateQuantity, toggleWishlist, isWishlisted, notify, reviewsFor, hydrated } = useStore();
+  const { cart, addToCart, updateQuantity, toggleWishlist, isWishlisted, notify, reviewsFor, hydrated, setOpenPanel } =
+    useStore();
   const preview = useSamplePreview();
   const reviews = [...(hydrated ? reviewsFor(product.id) : []), ...(preview ? sampleReviewsFor(product.id) : [])];
   const avgRating = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0;
@@ -84,7 +85,7 @@ export function ProductInfo({
   const onAddToCart = () => {
     if (!requireSize() || !size) return;
     addToCart({ productId: product.id, size, color: color?.name ?? "" });
-    notify(`Added to cart · Size ${size}`);
+    setOpenPanel("cart");
   };
 
   const changeQty = (delta: 1 | -1) => {

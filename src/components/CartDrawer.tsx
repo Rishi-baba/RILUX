@@ -69,7 +69,7 @@ function DrawerLine({ line, index, onNavigate }: { line: CartLine; index: number
 
 /** Recommendation card: a floating + on the image opens a size picker over the photo. */
 function SuggestionCard({ product, onNavigate }: { product: Product; onNavigate: () => void }) {
-  const { addToCart, notify } = useStore();
+  const { addToCart } = useStore();
   const [picking, setPicking] = useState(false);
 
   return (
@@ -97,7 +97,6 @@ function SuggestionCard({ product, onNavigate }: { product: Product; onNavigate:
                   type="button"
                   onClick={() => {
                     addToCart({ productId: product.id, size, color: product.colors[0]?.name ?? "" });
-                    notify(`Added ${product.title} (${size})`);
                     setPicking(false);
                   }}
                   className="h-[24px] rounded-[5px] border border-navy/15 font-ui text-[9.5px] font-medium text-navy transition-colors hover:border-navy hover:bg-navy hover:text-white"
