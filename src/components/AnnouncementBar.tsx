@@ -8,7 +8,7 @@ function MessageSet({ hidden }: { hidden?: boolean }) {
   return (
     <div aria-hidden={hidden} className="flex flex-none items-center">
       {Array.from({ length: REPEAT }, (_, i) => (
-        <div key={i} className="flex flex-none items-center gap-3 px-[28px]">
+        <div key={i} className="flex flex-none items-center gap-4 px-[160px]">
           <p className="whitespace-nowrap text-[12px] font-normal leading-normal">{announcement.message}</p>
           <Link
             href={announcement.href}
@@ -27,7 +27,7 @@ function MessageSet({ hidden }: { hidden?: boolean }) {
 export function AnnouncementBar() {
   return (
     <div className="group flex h-[45px] w-full items-center overflow-hidden bg-brand font-ui text-white">
-      <div className="flex w-max animate-[marquee_40s_linear_infinite] group-hover:[animation-play-state:paused] motion-reduce:animate-none">
+      <div className="flex w-max animate-[marquee_70s_linear_infinite] group-hover:[animation-play-state:paused] motion-reduce:animate-none">
         <MessageSet />
         <MessageSet hidden />
       </div>
