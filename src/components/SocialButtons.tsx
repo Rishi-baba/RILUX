@@ -21,7 +21,7 @@ export function SocialButtons() {
           type="button"
           aria-label={`RILUX on ${label}`}
           onClick={() => notify(`${label} page coming soon`)}
-          className="flex size-[36px] items-center justify-center rounded-full border border-navy/20 text-navy/80 transition-colors duration-200 hover:border-navy hover:bg-navy hover:text-white"
+          className="flex size-[36px] items-center justify-center rounded-full border border-white/20 text-white/80 transition-colors duration-200 hover:border-white hover:bg-white hover:text-black"
         >
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className="size-[15px]">
             <path d={path} />

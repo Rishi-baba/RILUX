@@ -5,10 +5,10 @@ import { PaymentIcons } from "@/components/PaymentIcons";
 import { SocialButtons } from "@/components/SocialButtons";
 import { brandName, contact, routes, whatsappHref } from "@/lib/content";
 
-// Minimal footer, white fading to a pale navy with a gold glow in the bottom-right corner: four hairline-ruled link columns,
-// an oversized navy logo beside the newsletter signup and socials, and a quiet legal line with payment marks.
-const label = "mb-[12px] font-ui text-[10.5px] uppercase tracking-[0.12em] text-stone";
-const link = "font-ui text-[14px] text-charcoal transition-colors duration-200 hover:text-navy";
+// Minimal black footer: four hairline-ruled link columns,
+// an oversized white logo beside the newsletter signup and socials, and a quiet legal line with payment marks.
+const label = "mb-[12px] font-ui text-[10.5px] uppercase tracking-[0.12em] text-white/50";
+const link = "font-ui text-[14px] text-white/80 transition-colors duration-200 hover:text-white";
 
 const columns: { title: string; links: { label: string; href: string; external?: boolean }[] }[] = [
   {
@@ -52,19 +52,13 @@ const legal = [
 
 export function Footer() {
   return (
-    <footer
-      className="border-t border-navy/10 pb-[68px] text-navy md:pb-0"
-      style={{
-        background:
-          "radial-gradient(90% 80% at 90% 110%, color-mix(in oklab, var(--gold) 75%, transparent) 0%, transparent 65%), linear-gradient(to bottom, #fff, color-mix(in oklab, var(--navy) 14%, #fff))",
-      }}
-    >
+    <footer className="bg-black pb-[68px] text-white md:pb-0">
       <div className="mx-auto max-w-[1440px] px-[20px] md:px-[34px]">
         <div className="grid grid-cols-2 gap-x-[24px] gap-y-[32px] pt-[56px] md:pt-[80px] lg:grid-cols-4">
           {columns.map((col) => (
             <nav key={col.title} aria-label={col.title}>
               <p className={label}>{col.title}</p>
-              <ul className="flex flex-col gap-[8px] border-l border-navy/15 pl-[12px]">
+              <ul className="flex flex-col gap-[8px] border-l border-white/15 pl-[12px]">
                 {col.links.map((item) => (
                   <li key={item.label} className="min-w-0">
                     {item.external ? (
@@ -90,7 +84,7 @@ export function Footer() {
 
         {/* Same 4-column grid as the links above, so the signup lines up under "Get in touch". */}
         <div className="mt-[48px] grid gap-x-[24px] gap-y-[40px] md:mt-[64px] lg:grid-cols-4 lg:items-end">
-          <Link href={routes.home} aria-label={`${brandName} home`} className="block w-full max-w-[520px] text-navy lg:col-span-3">
+          <Link href={routes.home} aria-label={`${brandName} home`} className="block w-full max-w-[520px] text-white lg:col-span-3">
             <Logo aria-hidden className="h-auto w-full" />
           </Link>
           <div className="flex flex-col gap-[20px]">
@@ -99,13 +93,13 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-[48px] flex flex-col gap-[16px] border-t border-navy/10 py-[20px] font-ui text-[11px] text-stone lg:flex-row lg:items-center lg:justify-between">
+        <div className="mt-[48px] flex flex-col gap-[16px] border-t border-white/10 py-[20px] font-ui text-[11px] text-white/50 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-center gap-[24px]">
             <p>© 2026 {brandName}</p>
             <ul className="flex gap-[20px]">
               {legal.map((item) => (
                 <li key={item.label}>
-                  <Link href={item.href} className="transition-colors duration-200 hover:text-navy">
+                  <Link href={item.href} className="transition-colors duration-200 hover:text-white">
                     {item.label}
                   </Link>
                 </li>
