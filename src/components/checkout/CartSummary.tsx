@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { Banknote, Headphones, RefreshCcw, Truck, type IconType } from "@/components/icons";
+import { AnimatedIcon } from "@/components/AnimatedIcon";
+import type { AnimatedIconName } from "@/components/animated-icons";
 import { RewardsProgress } from "@/components/RewardsProgress";
 import { rewardDiscount, rewardPercent, standardFee } from "@/components/checkout/pricing";
 import { formatPrice, routes, trustPoints } from "@/lib/content";
 
-const trustIcons: IconType[] = [Banknote, Truck, RefreshCcw, Headphones];
+const trustIcons: AnimatedIconName[] = ["handCoins", "truck", "refreshCcw", "messageCircleMore"];
 
 /** Right-hand summary card on /cart: reward progress, note, totals, checkout CTA. */
 export function CartSummary({ subtotal, shirts }: { subtotal: number; shirts: number }) {
@@ -65,10 +66,9 @@ export function CartSummary({ subtotal, shirts }: { subtotal: number; shirts: nu
 
       <ul className="mt-[20px] grid grid-cols-4 gap-[6px] border-t border-navy/10 pt-[18px]">
         {trustPoints.map((point, i) => {
-          const Icon = trustIcons[i % trustIcons.length];
           return (
-            <li key={point.title} className="flex flex-col items-center gap-[6px] text-center">
-              <Icon size={20} aria-hidden className="text-navy" />
+            <li key={point.title} data-icon-trigger className="flex flex-col items-center gap-[6px] text-center">
+              <AnimatedIcon name={trustIcons[i % trustIcons.length]} size={20} className="text-navy" />
               <span className="font-ui text-[10px] leading-tight text-ink-soft">{point.title}</span>
             </li>
           );

@@ -1,8 +1,9 @@
-import { Gem, Ruler, ShieldCheck, Sparkles, type IconType as LucideIcon } from "@/components/icons";
+import { AnimatedIcon } from "@/components/AnimatedIcon";
+import type { AnimatedIconName } from "@/components/animated-icons";
 
 import { brandName, brandPoints } from "@/lib/content";
 
-const icons: LucideIcon[] = [Gem, Ruler, ShieldCheck, Sparkles];
+const icons: AnimatedIconName[] = ["feather", "userCheck", "shieldCheck", "cart"];
 
 // Short brand-story band: a statement line plus four points, so the home page carries
 // more text than imagery (the brief asked for "why us" copy rather than a photo wall).
@@ -18,10 +19,9 @@ export function WhyBrand() {
         </h2>
         <ul className="mt-[32px] grid grid-cols-2 gap-x-[16px] gap-y-[28px] md:mt-[48px] md:grid-cols-4 md:gap-x-[32px]">
           {brandPoints.map((point, i) => {
-            const Icon = icons[i % icons.length];
             return (
-              <li key={point.title} className="flex flex-col items-center">
-                <Icon className="size-[26px] text-black" strokeWidth={1.25} aria-hidden />
+              <li key={point.title} data-icon-trigger className="flex flex-col items-center">
+                <AnimatedIcon name={icons[i % icons.length]} size={26} className="text-black" />
                 <h3 className="mt-[12px] font-ui text-[12px] font-semibold uppercase tracking-[0.1em] text-black md:text-[13px]">
                   {point.title}
                 </h3>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Leaf, Ruler, Scissors, Sparkles } from "@/components/icons";
+import { AnimatedIcon } from "@/components/AnimatedIcon";
 import { primaryButtonClass } from "@/components/info/fields";
 import { PageHero } from "@/components/info/PageHero";
 import { Placeholder, type PlaceholderTone } from "@/components/Placeholder";
@@ -41,10 +41,10 @@ const rows: { heading: string; tone: PlaceholderTone; body: [string, string] }[]
 ];
 
 const values = [
-  { icon: Scissors, title: "Craft", line: "Cut and stitched in India." },
-  { icon: Leaf, title: "Fabric", line: "Giza, satin and premium cottons." },
-  { icon: Ruler, title: "Fit", line: "Tested on real people, S to XXL." },
-  { icon: Sparkles, title: "Durability", line: "Holds up wash after wash." },
+  { icon: "handHeart" as const, title: "Craft", line: "Cut and stitched in India." },
+  { icon: "leaf" as const, title: "Fabric", line: "Giza, satin and premium cottons." },
+  { icon: "userCheck" as const, title: "Fit", line: "Tested on real people, S to XXL." },
+  { icon: "shieldCheck" as const, title: "Durability", line: "Holds up wash after wash." },
 ];
 
 export default function AboutPage() {
@@ -82,10 +82,10 @@ export default function AboutPage() {
           What We Value
         </h2>
         <ul className="mx-auto grid max-w-[1100px] grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
-          {values.map(({ icon: Icon, title, line }) => (
-            <li key={title} className="flex flex-col items-center text-center">
+          {values.map(({ icon, title, line }) => (
+            <li key={title} data-icon-trigger className="flex flex-col items-center text-center">
               <span className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-mist text-brand">
-                <Icon aria-hidden className="h-6 w-6" strokeWidth={1.5} />
+                <AnimatedIcon name={icon} />
               </span>
               <h3 className="mb-1.5 font-ui text-[14px] font-semibold uppercase tracking-[0.08em] text-black">
                 {title}
