@@ -21,7 +21,7 @@ function RewardNote({ shirts }: { shirts: number }) {
   const left = next ? next.shirts - shirts : 0;
 
   return (
-    <div className="px-[20px] pb-[14px]">
+    <div className="pb-[14px] pl-[20px] pr-[28px]">
       <p className="font-ui text-[12px] text-ink-soft">
         {next ? (
           <>
@@ -141,7 +141,8 @@ function SuggestionCard({ product, onNavigate }: { product: Product; onNavigate:
   const [picking, setPicking] = useState(false);
 
   return (
-    <div className="flex w-[120px] flex-none snap-start flex-col">
+    // Three cards fit exactly inside the scroller, with two 12px gaps between them.
+    <div className="flex w-[calc((100%-24px)/3)] flex-none snap-start flex-col">
       <Link href={routes.product(product.slug)} onClick={onNavigate} className="relative block aspect-[4/5] overflow-hidden rounded-[4px]" aria-label={product.title}>
         <Placeholder tone={product.tone} />
       </Link>
@@ -210,7 +211,7 @@ export function CartDrawer() {
 
   const header = (
     <div className="border-b border-black/10 bg-white">
-      <div className="flex h-[64px] items-center justify-between px-[20px]">
+      <div className="flex h-[64px] items-center justify-between pl-[20px] pr-[28px]">
         <h2 className="font-display text-[22px] text-navy">
           Cart <span className="font-ui text-[13px] text-stone">({count})</span>
         </h2>
@@ -282,12 +283,12 @@ export function CartDrawer() {
       title={`Your Cart (${count})`}
       header={header}
       footer={footer}
-      footerClassName="px-[20px] pb-[16px] pt-[16px]"
+      footerClassName="pb-[16px] pl-[20px] pr-[28px] pt-[16px]"
       className="md:max-w-[400px]"
     >
       {lines.length > 0 ? (
         <>
-          <ul className="divide-y divide-black/10 px-[20px]">
+          <ul className="divide-y divide-black/10 pl-[20px] pr-[28px]">
             {lines.map((line, i) => (
               <li key={`${line.productId}-${line.size}-${line.color}`}>
                 <DrawerLine line={line} index={i} onNavigate={close} />
@@ -297,11 +298,14 @@ export function CartDrawer() {
 
           {/* Recommendations scroll sideways below the cart lines */}
           <section aria-label="You may also like" className="border-t border-black/10 pb-[20px] pt-[18px]">
-            <p className="px-[20px] font-ui text-[11px] font-medium uppercase tracking-[0.14em] text-stone">You may also like</p>
-            <div className="scrollbar-none mt-[12px] flex snap-x gap-[12px] overflow-x-auto scroll-px-[20px] px-[20px] pb-[4px]">
-              {suggestions.map((p) => (
-                <SuggestionCard key={p.id} product={p} onNavigate={close} />
-              ))}
+            <p className="pl-[20px] pr-[28px] font-ui text-[11px] font-medium uppercase tracking-[0.14em] text-stone">You may also like</p>
+            {/* Padding sits outside the scroller so cards clip at the gutter, not flush against the drawer edge */}
+            <div className="mt-[12px] pl-[20px] pr-[28px]">
+              <div className="scrollbar-none flex snap-x snap-mandatory gap-[12px] overflow-x-auto pb-[4px]">
+                {suggestions.map((p) => (
+                  <SuggestionCard key={p.id} product={p} onNavigate={close} />
+                ))}
+              </div>
             </div>
           </section>
         </>
